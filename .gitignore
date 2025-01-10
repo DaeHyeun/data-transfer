@@ -1,0 +1,29 @@
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.db
+*.jre
+*.idea
+*.iml
+*.ipr
+
+# IntelliJ IDEA
+.idea/
+
+# VSCode
+.vscode/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# Maven
+target/
+!target/classes/
+!target/test-classes/
+
+# Gradle
+
