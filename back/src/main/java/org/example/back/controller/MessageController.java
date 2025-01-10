@@ -1,6 +1,6 @@
-package org.example.back.onetoonecontroller;
+package org.example.back.controller;
 
-import org.example.back.dto.ChatMessage; // 분리된 DTO 클래스 import
+import org.example.back.model.ChatMessage; // 분리된 DTO 클래스 import
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

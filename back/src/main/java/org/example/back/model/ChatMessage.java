@@ -1,4 +1,4 @@
-package org.example.back.dto;
+package org.example.back.model;
 
 import lombok.Getter;
 
