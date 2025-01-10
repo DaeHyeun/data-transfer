@@ -1,4 +1,4 @@
-package org.example.back.controller.model;
+package org.example.back.model;
 
 import lombok.*;
 

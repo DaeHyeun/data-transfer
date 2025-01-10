@@ -1,6 +1,6 @@
 package org.example.back.controller;
 
-import org.example.back.controller.model.Message;
+import org.example.back.model.Message;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
