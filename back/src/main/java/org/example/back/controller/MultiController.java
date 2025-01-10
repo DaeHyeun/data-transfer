@@ -1,6 +1,7 @@
 package org.example.back.controller;
 
 import org.example.back.model.Message;
+import org.example.back.model.User;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -32,9 +33,12 @@ public class MultiController {
 
     // 유저를 추가하는 API
     @PostMapping("/addUser")
-    public String addUser(@RequestParam String user) {  // HTTP 요청의 파라미터로 유저 ID를 받음
-        if (!userList.contains(user)) {  // 만약 유저 목록에 해당 유저가 없다면
-            userList.add(user);  // 유저 추가
+    public String addUser(@RequestBody User user) {  // User 객체로 받기
+        System.out.println("유저 ID: " + user.getUserId());
+        System.out.println("유저 이름: " + user.getUserName());
+        System.out.println("유저 이메일: " + user.getEmail());
+        if (!userList.contains(user.getUserId())) {  // 만약 유저 목록에 해당 유저가 없다면
+            userList.add(user.getUserId());  // 유저 추가
             return "신규유저";  // 신규 유저라는 메시지 반환
         } else {
             return "기존 유저";  // 이미 유저가 목록에 존재하면 "기존 유저" 반환
