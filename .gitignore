@@ -27,3 +27,5 @@ target/
 
 # Gradle
 
+# node_modules 폴더를 무시
+/front/node_modules/
