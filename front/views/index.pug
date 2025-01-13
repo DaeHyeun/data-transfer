@@ -5,10 +5,30 @@ block content
   div
     input#username(type="text" placeholder="Enter your username" required)
     button#save-username Save Username
+  script(src="/socket.io/socket.io.js")
   script.
+    var socket = io();
     document.getElementById('save-username').addEventListener('click', function() {
       var username = document.getElementById('username').value;
       if (username) {
+        fetch('http://localhost:8080/api/save-username', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username: username })  // username을 JSON 형식으로 보냄
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              window.location.href = '/room?username=' + encodeURIComponent(username);
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error saving username:', error);
+        });
         // 사용자 이름을 세션에 저장 후 채팅방으로 이동
         window.location.href = '/room?username=' + encodeURIComponent(username);
       }

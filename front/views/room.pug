@@ -4,17 +4,20 @@ block content
     h1= title
     ul#messages
     form#form(action="" style="display:block;")
-        p name
-            input#name(type="text" autocomplete="off" placeholder="Type your message here")
-        p message
-            input#input(type="text" autocomplete="off" placeholder="Type your message here" required)
-            button Send
+        
+        label(for="name") Name
+        input#name(type="text" autocomplete="off" placeholder="Type your name here")
+    
+        label(for="input") Message
+        input#input(type="text" autocomplete="off" placeholder="Type your message here" required)
+        
+        button(type="submit") Send
     script(src="/socket.io/socket.io.js")
-    script(src="app.js")
     script.
         var socket = io();
+        
         var username = new URLSearchParams(window.location.search).get('username');  // URL에서 사용자 이름 가져오기
-
+        socket.emit('set-username', username);
         // username이 없으면 index 페이지로 리디렉션
         if (!username) {
             alert("Username is required.");
@@ -22,16 +25,28 @@ block content
         }
 
         var form = document.getElementById('form');
+        var nasm = document.getElementById('name');
         var input = document.getElementById('input');
-        var name = document.getElementById('name');
         var messages = document.getElementById('messages');
-        
+ 
         form.addEventListener('submit', function(e) {
+        
             e.preventDefault();
-            if (name && input.value && username) {
-                alert(input.value);
+            if (nasm.value && input.value && username){
+                fetch('http://localhost:8080/api/one-to-one', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user: username, receiver: nasm.value, message: input.value })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // 서버로 메시지가 전달되면 입력 필드를 비우고 메시지 전송
+                    input.value = '';
+                    
+                })
+                .catch(error => console.error('Error sending message to Spring Boot:', error)); 
             }
-            if (input.value && username) {
+            else if (input.value && username) {
                 // 클라이언트에서 메시지를 Spring 서버로 전송
                 fetch('http://localhost:8080/api/send-message', {
                     method: 'POST',

@@ -27,12 +27,27 @@ var io = socketIo(server);
 
 app.locals.io = io;
 
+let users = {};
+
+app.locals.users = users;
+
 // 클라이언트 연결 시
 io.on('connection', (socket) => {
-  console.log('A user connected');
+  console.log('A user connected' + socket.id);
+
+  socket.on('set-username', (username) => {
+      users[username] = socket.id;
+      console.log(`User ${username} connected with socket id ${socket.id}`);
+  });
 
   // 클라이언트 연결 종료 시
   socket.on('disconnect', () => {
+    for (let username in users) {
+        if (users[username] === socket.id) {
+            delete users[username];
+            break;
+        }
+    }
     console.log('A user disconnected');
   });
 });

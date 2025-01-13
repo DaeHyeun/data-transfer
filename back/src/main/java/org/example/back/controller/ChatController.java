@@ -43,5 +43,14 @@ public class ChatController {
 
         return ResponseEntity.ok("Message sent to Express server");
     }
+    @PostMapping("/one-to-one")
+    public ResponseEntity<String> oneToOne(@RequestBody Map<String, String> data) {
+        System.out.println(data);
+        String message = data.get("message");
+        String expressServerUrl = "http://localhost:3000/api/one-to-one";
+        HttpEntity<Map<String, String>> request = new HttpEntity<>(data);
+        restTemplate.exchange(expressServerUrl, HttpMethod.POST, request, String.class);
+        return ResponseEntity.ok("Message sent to Express server");
+    }
 
 }

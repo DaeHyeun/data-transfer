@@ -40,6 +40,24 @@ app.post('/api/receive-message', (req, res) => {
   res.status(200).send('Message received');
 });
 
+app.post('/api/one-to-one', (req, res) => {
+  const data = req.body;
+  const receiver = data.receiver;
+  const user = data.user;
+  const message = data.message;
+  console.log(data);
+  console.log(app.locals.users);
+
+  if (app.locals.users[receiver]) {
+      // receiver의 socket.id로 해당 사용자에게만 메시지 전송
+      app.locals.io.to(app.locals.users[receiver]).emit('chat message', { user, message });
+      app.locals.io.to(app.locals.users[user]).emit('chat message', { user, message });
+      res.status(200).send('Message sent to ' + receiver);
+  } else {
+      res.status(404).send('Receiver not connected');
+  }
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
