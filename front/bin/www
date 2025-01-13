@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('front:server');
 var http = require('http');
+var socketIo = require('socket.io');
 
 /**
  * Get port from environment and store in Express.
@@ -22,28 +23,19 @@ app.set('port', port);
 var server = http.createServer(app);
 
 // socket io
-var io = require('socket.io')(server);
+var io = socketIo(server);
 
+app.locals.io = io;
+
+// 클라이언트 연결 시
 io.on('connection', (socket) => {
   console.log('A user connected');
 
-  socket.on('chat message', (data) => {
-      // 메시지를 Spring 서버에 전달
-      fetch('http://localhost:8080/api/chat', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      }).then(response => response.json())
-        .then(result => {
-          io.emit('chat message', result); // 클라이언트에 메시지 전달
-        });
-  });
-
+  // 클라이언트 연결 종료 시
   socket.on('disconnect', () => {
-      console.log('A user disconnected');
+    console.log('A user disconnected');
   });
 });
-
 
 /**
  * Listen on provided port, on all network interfaces.

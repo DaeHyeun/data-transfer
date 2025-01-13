@@ -1,8 +1,13 @@
 package org.example.back.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,20 +19,29 @@ public class ChatController {
 
     private Map<String, String> names = new HashMap<>();
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     @PostMapping("/save-username")
     public ResponseEntity<String> saveUsername(@RequestBody Map<String, String> data) {
         String username = data.get("username");
-        // 사용자 이름을 저장 (예: 데이터베이스)
 
         System.out.println("Username saved: " + username);
         names.put(username, username);
         return ResponseEntity.ok("Username saved");
     }
 
-    @PostMapping("/chat")
-    public ResponseEntity<Map<String, String>> handleChatMessage(@RequestBody Map<String, String> message) {
-        // 메시지 처리 후, 필요한 경우 수정하여 반환
-        System.out.println("Received message from " + message.get("user") + ": " + message.get("message"));
-        return ResponseEntity.ok(message);
+    @PostMapping("/send-message")
+    public ResponseEntity<String> sendMessage(@RequestBody Map<String, String> data) {
+        String message = data.get("message");
+        System.out.println("Message sent to: " + message);
+
+        // 메시지를 Express 서버로 전달
+        String expressServerUrl = "http://localhost:3000/api/receive-message";
+        HttpEntity<Map<String, String>> request = new HttpEntity<>(data);
+        ResponseEntity<String> response = restTemplate.exchange(expressServerUrl, HttpMethod.POST, request, String.class);
+
+        return ResponseEntity.ok("Message sent to Express server");
     }
+
 }

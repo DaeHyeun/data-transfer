@@ -5,50 +5,11 @@ block content
   div
     input#username(type="text" placeholder="Enter your username" required)
     button#save-username Save Username
-  ul#messages
-  form#form(action="" style="display:none;")
-    input#input(type="text" autocomplete="off" placeholder="Type your message here" required)
-    button Send
-  script(src="/socket.io/socket.io.js")
   script.
-    var socket = io();
-    var username = '';
-
     document.getElementById('save-username').addEventListener('click', function() {
-      username = document.getElementById('username').value;
+      var username = document.getElementById('username').value;
       if (username) {
-        // 사용자 이름을 Spring 서버에 전송
-        fetch('http://localhost:8080/api/save-username', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ username: username })
-        }).then(response => {
-          if (response.ok) {
-            document.getElementById('username').style.display = 'none';
-            document.getElementById('save-username').style.display = 'none';
-            document.getElementById('form').style.display = 'block';
-          }
-        });
+        // 사용자 이름을 세션에 저장 후 채팅방으로 이동
+        window.location.href = '/room?username=' + encodeURIComponent(username);
       }
-    });
-
-    var form = document.getElementById('form');
-    var input = document.getElementById('input');
-    var messages = document.getElementById('messages');
-
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      if (input.value && username) {
-        socket.emit('chat message', { user: username, message: input.value });
-        input.value = '';
-      }
-    });
-
-    socket.on('chat message', function(data) {
-      var item = document.createElement('li');
-      item.textContent = data.user + ': ' + data.message;
-      messages.appendChild(item);
-      window.scrollTo(0, document.body.scrollHeight);
     });
