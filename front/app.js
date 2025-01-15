@@ -9,8 +9,6 @@ var roomRouter = require('./routes/room');
 
 var app = express();
 
-// var { io } = require('./bin/www');
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -32,7 +30,7 @@ app.post('/api/receive-message', (req, res) => {
   const message = req.body;
   
   // 메시지를 수신한 후 소켓을 통해 클라이언트로 전달
-  app.locals.io.emit('chat message', {
+  app.locals.io.to(message.room).emit('chat message', {
     user: message.user,
     message: message.message
   });
@@ -45,18 +43,29 @@ app.post('/api/one-to-one', (req, res) => {
   const receiver = data.receiver;
   const user = data.user;
   const message = data.message;
+  const room = data.room;
+
   console.log(data);
   console.log(app.locals.users);
 
-  if (app.locals.users[receiver]) {
-      // receiver의 socket.id로 해당 사용자에게만 메시지 전송
-      app.locals.io.to(app.locals.users[receiver]).emit('chat message', { user, message });
-      app.locals.io.to(app.locals.users[user]).emit('chat message', { user, message });
+  if (app.locals.users[room]) {
+    // 사용자 배열에서 receiver와 user 객체 찾기
+    const receiverSocket = app.locals.users[room].find(u => u.username === receiver);
+    const userSocket = app.locals.users[room].find(u => u.username === user);
+  
+    if (receiverSocket && userSocket) {
+      // 해당 소켓 ID로 메시지 전송
+      app.locals.io.to(receiverSocket.id).emit('chat message', { user, message });
+      app.locals.io.to(userSocket.id).emit('chat message', { user, message });
       res.status(200).send('Message sent to ' + receiver);
+    } else {
+      res.status(404).send('Receiver or user not connected');
+    }
   } else {
-      res.status(404).send('Receiver not connected');
+    res.status(404).send('Room not found');
   }
 });
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

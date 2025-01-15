@@ -35,19 +35,70 @@ app.locals.users = users;
 io.on('connection', (socket) => {
   console.log('A user connected' + socket.id);
 
-  socket.on('set-username', (username) => {
-      users[username] = socket.id;
-      console.log(`User ${username} connected with socket id ${socket.id}`);
+  // 채팅방 입장
+  socket.on('joinRoom', (data) => {
+    const { username, room } = data;
+    socket.join(room);
+    
+    // 방에 사용자 추가
+    if (!users[room]) {
+      users[room] = [];
+    }
+    users[room].push({ id: socket.id, username });
+    
+  
+    io.to(room).emit('update-user-list', users[room]);
+
+    // 백엔드에서 사용자 이력에 따라 메시지 가져오기
+    fetch('http://localhost:8080/api/join', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json', // JSON 데이터 전송
+      },
+      body: JSON.stringify({ username, room }), // 요청 본문에 username과 room을 JSON 형태로 전송
+    })
+      .then(response => response.json()) // 응답을 JSON 형식으로 파싱
+      .then(data => {
+        const messages = data.message;
+    
+        // 이전에 접속한 사용자라면 이전 메시지 전송
+        if (messages && messages.length > 0) {
+          socket.emit('previousMessages', messages);
+        }
+    
+        var datas = { user: "System", message: `${username} has joined the room` };
+        // 방에 사용자 입장 메시지 전송
+        socket.to(room).emit('chat message', datas);
+      })
+      .catch(error => {
+        console.error('Error fetching previous messages:', error);
+      });
+    
+
   });
 
   // 클라이언트 연결 종료 시
   socket.on('disconnect', () => {
-    for (let username in users) {
-        if (users[username] === socket.id) {
-            delete users[username];
-            break;
-        }
+
+    // 모든 방을 순회하며 해당 사용자를 삭제
+    for (let room in users) {
+      users[room] = users[room].filter(user => user.id !== socket.id);
+      if (users[room].length === 0) {
+        delete users[room]; // 방에 사용자가 없으면 방 정보 삭제
+      }else{
+        // 사용자 목록 업데이트 전송
+        io.to(room).emit('update-user-list', users[room]);
+      }
     }
+
+    // 방에 사용자 퇴장 메시지 전송
+    for (let room in socket.rooms) {
+      if (room !== socket.id) { // 자신의 기본 방 제외
+        socket.to(room).emit('message', 'A user has left the room');
+      }
+    }
+
+
     console.log('A user disconnected');
   });
 });
