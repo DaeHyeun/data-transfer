@@ -51,30 +51,7 @@ public class ChatController {
             Map<String, List<String>> response = new HashMap<>();
             return ResponseEntity.ok(response);
         }
-
-//        Map<String, String> response = new HashMap<>();
-//        response.put("message", "User " + username + " save successfully");
-//        return ResponseEntity.ok(response);
     }
-
-//    @PostMapping("/delete-username")
-//    public ResponseEntity<Map<String, String>> deleteUsername(@RequestBody Map<String, String> data) {
-//        String username = data.get("username");
-//
-//        System.out.println("Username delete: " + username);
-//        if (username == null){
-//            Map<String, String> response = new HashMap<>();
-//            response.put("message", ("Not user found" + null));
-//            return ResponseEntity.ok(response);
-//        } else{
-//            users.remove(username);
-//            System.out.println("users : " + users);
-//            Map<String, String> response = new HashMap<>();
-//            response.put("message", "User " + username + " deleted successfully");
-//            return ResponseEntity.ok(response);
-//        }
-//
-//    }
 
     @PostMapping("/send-message")
     public ResponseEntity<Map<String, String>> sendMessage(@RequestBody Map<String, String> data) {
