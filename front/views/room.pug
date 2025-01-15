@@ -19,6 +19,10 @@ block content
         label(for="input" style="font-weight: bold;") Message
         input#input(type="text" autocomplete="off" placeholder="Type your message here" required style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 100%;")
 
+      // 파일 업로드
+      div(style="flex-grow: 1;")
+        input#file(type="file" accept=accept="image/*, video/*, audio/*, application/pdf, .doc, .docx, .xls, .xlsx, .ppt, .pptx, text/plain, .zip" style="padding: 10px; border: 1px solid #ccc; border-radius: 5px; width: 100%;")
+
       // 보내기 버튼
       div(style="flex-shrink: 0;")
         button(type="submit" style="padding: 10px; border: none; border-radius: 5px; background-color: #4CAF50; color: white; font-size: 16px; cursor: pointer; width: 100%; position: relative; top: 8px; left: 20px;") Send
@@ -40,9 +44,12 @@ block content
     var nasm = document.getElementById('name');
     var input = document.getElementById('input');
     var messages = document.getElementById('messages');
+    var fileInput = document.getElementById('file');
 
     form.addEventListener('submit', function(e) {
       e.preventDefault();
+      var formData = new FormData();
+      
       if (nasm.value && input.value && username) {
         fetch('http://localhost:8080/api/one-to-one', {
           method: 'POST',
@@ -54,18 +61,45 @@ block content
           input.value = '';
         })
         .catch(error => console.error('Error sending message to Spring Boot:', error));
-      } else if (input.value && username) {
-        fetch('http://localhost:8080/api/send-message', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ user: username, message: input.value, room: room })
-        })
-        .then(response => response.json())
-        .then(data => {
-          input.value = '';
-        })
-        .catch(error => console.error('Error sending message to Spring Boot:', error));
-      }
+      } else if (input.value || fileInput.files.length) {
+          formData.append('user', username);
+          formData.append('room', room);
+          if (nasm.value) formData.append('receiver', nasm.value);
+          if (input.value) formData.append('message', input.value);
+          if (fileInput.files.length > 0) {
+              var reader = new FileReader();
+              reader.onload = function (event) {
+                  var base64File = event.target.result.split(',')[1]; // Base64 부분만 추출
+                  formData.append('file', base64File);
+                  formData.append('fileName', fileInput.files[0].name);
+                  formData.append('filetype', fileInput.files[0].type);
+
+                  fetch('http://localhost:8080/api/send-message', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify(Object.fromEntries(formData))
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                      input.value = '';
+                      fileInput.value = '';
+                  })
+                  .catch(error => console.error('Error sending message to Spring Boot:', error));
+              };
+              reader.readAsDataURL(fileInput.files[0]);
+          } else {
+              fetch('http://localhost:8080/api/send-message', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(Object.fromEntries(formData))
+              })
+              .then(response => response.json())
+              .then(data => {
+                  input.value = '';
+              })
+              .catch(error => console.error('Error sending message to Spring Boot:', error));
+          }
+        }
     });
 
     //- 사용자 정보를 가져와 업데이트
@@ -73,7 +107,7 @@ block content
         var select = document.getElementById('name');
         
         // 기존 옵션 초기화
-        select.innerHTML = '<option value="">-- ALL --</option>';
+        select.innerHTML = '<option value="">ALL</option>';
 
         // 사용자 목록을 기반으로 옵션 추가
         userList.forEach(function(user) {
@@ -91,9 +125,55 @@ block content
         console.log('Received message:', data);
         var item = document.createElement('li');
         item.textContent = data.user + ': ' + data.message;
-        messages.appendChild(item);
+        console.log("여기 오나 데이터?" + data.file);
+
+        // 멀티미디어 메시지 처리
+        if (data.file) {
+            // 파일 타입이 정의되어 있을 때만 처리
+            if (data.file.type) {
+                // 이미지나 비디오 파일일 경우
+                if (data.file.type.startsWith('image') || data.file.type.startsWith('video')) {
+                    const mediaElement = document.createElement(data.file.type.startsWith('image') ? 'img' : 'video');
+                    console.log("여기 오나?" + mediaElement);
+
+                    // Base64로 이미지를 표시하거나 비디오를 설정
+                    mediaElement.src = 'data:' + data.file.type + ';base64,' + data.file.url; // Base64 데이터 또는 파일 URL
+                    mediaElement.controls = true;
+
+                    // 이미지 스타일 조정
+                    if (data.file.type.startsWith('image')) {
+                        mediaElement.style.maxWidth = '50%';  // 이미지를 최대 너비로 표시
+                        mediaElement.style.height = 'auto';    // 이미지 높이를 자동으로 비율에 맞추기
+                        mediaElement.style.objectFit = 'contain'; // 이미지 비율 유지하며 크기에 맞추기
+                    } 
+                    // 비디오 스타일 조정
+                    else if (data.file.type.startsWith('video')) {
+                        mediaElement.style.width = '100%';  // 비디오 너비를 100%로 설정
+                        mediaElement.style.height = 'auto'; // 비디오의 높이를 자동으로 설정
+                    }
+
+                    item.appendChild(mediaElement); // 메시지 항목에 미디어 요소 추가
+                } 
+                // 일반 파일일 경우 다운로드 링크 제공
+                else {
+                    const fileLink = document.createElement('a');
+                    fileLink.href = data.file.url;
+                    fileLink.download = data.filename;  // 다운로드 시 파일 이름 설정
+                    fileLink.textContent = `Download ${data.filename}`;
+                    item.appendChild(fileLink); // 메시지 항목에 파일 링크 추가
+                }
+            } else {
+                console.error('File type is missing in the message data');
+            }
+        } else {
+            console.error('No file data in the message');
+        }
+
+        document.getElementById('messages').appendChild(item);
         window.scrollTo(0, document.body.scrollHeight);
     });
+
+
 
     // - 초기 메시지 받아오기기
     socket.on('previousMessages', (messages) => {

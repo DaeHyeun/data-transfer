@@ -6,6 +6,7 @@ var createError = require('http-errors');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var roomRouter = require('./routes/room');
+const fs = require('fs');
 
 var app = express();
 
@@ -14,8 +15,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+
+app.use(express.json({ limit: '50mb' })); // JSON 요청의 크기 제한을 50MB로 설정
+app.use(express.urlencoded({ limit: '50mb', extended: true })); // URL-encoded 요청의 크기 제한 설정
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -24,19 +26,79 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/room', roomRouter);
 
-app.use(express.json());
+// 업로드된 파일을 저장할 경로
+const uploadDir = path.join(__dirname, 'uploads');
+
+// 업로드 폴더가 없으면 생성
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
 
 app.post('/api/receive-message', (req, res) => {
-  const message = req.body;
-  
-  // 메시지를 수신한 후 소켓을 통해 클라이언트로 전달
-  app.locals.io.to(message.room).emit('chat message', {
-    user: message.user,
-    message: message.message
-  });
+  const data = req.body;
 
-  res.status(200).send('Message received');
+  // 파일 처리
+  let fileData = {};
+
+  if (data.file) {
+    const fileType = data.filetype; // 예: 'image/png', 'video/mp4' 등
+    const base64Data = data.file; // Base64로 인코딩된 파일 데이터
+    const fileName = data.fileName; // 파일 이름
+    if (fileType.startsWith('image') || fileType.startsWith('video')) {
+      fileData = {
+        type: fileType, // 이미지/비디오 파일 타입
+        url: base64Data // Base64로 인코딩된 이미지/비디오 URL
+      };
+      
+      // 소켓을 통해 메시지와 함께 URL 전달
+      app.locals.io.to(data.room).emit('chat message', {
+        user: data.user,
+        room: data.room,
+        message: data.message,
+        file: fileData,
+        filename: fileName,
+      });
+
+      res.status(200).send('Message received');
+      
+    } else{
+        // 파일을 저장할 경로 설정
+        const filePath = path.join(uploadDir, fileName);
+        
+        // Base64 데이터를 Buffer로 변환하여 파일로 저장
+        const buffer = Buffer.from(base64Data, 'base64');
+        
+        fs.writeFile(filePath, buffer, (err) => {
+          if (err) {
+            return res.status(500).send('Error saving file');
+          }
+          
+          // 파일이 성공적으로 저장되었으면, 클라이언트에 파일 URL 제공
+          fileData = {
+          type: fileType,
+          url: `http://localhost:3000/uploads/${fileName}`, // 파일 다운로드 URL
+        };
+        
+        // 소켓을 통해 메시지와 함께 URL 전달
+        app.locals.io.to(data.room).emit('chat message', {
+          user: data.user,
+          room: data.room,
+          message: data.message,
+          file: fileData,
+          filename: fileName,
+        });
+        
+        res.status(200).send('Message received');
+      });
+    }
+  } else {
+    res.status(400).send('No file data');
+  }
 });
+
+
+// 업로드된 파일에 대한 정적 경로 제공
+app.use('/uploads', express.static(uploadDir));
 
 app.post('/api/one-to-one', (req, res) => {
   const data = req.body;

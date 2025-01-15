@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -55,28 +56,45 @@ public class ChatController {
 
     @PostMapping("/send-message")
     public ResponseEntity<Map<String, String>> sendMessage(@RequestBody Map<String, String> data) {
-        String message = data.get("message");
         String username = data.get("user");
         String room = data.get("room");
-        System.out.println("Message sent to: " + message);
-        System.out.println("Username sent to: " + username);
-        System.out.println("Room sent to: " + room);
+        String receiver = data.get("receiver");
+        String message = data.get("message");
+        String base64File = data.get("file");
+        String fileName = data.get("fileName");
+        String fileType = data.get("fileType");
 
+        // 로그 출력
+        System.out.println("Message sent: " + message);
+        System.out.println("Username sent: " + username);
+        System.out.println("Room sent: " + room);
+
+        // 파일 처리 로직
+        if (base64File != null) {
+            byte[] decodedBytes = Base64.getDecoder().decode(base64File);
+            System.out.println("Received file: " + fileName + " with size: " + decodedBytes.length);
+            // 파일 저장 로직 추가 가능
+        }
+
+        // 채팅 메시지 저장
         chatRooms.putIfAbsent(room, new ArrayList<>());
-        chatRooms.get(room).add(username + ": " + message);
+        String fullMessage = (receiver != null) ? username + " to " + receiver + ": " + message : username + ": " + message;
+        chatRooms.get(room).add(fullMessage);
 
-
-        System.out.println("chatHistory : " + chatRooms.get(room));
+        System.out.println("chatHistory: " + chatRooms.get(room));
 
         // 메시지를 Express 서버로 전달
         String expressServerUrl = "http://localhost:3000/api/receive-message";
         HttpEntity<Map<String, String>> request = new HttpEntity<>(data);
         restTemplate.exchange(expressServerUrl, HttpMethod.POST, request, String.class);
 
+        // 응답 생성
         Map<String, String> response = new HashMap<>();
         response.put("message", "ok");
         return ResponseEntity.ok(response);
     }
+
+
 
     @PostMapping("/one-to-one")
     public ResponseEntity<Map<String, String>> oneToOne(@RequestBody Map<String, String> data) {
