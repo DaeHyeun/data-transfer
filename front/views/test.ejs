@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.IO Test</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        // 소켓 연결
+        const socket = io();
+
+        // 메시지 보내기
+        function sendMessage() {
+            const message = document.getElementById('message').value;
+            const userId = 'testUser';  // 예시로 'testUser'를 사용
+            if (message) {
+                // 서버로 메시지 전송
+                socket.emit('chat message', { message, userId });
+
+                // 메시지 입력창 비우기
+                document.getElementById('message').value = '';
+            }
+        }
+
+        // 서버로부터 메시지 받기
+        socket.on('chat message', function(data) {
+            const { message, userId } = data;
+            const messagesList = document.getElementById('messages');
+            const newMessage = document.createElement('li');
+            newMessage.textContent = `${userId}: ${message}`;
+            messagesList.appendChild(newMessage);
+        });
+    </script>
+</head>
+<body>
+<h1>Socket.IO Test</h1>
+
+<ul id="messages">
+    <!-- 서버로부터 받은 메시지가 여기에 추가됩니다. -->
+</ul>
+
+<input id="message" type="text" placeholder="Type a message">
+<button onclick="sendMessage()">Send</button>
+</body>
+</html>

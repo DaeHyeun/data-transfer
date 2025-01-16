@@ -6,12 +6,15 @@ const bodyParser = require('body-parser');
 const app = express();
 const axios = require('axios');
 
+
 // 세션 미들웨어 설정
 app.use(session({
   secret: 'your-secret-key',  // 세션 암호화에 사용되는 키
   resave: false,              // 세션이 변경되지 않더라도 저장할지 여부
   saveUninitialized: true     // 초기화되지 않은 세션도 저장할지 여부
 }));
+
+
 
 // EJS 설정
 app.set('view engine', 'ejs');
@@ -27,6 +30,11 @@ app.use(bodyParser.json()); // JSON 데이터를 파싱
 app.get('/', (req, res) => {
   res.render('index')
 });
+
+//소켓 테스트
+app.get('/test',(req,res) => {
+  res.render('test')
+})
 
 // 아이디 입력 후 채팅 화면으로 리다이렉트
 app.post('/chat', (req, res) => {
