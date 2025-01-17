@@ -1,93 +1,72 @@
+<!-- views/chat.ejs -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>채팅</title>
+    <style>
+        #chat-box {
+            width: 100%;
+            height: 300px;
+            overflow-y: scroll;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        #message-input {
+            width: 80%;
+            padding: 10px;
+        }
+        #send-btn {
+            padding: 10px;
+        }
+    </style>
 </head>
 <body>
+<h1>채팅방</h1>
+<p>로그인한 사용자: <%= username %></p>
 
-<h1>안녕하세요, <%= userId %>님! 채팅을 시작하세요.</h1>
+<div id="chat-box"></div>
 
-<!-- 채팅 내역 표시 -->
-<div id="chatBox" style="border: 1px solid #ccc; height: 300px; overflow-y: scroll; padding: 10px;">
-    <!-- 채팅 내용이 여기에 추가됨 -->
-    <% if (messages && messages.length > 0) { %>
-        <% messages.forEach(function(msg) { %>
-            <p><%= msg %></p>
-        <% }) %>
-    <% } else { %>
-        <p>채팅 내용이 없습니다.</p>
-    <% } %>
+<input type="text" id="message-input" placeholder="메시지를 입력하세요..." />
+<button id="send-btn">전송</button>
 
-</div>
-
-
-<!-- 채팅 입력 -->
-<div>
-    <input type="text" id="chatInput" placeholder="채팅을 입력하세요..." style="width: 80%; padding: 5px;">
-    <input type="hidden" id="senderId" value="<%= userId %>">
-    <button onclick="sendMessage()">전송</button>
-</div>
-
+<script src="/socket.io/socket.io.js"></script>
 <script>
-    // 페이지 로드 시 자동으로 input에 포커스를 맞추는 함수
-    window.onload = function() {
-        // 페이지가 새로고침된 후 0.1초 뒤에 input에 포커스를 맞추는 코드
-        setTimeout(function() {
-            document.getElementById("chatInput").focus();
-            var chatBox = document.getElementById('chatBox');
-            chatBox.scrollTop = chatBox.scrollHeight;  // 채팅 박스의 스크롤을 맨 아래로 이동
-        }, 100); // 100ms = 0.1초
-    };
+    const socket = io();
+
+    // 메시지 전송 함수
     function sendMessage() {
-        var chatInput = document.getElementById('chatInput').value;
-        var senderId = document.getElementById("senderId").value;  // 채팅 입력자의 아이디
+        const message = document.getElementById('message-input').value;
+        const username = '<%= username %>'; // 서버에서 전달한 username을 가져옴
 
-        // 서버로 보내는 데이터 객체 생성
-        var messageData = {
-            senderId: senderId,  // 보낸 사람 아이디
-            message: chatInput      // 메시지 내용
-        };
-
-        // fetch API를 사용하여 메시지를 서버로 전송
-        fetch('http://localhost:8080/multi/multiChat', {  // 여기에 정확한 API URL을 입력해야 합니다
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'  // JSON 형식으로 전송
-            },
-            body: JSON.stringify(messageData)  // 객체를 JSON 문자열로 변환
-        })
-            .then(response => response.text())
-            .then(data => {
-                console.log('html에서 받은값:', data);
-                setTimeout(function() {
-                    location.reload();
-                }, 100); // 100ms = 0.1초
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-
-        // 메시지 입력 필드 초기화
-        document.getElementById('chatInput').value = "";
-
-        var chatBox = document.getElementById('chatBox');
-        chatBox.scrollTop = chatBox.scrollHeight;  // 채팅 박스의 스크롤을 맨 아래로 이동
+        if (message) {
+            // 서버로 메시지 전송
+            socket.emit('socket', { username, message }); // { username, message } 형식으로 전송
+            document.getElementById('message-input').value = '';  // 입력창 초기화
+        }
     }
 
+    // 버튼 클릭 시 메시지 전송
+    document.getElementById('send-btn').addEventListener('click', sendMessage);
 
-    // Enter 키 입력 시 메시지 전송
-    document.getElementById('chatInput').addEventListener('keydown', function(event) {
+    // Enter 키로 메시지 전송
+    document.getElementById('message-input').addEventListener('keydown', (event) => {
         if (event.key === 'Enter') {
-            event.preventDefault();  // 기본적으로 폼 제출을 방지
-            sendMessage();           // 메시지 전송 함수 호출
+            event.preventDefault(); // Enter 키 기본 동작 방지 (새 줄 추가 방지)
+            sendMessage();  // 메시지 전송
         }
     });
 
-
-
+    // 서버로부터 받은 메시지 처리
+    socket.on('message', (msg) => {
+        const chatBox = document.getElementById('chat-box');
+        const messageDiv = document.createElement('div');
+        messageDiv.innerHTML = msg; // 메시지 HTML 삽입
+        chatBox.appendChild(messageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;  // 스크롤 맨 아래로
+    });
 </script>
-
 </body>
 </html>

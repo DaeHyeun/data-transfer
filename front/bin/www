@@ -1,64 +1,45 @@
 #!/usr/bin/env node
-
-/**
- * Module dependencies.
- */
-
 var app = require('../app');
-var debug = require('debug')('front:server');
+var debug = require('debug')('express_server:server');
 var http = require('http');
-const socketIo  = require('socket.io');
-/**
- * Get port from environment and store in Express.
- */
+var socketIo = require('socket.io');
+
 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
-/**
- * Create HTTP server.
- */
-
 var server = http.createServer(app);
-const io = socketIo(server);
 
-// 클라이언트와의 소켓 연결 처리
+// socket io
+var io = socketIo(server);
+
+app.locals.io = io;
+
+let users = {};
+app.locals.users = users;
+
+// 클라이언트 연결 시
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  console.log('소켓 연결 소켓 아이디 : ' + socket.id);
 
-  // 클라이언트로부터 메시지를 받으면 처리
-  socket.on('chat message', (data) => {
-    const { message, userId } = data;
-    console.log(`${userId}: ${message}`);
+  // 채팅방 입장
+  socket.on('socket', (data) => {
+    const { username, message } = data; // 데이터에서 username과 message 추출
+    console.log(`${username}: ${message}`);
 
-    // 사용자별로 메시지를 저장
-    if (!userMessages[userId]) {
-      userMessages[userId] = [];
-    }
-    userMessages[userId].push(message);
-
-    // 모든 클라이언트에 메시지를 방송 (채팅방의 모든 사용자에게 메시지 전송)
-    io.emit('chat message', { message, userId });
+    // 모든 클라이언트에게 메시지 전송
+    io.emit('message', `<strong>${username}:</strong> ${message}`);
   });
 
-  // 연결 해제 처리
+  // 클라이언트 연결 종료 시
   socket.on('disconnect', () => {
-    console.log('user disconnected');
+    console.log('A user disconnected');
   });
 });
-
-
-/**
- * Listen on provided port, on all network interfaces.
- */
 
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
-/**
- * Normalize a port into a number, string, or false.
- */
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
@@ -76,18 +57,14 @@ function normalizePort(val) {
   return false;
 }
 
-/**
- * Event listener for HTTP server "error" event.
- */
-
 function onError(error) {
   if (error.syscall !== 'listen') {
     throw error;
   }
 
   var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
+      ? 'Pipe ' + port
+      : 'Port ' + port;
 
   // handle specific listen errors with friendly messages
   switch (error.code) {
@@ -111,7 +88,7 @@ function onError(error) {
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
+      ? 'pipe ' + addr
+      : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
