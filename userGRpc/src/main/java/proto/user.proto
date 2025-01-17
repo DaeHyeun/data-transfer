@@ -1,0 +1,26 @@
+//PS C:\ChatTest01\data-transfer\userGRpc\src\main\java\proto>
+// protoc --java_out=.. --grpc-java_out=.. user.proto
+
+syntax = "proto3";
+package org.example.usergrpc.user;
+option java_multiple_files=true;
+
+// 메시지 정의
+message User {
+
+  string category = 1;   // db에서 할 작업 종류
+  string username = 2;   // 아이디
+  string password = 3;   // 비밀번호
+}
+
+// 아이디 중복 검사 결과 메시지 정의
+message IdCheckResponse {
+  bool isDuplicate = 1;  // 아이디 중복 여부 (true: 중복, false: 사용 가능)
+  string message = 2;    // 상태 메시지
+}
+
+// 서비스 정의
+service UserService {
+  // 아이디 중복검사
+  rpc idChk (User) returns (IdCheckResponse);
+}
