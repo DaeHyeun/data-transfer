@@ -122,51 +122,32 @@ block content
 
     // - 메시지 받아오기
     socket.on('chat message', function(data) {
-        console.log('Received message:', data);
         var item = document.createElement('li');
         item.textContent = data.user + ': ' + data.message;
-        console.log("여기 오나 데이터?" + data.file);
 
-        // 멀티미디어 메시지 처리
         if (data.file) {
-            // 파일 타입이 정의되어 있을 때만 처리
-            if (data.file.type) {
-                // 이미지나 비디오 파일일 경우
-                if (data.file.type.startsWith('image') || data.file.type.startsWith('video')) {
-                    const mediaElement = document.createElement(data.file.type.startsWith('image') ? 'img' : 'video');
-                    console.log("여기 오나?" + mediaElement);
+            if (data.file.type.startsWith('image') || data.file.type.startsWith('video')) {
+                const mediaElement = document.createElement(data.file.type.startsWith('image') ? 'img' : 'video');
+                mediaElement.src = data.file.url;
+                mediaElement.controls = true;
 
-                    // Base64로 이미지를 표시하거나 비디오를 설정
-                    mediaElement.src = 'data:' + data.file.type + ';base64,' + data.file.url; // Base64 데이터 또는 파일 URL
-                    mediaElement.controls = true;
-
-                    // 이미지 스타일 조정
-                    if (data.file.type.startsWith('image')) {
-                        mediaElement.style.maxWidth = '50%';  // 이미지를 최대 너비로 표시
-                        mediaElement.style.height = 'auto';    // 이미지 높이를 자동으로 비율에 맞추기
-                        mediaElement.style.objectFit = 'contain'; // 이미지 비율 유지하며 크기에 맞추기
-                    } 
-                    // 비디오 스타일 조정
-                    else if (data.file.type.startsWith('video')) {
-                        mediaElement.style.width = '100%';  // 비디오 너비를 100%로 설정
-                        mediaElement.style.height = 'auto'; // 비디오의 높이를 자동으로 설정
-                    }
-
-                    item.appendChild(mediaElement); // 메시지 항목에 미디어 요소 추가
-                } 
-                // 일반 파일일 경우 다운로드 링크 제공
-                else {
-                    const fileLink = document.createElement('a');
-                    fileLink.href = data.file.url;
-                    fileLink.download = data.filename;  // 다운로드 시 파일 이름 설정
-                    fileLink.textContent = `Download ${data.filename}`;
-                    item.appendChild(fileLink); // 메시지 항목에 파일 링크 추가
+                if (data.file.type.startsWith('image')) {
+                    mediaElement.style.maxWidth = '50%';
+                    mediaElement.style.height = 'auto';
+                } else if (data.file.type.startsWith('video')) {
+                    mediaElement.style.width = '100%';
+                    mediaElement.style.height = 'auto';
                 }
+                item.appendChild(document.createElement('br'));
+                item.appendChild(mediaElement);
             } else {
-                console.error('File type is missing in the message data');
+                const fileLink = document.createElement('a');
+                fileLink.href = data.file.url;
+                fileLink.download = data.filename;
+                fileLink.textContent = `Download ${data.filename}`;
+                item.appendChild(document.createElement('br'));
+                item.appendChild(fileLink);
             }
-        } else {
-            console.error('No file data in the message');
         }
 
         document.getElementById('messages').appendChild(item);
@@ -174,12 +155,55 @@ block content
     });
 
 
-
-    // - 초기 메시지 받아오기기
+    // 초기 메시지 받아오기
     socket.on('previousMessages', (messages) => {
       messages.forEach((message) => {
         const item = document.createElement('li');
-        item.textContent = message;
+
+        // 메시지와 파일 정보를 파싱
+        const parts = message.split(", ");
+        const textPart = parts[0]; // "username: message" 형태
+        const filePart = parts[1] ? parts[1].split(": ") : null; // "fileName: fileType" 형태
+
+        // 메시지 출력
+        const textNode = document.createTextNode(textPart);
+        item.appendChild(textNode);
+
+        // 파일이 있는 경우 추가 처리
+        if (filePart && filePart.length === 2) {
+          const [fileName, fileType] = filePart;
+
+          // 이미지나 비디오 파일 처리
+          if (fileType.startsWith('image') || fileType.startsWith('video')) {
+            const mediaElement = document.createElement(
+              fileType.startsWith('image') ? 'img' : 'video'
+            );
+            mediaElement.src = `/uploads/${fileName}`;
+            mediaElement.controls = true;
+
+            // 이미지와 비디오의 스타일 설정
+            if (fileType.startsWith('image')) {
+              mediaElement.style.maxWidth = '50%';
+              mediaElement.style.height = 'auto';
+            } else if (fileType.startsWith('video')) {
+              mediaElement.style.width = '100%';
+              mediaElement.style.height = 'auto';
+            }
+
+            item.appendChild(document.createElement('br'));
+            item.appendChild(mediaElement);
+          } else {
+            // 이미지와 비디오가 아닌 경우, 다운로드 링크 추가
+            const downloadLink = document.createElement('a');
+            downloadLink.href = `/uploads/${fileName}`;
+            downloadLink.textContent = `Download ${fileName}`;
+            downloadLink.download = fileName; // 파일 다운로드 속성 설정
+
+            item.appendChild(document.createElement('br'));
+            item.appendChild(downloadLink);
+          }
+        }
+
         document.getElementById('messages').appendChild(item);
       });
     });

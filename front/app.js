@@ -36,65 +36,45 @@ if (!fs.existsSync(uploadDir)) {
 
 app.post('/api/receive-message', (req, res) => {
   const data = req.body;
-
-  // 파일 처리
   let fileData = {};
 
   if (data.file) {
-    const fileType = data.filetype; // 예: 'image/png', 'video/mp4' 등
-    const base64Data = data.file; // Base64로 인코딩된 파일 데이터
-    const fileName = data.fileName; // 파일 이름
-    if (fileType.startsWith('image') || fileType.startsWith('video')) {
-      fileData = {
-        type: fileType, // 이미지/비디오 파일 타입
-        url: base64Data // Base64로 인코딩된 이미지/비디오 URL
-      };
-      
-      // 소켓을 통해 메시지와 함께 URL 전달
-      app.locals.io.to(data.room).emit('chat message', {
-        user: data.user,
-        room: data.room,
-        message: data.message,
-        file: fileData,
-        filename: fileName,
-      });
+      const fileType = data.filetype;
+      const base64Data = data.file;
+      const fileName = data.fileName;
+      const filePath = path.join(uploadDir, fileName);
+      const buffer = Buffer.from(base64Data, 'base64');
 
-      res.status(200).send('Message received');
-      
-    } else{
-        // 파일을 저장할 경로 설정
-        const filePath = path.join(uploadDir, fileName);
-        
-        // Base64 데이터를 Buffer로 변환하여 파일로 저장
-        const buffer = Buffer.from(base64Data, 'base64');
-        
-        fs.writeFile(filePath, buffer, (err) => {
+      fs.writeFile(filePath, buffer, (err) => {
           if (err) {
-            return res.status(500).send('Error saving file');
+              return res.status(500).send('Error saving file');
           }
-          
-          // 파일이 성공적으로 저장되었으면, 클라이언트에 파일 URL 제공
+
           fileData = {
-          type: fileType,
-          url: `http://localhost:3000/uploads/${fileName}`, // 파일 다운로드 URL
-        };
-        
-        // 소켓을 통해 메시지와 함께 URL 전달
-        app.locals.io.to(data.room).emit('chat message', {
+              type: fileType,
+              url: `http://localhost:3000/uploads/${fileName}`
+          };
+
+          app.locals.io.to(data.room).emit('chat message', {
+              user: data.user,
+              room: data.room,
+              message: data.message,
+              file: fileData,
+              filename: fileName,
+          });
+
+          res.status(200).send('Message received');
+      });
+  } else {
+      res.status(200).send('No file data');
+      app.locals.io.to(data.room).emit('chat message', {
           user: data.user,
           room: data.room,
           message: data.message,
-          file: fileData,
-          filename: fileName,
-        });
-        
-        res.status(200).send('Message received');
       });
-    }
-  } else {
-    res.status(400).send('No file data');
   }
 });
+
 
 
 // 업로드된 파일에 대한 정적 경로 제공

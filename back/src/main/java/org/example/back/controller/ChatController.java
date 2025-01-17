@@ -62,23 +62,17 @@ public class ChatController {
         String message = data.get("message");
         String base64File = data.get("file");
         String fileName = data.get("fileName");
-        String fileType = data.get("fileType");
+        String fileType = data.get("filetype");
 
         // 로그 출력
         System.out.println("Message sent: " + message);
         System.out.println("Username sent: " + username);
         System.out.println("Room sent: " + room);
-
-        // 파일 처리 로직
-        if (base64File != null) {
-            byte[] decodedBytes = Base64.getDecoder().decode(base64File);
-            System.out.println("Received file: " + fileName + " with size: " + decodedBytes.length);
-            // 파일 저장 로직 추가 가능
-        }
+        System.out.println("fileType : " + fileType);
 
         // 채팅 메시지 저장
         chatRooms.putIfAbsent(room, new ArrayList<>());
-        String fullMessage = (receiver != null) ? username + " to " + receiver + ": " + message : username + ": " + message;
+        String fullMessage = (fileName != null) ? username + ": " + message + ", " + fileName + ": " + fileType : username + ": " + message;
         chatRooms.get(room).add(fullMessage);
 
         System.out.println("chatHistory: " + chatRooms.get(room));
