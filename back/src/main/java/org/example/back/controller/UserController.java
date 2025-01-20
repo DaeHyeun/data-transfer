@@ -15,10 +15,9 @@ public class UserController {
     private QueueProducer queueProducer = new QueueProducer();
     private QueueConsumer queueConsumer = new QueueConsumer(new CountDownLatch(1));
 
-
+    //아이디 중복 검사
     @PostMapping("/idchk")
     public String idchk(@RequestBody User user) {
-
         // QueueProducer 실행
         queueProducer.setCategory("idchk");
         queueProducer.setUsername(user.getUsername());
@@ -35,7 +34,6 @@ public class UserController {
         try {
             // 메시지를 받을 때까지 대기
             latch.await();
-
             // 메시지를 받은 후, isDuplicate 값을 반환
             String isDuplicate = queueConsumer.getResult();
             if (isDuplicate != null && !isDuplicate.isEmpty()) {
@@ -43,7 +41,6 @@ public class UserController {
             } else {
                 return "에러";
             }
-
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             return "에러";
@@ -55,13 +52,9 @@ public class UserController {
         }
     }
 
+    //회원가입
     @PostMapping("/join")
     public String join(@RequestBody User user) {
-        System.out.println("======================================");
-        System.out.println(user.getUsername());
-        System.out.println(user.getPassword());
-        System.out.println("======================================");
-
         // QueueProducer 실행
         queueProducer.setCategory("join");
         queueProducer.setUsername(user.getUsername());
@@ -99,6 +92,42 @@ public class UserController {
 
     }
 
+    //로그인
+    @PostMapping("/login")
+    public String login(@RequestBody User user) {
+        // QueueProducer 실행
+        queueProducer.setCategory("login");
+        queueProducer.setUsername(user.getUsername());
+        queueProducer.setPassword(user.getPassword());
+        Thread producerThread = new Thread(queueProducer);
+        producerThread.start();
+
+        // CountDownLatch 사용하여 메시지 수신 대기
+        CountDownLatch latch = new CountDownLatch(1);
+        queueConsumer = new QueueConsumer(latch);
+        Thread consumerThread = new Thread(queueConsumer);
+        consumerThread.start();
+
+        try {
+            // 메시지를 받을 때까지 대기
+            latch.await();
+            // 메시지를 받은 후, isDuplicate 값을 반환
+            String isDuplicate = queueConsumer.getResult();
+            if (isDuplicate != null && !isDuplicate.isEmpty()) {
+                return isDuplicate;
+            } else {
+                return "에러";
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return "에러";
+        } finally {
+            // 메모리 해제
+            queueConsumer.setResult(null);
+            producerThread.interrupt();
+            consumerThread.interrupt();
+        }
+    }
 
 
 }
