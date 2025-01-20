@@ -38,8 +38,7 @@ public class QueueProducer implements Runnable{
             // Create a Session
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-            // Create the destination
-            Destination destination = session.createQueue("userGrpc");
+            Destination destination = session.createQueue("restToGrpc");
 
             // Create a MessageProducer from the Session to the Queue
             MessageProducer producer = session.createProducer(destination);

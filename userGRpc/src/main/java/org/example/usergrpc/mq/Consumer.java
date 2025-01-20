@@ -4,11 +4,11 @@ import io.grpc.stub.StreamObserver;
 import lombok.*;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.example.usergrpc.user.IdCheckResponse;
+import org.example.usergrpc.user.JoinUser;
 import org.example.usergrpc.user.User;
 import org.example.usergrpc.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import javax.jms.*;
 import java.util.Enumeration;
@@ -19,7 +19,7 @@ import java.util.Enumeration;
 @Setter
 @Getter
 @ToString
-public class QueueConsumer implements Runnable, ExceptionListener {
+public class Consumer implements Runnable, ExceptionListener {
 
     private String category;
     private String username;
@@ -36,7 +36,7 @@ public class QueueConsumer implements Runnable, ExceptionListener {
             connection.setExceptionListener(this);
 
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Destination destination = session.createQueue("userGrpc");
+            Destination destination = session.createQueue("restToGrpc");
             MessageConsumer consumer = session.createConsumer(destination);
 
             while (true) {
@@ -68,22 +68,21 @@ public class QueueConsumer implements Runnable, ExceptionListener {
 
                     // MQ에서 받은 데이터를 gRPC 서비스 메서드로 전달
                     // StreamObserver를 생성하여 gRPC 메서드에 전달
+                    //아이디 중복검사
                     StreamObserver<IdCheckResponse> responseObserver = new StreamObserver<IdCheckResponse>() {
+                        @SneakyThrows
                         @Override
                         public void onNext(IdCheckResponse value) {
-                            // onNext는 클라이언트로 응답이 올 때마다 호출됩니다.
-                            // 응답 받은 데이터 출력
-                            System.out.println("Received response from gRPC server:");
-                            System.out.println("Is Duplicate: " + value.getIsDuplicate());
-                            System.out.println("Message: " + value.getMessage());
-                            System.out.println("Response: " + value.getMessage());
-                            String str = "" + value.getIsDuplicate();
+                                System.out.println("Received response from gRPC server:");
+                                System.out.println("Is Duplicate: " + value.getIsDuplicate());
+                                System.out.println("Message: " + value.getMessage());
+                                System.out.println("Response: " + value.getMessage());
+                                String str = "" + value.getIsDuplicate();
 
-                            QueueProducer queueProducer = new QueueProducer(str);
-                            Thread thread = new Thread(queueProducer);
-                            thread.start();
-                            //thread.interrupt();
-
+                                Producer queueProducer = new Producer(str);
+                                Thread thread = new Thread(queueProducer);
+                                thread.start();
+                                //thread.interrupt();
                         }
 
                         @Override
@@ -98,10 +97,40 @@ public class QueueConsumer implements Runnable, ExceptionListener {
                             System.out.println("ID check operation completed.");
                         }
                     };
+                    //회원가입
+                    StreamObserver<JoinUser> joinUserStreamObserver = new StreamObserver<JoinUser>() {
+                        @SneakyThrows
+                        @Override
+                        public void onNext(JoinUser joinUser) {
+                            String str = "" + joinUser.getJoinvalidate();
+                            Producer queueProducer = new Producer(str);
+                            Thread thread = new Thread(queueProducer);
+                            thread.start();
+                            //thread.interrupt();
 
-                    // `idChk` 메서드 호출 (StreamObserver 전달)
-                    User request = User.newBuilder().setUsername(this.username).build();
-                    userService.idChk(request, responseObserver);
+                        }
+
+                        @Override
+                        public void onError(Throwable throwable) {
+
+                        }
+
+                        @Override
+                        public void onCompleted() {
+
+                        }
+                    };
+
+                    if (category.equals("idchk")) {
+                        // `idChk` 메서드 호출 (StreamObserver 전달)
+                        User request = User.newBuilder().setUsername(this.username).build();
+                        userService.idChk(request, responseObserver);
+                    } else if (category.equals("join")) {
+                        User request = User.newBuilder().setUsername(this.username).setPassword(this.password).setCategory(this.category).build();
+                        userService.handleUserMessage(request, joinUserStreamObserver);
+                    } else if (category.equals("login")) {
+
+                    }
 
                     // 로그 출력
                     System.out.println("Received Message and passed to gRPC service: " + this);

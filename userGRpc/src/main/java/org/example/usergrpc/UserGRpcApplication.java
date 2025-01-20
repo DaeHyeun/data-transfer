@@ -2,7 +2,7 @@ package org.example.usergrpc;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import org.example.usergrpc.mq.QueueConsumer;
+import org.example.usergrpc.mq.Consumer;
 import org.example.usergrpc.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -15,7 +15,7 @@ import java.io.IOException;
 public class UserGRpcApplication {
 
     @Autowired
-    private QueueConsumer queueConsumer;  // 비-static으로 두고 Spring이 의존성 주입
+    private Consumer queueConsumer;  // 비-static으로 두고 Spring이 의존성 주입
 
     public static void main(String[] args) throws IOException, InterruptedException {
         // Spring Boot 애플리케이션 실행

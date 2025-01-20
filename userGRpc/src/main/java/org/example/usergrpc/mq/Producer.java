@@ -1,24 +1,20 @@
 package org.example.usergrpc.mq;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.checkerframework.checker.units.qual.A;
-import org.springframework.stereotype.Service;
 
 import javax.jms.*;
 
 
 @Getter
 @Setter
-public class QueueProducer implements Runnable {
+public class Producer implements Runnable {
 
-    private String isDuplicate;
+    private String result;
 
-    public QueueProducer(String isDuplicate) {
-        this.isDuplicate = isDuplicate;
+    public Producer(String result) {
+        this.result = result;
     }
 
     @Override
@@ -32,13 +28,13 @@ public class QueueProducer implements Runnable {
 
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-            Destination destination = session.createQueue("isDuplicate");
+            Destination destination = session.createQueue("gRpcToRest");
 
             MessageProducer producer = session.createProducer(destination);
 
             producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
 
-            Message message = session.createTextMessage(isDuplicate);
+            Message message = session.createTextMessage(result);
 
             producer.send(message);
 

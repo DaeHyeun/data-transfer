@@ -7,7 +7,6 @@ option java_multiple_files=true;
 
 // 메시지 정의
 message User {
-
   string category = 1;   // db에서 할 작업 종류
   string username = 2;   // 아이디
   string password = 3;   // 비밀번호
@@ -19,8 +18,23 @@ message IdCheckResponse {
   string message = 2;    // 상태 메시지
 }
 
+message JoinUser {
+  bool joinvalidate = 1;
+  string message =2;
+}
+
+message loginUser {
+  bool login =1;
+  string message =2;
+}
+
 // 서비스 정의
 service UserService {
   // 아이디 중복검사
   rpc idChk (User) returns (IdCheckResponse);
+
+  //회원가입
+  rpc join (User) returns (JoinUser);
+
+  rpc login (User) returns (loginUser);
 }

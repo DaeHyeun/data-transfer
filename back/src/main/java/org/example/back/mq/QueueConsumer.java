@@ -1,20 +1,23 @@
 package org.example.back.mq;
 import jakarta.jms.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import java.util.concurrent.CountDownLatch;
 
+@Getter
+@Setter
 public class QueueConsumer implements Runnable, ExceptionListener {
-    private String isDuplicate;
+    private String category;
+    private String result;
     private final CountDownLatch latch;
 
     public QueueConsumer(CountDownLatch latch) {
         this.latch = latch;
     }
 
-    public void setIsDuplicate(String isDuplicate) {
-        this.isDuplicate = isDuplicate;
-    }
+
 
     @Override
     public void run() {
@@ -26,14 +29,14 @@ public class QueueConsumer implements Runnable, ExceptionListener {
             connection.setExceptionListener(this);
 
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Destination destination = session.createQueue("isDuplicate");
+            Destination destination = session.createQueue("gRpcToRest");
             MessageConsumer consumer = session.createConsumer(destination);
 
             Message message = consumer.receive();  // 메시지 수신
             System.out.println(((TextMessage)message).getText());
 
             if (message instanceof TextMessage) {
-                this.isDuplicate = ((TextMessage) message).getText();  // 메시지 내용 저장
+                this.result = ((TextMessage) message).getText();  // 메시지 내용 저장
             }
 
             // 메시지를 받았으므로 latch 카운트를 감소시킴
@@ -52,7 +55,4 @@ public class QueueConsumer implements Runnable, ExceptionListener {
         System.out.println("JMS Exception occurred. Shutting down client.");
     }
 
-    public String getIsDuplicate() {
-        return isDuplicate;
-    }
 }

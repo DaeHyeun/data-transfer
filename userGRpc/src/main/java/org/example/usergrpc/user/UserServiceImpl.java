@@ -33,18 +33,34 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
 
 
     // MQ에서 받은 데이터를 처리하고 DB에 저장하는 메서드
-    public void handleUserMessage(String username, String password, String category) {
+    public void handleUserMessage(User request, StreamObserver<JoinUser> responseObserver) {
         try {
             // User 객체 생성
-            UserEntity user = new UserEntity(username, password, category);
+            UserEntity user = new UserEntity(request.getUsername(), request.getPassword(), request.getCategory());
 
-            // DB에 저장
-            userRepository.save(user);
+            try {
+                UserEntity savedUser = userRepository.save(user);  // 저장 시도
+                System.out.println("저장 성공: " + savedUser);  // 성공 시 출력
+                responseObserver.onNext(JoinUser.newBuilder().setJoinvalidate(true).setMessage("회원가입 성공").build());
+            } catch (Exception e) {
+                System.out.println("실패");
+                responseObserver.onNext(JoinUser.newBuilder().setJoinvalidate(true).setMessage("회원가입 실패").build());
+            }
 
             System.out.println("User saved to DB: " + user);
+
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Error saving user to DB.");
         }
+    }
+
+    public void login(User request, StreamObserver<loginUser> responseObserver) {
+        try{
+            UserEntity user = new UserEntity(request.getUsername(), request.getPassword(), request.getCategory());
+        }catch (Exception e){
+            userRepository.findByUsername(request.getUsername());
+        }
+
     }
 }

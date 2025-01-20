@@ -2,7 +2,7 @@ package org.example.usergrpc;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import org.example.usergrpc.mq.QueueConsumer;
+import org.example.usergrpc.mq.Consumer;
 
 public class UserClient {
     public static void main(String[] args) {
@@ -13,7 +13,7 @@ public class UserClient {
                 .usePlaintext()
                 .build();
 
-        QueueConsumer queueConsumer = new QueueConsumer();
+        Consumer queueConsumer = new Consumer();
         Thread consumerThread = new Thread(queueConsumer);
         consumerThread.start();
 

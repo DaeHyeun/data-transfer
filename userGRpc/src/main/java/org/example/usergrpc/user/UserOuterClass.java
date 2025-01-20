@@ -35,6 +35,16 @@ public final class UserOuterClass {
   static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_org_example_usergrpc_user_IdCheckResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_org_example_usergrpc_user_JoinUser_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_org_example_usergrpc_user_JoinUser_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_org_example_usergrpc_user_loginUser_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_org_example_usergrpc_user_loginUser_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -47,10 +57,17 @@ public final class UserOuterClass {
       "\n\nuser.proto\022\031org.example.usergrpc.user\"" +
       "<\n\004User\022\020\n\010category\030\001 \001(\t\022\020\n\010username\030\002 " +
       "\001(\t\022\020\n\010password\030\003 \001(\t\"7\n\017IdCheckResponse" +
-      "\022\023\n\013isDuplicate\030\001 \001(\010\022\017\n\007message\030\002 \001(\t2c" +
-      "\n\013UserService\022T\n\005idChk\022\037.org.example.use" +
-      "rgrpc.user.User\032*.org.example.usergrpc.u" +
-      "ser.IdCheckResponseB\002P\001b\006proto3"
+      "\022\023\n\013isDuplicate\030\001 \001(\010\022\017\n\007message\030\002 \001(\t\"1" +
+      "\n\010JoinUser\022\024\n\014joinvalidate\030\001 \001(\010\022\017\n\007mess" +
+      "age\030\002 \001(\t\"+\n\tloginUser\022\r\n\005login\030\001 \001(\010\022\017\n" +
+      "\007message\030\002 \001(\t2\201\002\n\013UserService\022T\n\005idChk\022" +
+      "\037.org.example.usergrpc.user.User\032*.org.e" +
+      "xample.usergrpc.user.IdCheckResponse\022L\n\004" +
+      "join\022\037.org.example.usergrpc.user.User\032#." +
+      "org.example.usergrpc.user.JoinUser\022N\n\005lo" +
+      "gin\022\037.org.example.usergrpc.user.User\032$.o" +
+      "rg.example.usergrpc.user.loginUserB\002P\001b\006" +
+      "proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -68,6 +85,18 @@ public final class UserOuterClass {
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_org_example_usergrpc_user_IdCheckResponse_descriptor,
         new java.lang.String[] { "IsDuplicate", "Message", });
+    internal_static_org_example_usergrpc_user_JoinUser_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_org_example_usergrpc_user_JoinUser_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_org_example_usergrpc_user_JoinUser_descriptor,
+        new java.lang.String[] { "Joinvalidate", "Message", });
+    internal_static_org_example_usergrpc_user_loginUser_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_org_example_usergrpc_user_loginUser_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_org_example_usergrpc_user_loginUser_descriptor,
+        new java.lang.String[] { "Login", "Message", });
     descriptor.resolveAllFeaturesImmutable();
   }
 

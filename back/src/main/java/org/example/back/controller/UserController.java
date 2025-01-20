@@ -12,18 +12,23 @@ import java.util.concurrent.CountDownLatch;
 @CrossOrigin(origins = "http://localhost:3000")  // CORS 설정: 로컬 서버에서 오는 요청을 허용
 public class UserController {
 
+    private QueueProducer queueProducer = new QueueProducer();
+    private QueueConsumer queueConsumer = new QueueConsumer(new CountDownLatch(1));
+
+
     @PostMapping("/idchk")
     public String idchk(@RequestBody User user) {
-        System.out.println(user.getUsername());
 
         // QueueProducer 실행
-        QueueProducer queueProcedure = new QueueProducer("idchk", user.getUsername(), "11");
-        Thread producerThread = new Thread(queueProcedure);
+        queueProducer.setCategory("idchk");
+        queueProducer.setUsername(user.getUsername());
+        queueProducer.setPassword("null");
+        Thread producerThread = new Thread(queueProducer);
         producerThread.start();
 
         // CountDownLatch 사용하여 메시지 수신 대기
         CountDownLatch latch = new CountDownLatch(1);
-        QueueConsumer queueConsumer = new QueueConsumer(latch);
+        queueConsumer = new QueueConsumer(latch);
         Thread consumerThread = new Thread(queueConsumer);
         consumerThread.start();
 
@@ -32,7 +37,7 @@ public class UserController {
             latch.await();
 
             // 메시지를 받은 후, isDuplicate 값을 반환
-            String isDuplicate = queueConsumer.getIsDuplicate();
+            String isDuplicate = queueConsumer.getResult();
             if (isDuplicate != null && !isDuplicate.isEmpty()) {
                 return isDuplicate;
             } else {
@@ -44,10 +49,54 @@ public class UserController {
             return "에러";
         } finally {
             // 메모리 해제
-            queueConsumer.setIsDuplicate(null);
+            queueConsumer.setResult(null);
             producerThread.interrupt();
             consumerThread.interrupt();
         }
+    }
+
+    @PostMapping("/join")
+    public String join(@RequestBody User user) {
+        System.out.println("======================================");
+        System.out.println(user.getUsername());
+        System.out.println(user.getPassword());
+        System.out.println("======================================");
+
+        // QueueProducer 실행
+        queueProducer.setCategory("join");
+        queueProducer.setUsername(user.getUsername());
+        queueProducer.setPassword(user.getPassword());
+        Thread producerThread = new Thread(queueProducer);
+        producerThread.start();
+
+        // CountDownLatch 사용하여 메시지 수신 대기
+        CountDownLatch latch1 = new CountDownLatch(1);
+        QueueConsumer consumer = new QueueConsumer(latch1);
+        Thread consumerThread = new Thread(consumer);
+        consumerThread.start();
+
+        try {
+            // 메시지를 받을 때까지 대기
+            latch1.await();
+
+            // 메시지를 받은 후, isDuplicate 값을 반환
+            String joinId = consumer.getResult();
+            if (joinId != null && !joinId.isEmpty()) {
+                return joinId;
+            } else {
+                return "에러";
+            }
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return "에러";
+        } finally {
+            // 메모리 해제
+            consumer.setResult(null);
+            producerThread.interrupt();
+            consumerThread.interrupt();
+        }
+
     }
 
 
