@@ -67,7 +67,7 @@ app.post('/join',async (req,res)=>{
             , password : password
         })
     if (axiosResponse.data !==null){
-        req.session.username = username; // 세션에 사용자명 저장
+        //req.session.username = username; // 세션에 사용자명 저장
         res.redirect('/');
     }else {
         res.send("회원가입 실패");
@@ -75,7 +75,20 @@ app.post('/join',async (req,res)=>{
 })
 
 // 로그인 프로세스
-
+app.post('/login', async (req,res)=>{
+    const {username , password} = req.body;
+    const axiosResponse = await axios.post('http://localhost:8080/user/login',
+        {
+            username : username
+            ,password : password
+        });
+    if(axiosResponse.data !== null){
+        req.session.username = username;
+        res.render('chat');
+    }else{
+        res.redirect('/');
+    }
+})
 
 
 
