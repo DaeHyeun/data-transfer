@@ -160,6 +160,26 @@
                     <outputDirectory>C:\ChatTest01\data-transfer\userGRpc\src\main\java\</outputDirectory>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>deploy-file</goal>
+                        </goals>
+                        <configuration>
+                            <file>${project.build.directory}/your-jar-file.jar</file>
+                            <repositoryId>central</repositoryId>
+                            <url>file://${project.basedir}/repo</url> <!-- 로컬 Maven 레포지토리 경로 -->
+                            <groupId>org.example</groupId>
+                            <artifactId>user-grpc</artifactId>
+                            <version>1.0.0</version>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
 

@@ -3,10 +3,7 @@ package org.example.usergrpc.mq;
 import io.grpc.stub.StreamObserver;
 import lombok.*;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.example.usergrpc.user.IdCheckResponse;
-import org.example.usergrpc.user.JoinUser;
-import org.example.usergrpc.user.User;
-import org.example.usergrpc.user.UserServiceImpl;
+import org.example.usergrpc.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -121,6 +118,31 @@ public class Consumer implements Runnable, ExceptionListener {
                         }
                     };
 
+                    //로그인
+                    StreamObserver<LoginUser> loginUserStreamObserver = new StreamObserver<LoginUser>() {
+                        @SneakyThrows
+                        @Override
+                        public void onNext(LoginUser loginUser) {
+                            //thread.interrupt();
+                            String str = loginUser.getMessage();
+                            Producer queueProducer = new Producer(str);
+                            Thread thread = new Thread(queueProducer);
+                            thread.start();
+
+                        }
+
+                        @Override
+                        public void onError(Throwable throwable) {
+
+                        }
+
+                        @Override
+                        public void onCompleted() {
+
+                        }
+                    };
+
+
                     if (category.equals("idchk")) {
                         // `idChk` 메서드 호출 (StreamObserver 전달)
                         User request = User.newBuilder().setUsername(this.username).build();
@@ -129,6 +151,9 @@ public class Consumer implements Runnable, ExceptionListener {
                         User request = User.newBuilder().setUsername(this.username).setPassword(this.password).setCategory(this.category).build();
                         userService.handleUserMessage(request, joinUserStreamObserver);
                     } else if (category.equals("login")) {
+                        User request = User.newBuilder().setUsername(this.username).setPassword(this.password).setCategory(this.category).build();
+                        System.out.println(request);
+                        userService.login(request,loginUserStreamObserver );
 
                     }
 

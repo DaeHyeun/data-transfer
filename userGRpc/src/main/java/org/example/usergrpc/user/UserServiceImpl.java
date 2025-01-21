@@ -55,11 +55,14 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         }
     }
 
-    public void login(User request, StreamObserver<loginUser> responseObserver) {
+    public void login(User request, StreamObserver<LoginUser> responseObserver) {
         try{
-            UserEntity user = new UserEntity(request.getUsername(), request.getPassword(), request.getCategory());
+            UserEntity user = userRepository.findByUsernameAndPassword(request.getUsername(), request.getPassword());
+            responseObserver.onNext(LoginUser.newBuilder().setLogin(true).setMessage(user.getUsername()).build());
         }catch (Exception e){
-            userRepository.findByUsername(request.getUsername());
+            System.out.println("예외");
+            System.out.println(e.getMessage());
+
         }
 
     }

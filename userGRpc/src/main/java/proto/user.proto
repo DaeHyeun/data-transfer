@@ -23,7 +23,7 @@ message JoinUser {
   string message =2;
 }
 
-message loginUser {
+message LoginUser {
   bool login =1;
   string message =2;
 }
@@ -36,5 +36,5 @@ service UserService {
   //회원가입
   rpc join (User) returns (JoinUser);
 
-  rpc login (User) returns (loginUser);
+  rpc login (User) returns (LoginUser);
 }

@@ -83,8 +83,8 @@ app.post('/login', async (req,res)=>{
             ,password : password
         });
     if(axiosResponse.data !== null){
-        req.session.username = username;
-        res.render('chat');
+        req.session.username = axiosResponse.data;
+        res.redirect('/chat');
     }else{
         res.redirect('/');
     }
