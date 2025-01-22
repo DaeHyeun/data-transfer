@@ -5,6 +5,10 @@ import org.example.back.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")  // "/user" 경로로 들어오는 요청을 처리하는 컨트롤러
 @CrossOrigin(origins = "http://localhost:3000")  // CORS 설정: 로컬 서버에서 오는 요청을 허용
@@ -55,6 +59,16 @@ public class UserController {
 
         UsergRpcResponse response = userServiceBlockingStub.userIdChkAndJoinAndLogin(request);
         return response.getMessage();
+    }
+
+    //유저 리스트 출력
+    @PostMapping("/getUserList")
+    public List<String> getuserList() throws InterruptedException {
+        List<String> userList = new ArrayList<>();
+        User request = User.newBuilder().setCategory("getUserList").build();
+        UsergRpcResponse response = userServiceBlockingStub.userIdChkAndJoinAndLogin(request);
+        userList = Arrays.stream(response.getMessage().split(",")).toList();
+        return userList;
     }
 
 }
