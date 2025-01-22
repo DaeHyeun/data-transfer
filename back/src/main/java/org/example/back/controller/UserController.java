@@ -1,133 +1,60 @@
 package org.example.back.controller;
 
-import org.example.back.model.User;
-import org.example.back.mq.QueueConsumer;
-import org.example.back.mq.QueueProducer;
+import org.example.back.model.ReqUser;
+import org.example.back.user.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.concurrent.CountDownLatch;
 
 @RestController
 @RequestMapping("/user")  // "/user" 경로로 들어오는 요청을 처리하는 컨트롤러
 @CrossOrigin(origins = "http://localhost:3000")  // CORS 설정: 로컬 서버에서 오는 요청을 허용
 public class UserController {
 
-    private QueueProducer queueProducer = new QueueProducer();
-    private QueueConsumer queueConsumer = new QueueConsumer(new CountDownLatch(1));
+    private final UserServiceGrpc.UserServiceStub userServiceStub;  // 비동기 Stub
+    private final UserServiceGrpc.UserServiceBlockingStub userServiceBlockingStub;  // 동기 Stub
+    private final UserServiceGrpc.UserServiceFutureStub userServiceFutureStub;
 
-    //아이디 중복 검사
+    @Autowired
+    public UserController(UserServiceGrpc.UserServiceStub userServiceStub, UserServiceGrpc.UserServiceBlockingStub userServiceBlockingStub, UserServiceGrpc.UserServiceFutureStub userServiceFutureStub) {
+        this.userServiceStub = userServiceStub;
+        this.userServiceBlockingStub = userServiceBlockingStub;
+        this.userServiceFutureStub = userServiceFutureStub;
+    }
+
+    // 아이디 중복 검사
     @PostMapping("/idchk")
-    public String idchk(@RequestBody User user) {
-        // QueueProducer 실행
-        queueProducer.setCategory("idchk");
-        queueProducer.setUsername(user.getUsername());
-        queueProducer.setPassword("null");
-        Thread producerThread = new Thread(queueProducer);
-        producerThread.start();
-
-        // CountDownLatch 사용하여 메시지 수신 대기
-        CountDownLatch latch = new CountDownLatch(1);
-        queueConsumer = new QueueConsumer(latch);
-        Thread consumerThread = new Thread(queueConsumer);
-        consumerThread.start();
-
-        try {
-            // 메시지를 받을 때까지 대기
-            latch.await();
-            // 메시지를 받은 후, isDuplicate 값을 반환
-            String isDuplicate = queueConsumer.getResult();
-            if (isDuplicate != null && !isDuplicate.isEmpty()) {
-                return isDuplicate;
-            } else {
-                return "에러";
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            return "에러";
-        } finally {
-            // 메모리 해제
-            queueConsumer.setResult(null);
-            producerThread.interrupt();
-            consumerThread.interrupt();
-        }
+    public String idchkvv(@RequestBody ReqUser reqUser) {
+        User request = User.newBuilder()
+                .setUsername(reqUser.getUsername())
+                .setCategory("idChk")
+                .build();
+        UsergRpcResponse response = userServiceBlockingStub.userIdChkAndJoinAndLogin(request);
+        return "" + response.getValidate();
     }
 
-    //회원가입
+    // 회원 가입 처리
     @PostMapping("/join")
-    public String join(@RequestBody User user) {
-        // QueueProducer 실행
-        queueProducer.setCategory("join");
-        queueProducer.setUsername(user.getUsername());
-        queueProducer.setPassword(user.getPassword());
-        Thread producerThread = new Thread(queueProducer);
-        producerThread.start();
-
-        // CountDownLatch 사용하여 메시지 수신 대기
-        CountDownLatch latch1 = new CountDownLatch(1);
-        QueueConsumer consumer = new QueueConsumer(latch1);
-        Thread consumerThread = new Thread(consumer);
-        consumerThread.start();
-
-        try {
-            // 메시지를 받을 때까지 대기
-            latch1.await();
-
-            // 메시지를 받은 후, isDuplicate 값을 반환
-            String joinId = consumer.getResult();
-            if (joinId != null && !joinId.isEmpty()) {
-                return joinId;
-            } else {
-                return "에러";
-            }
-
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            return "에러";
-        } finally {
-            // 메모리 해제
-            consumer.setResult(null);
-            producerThread.interrupt();
-            consumerThread.interrupt();
-        }
-
+    public String join(@RequestBody ReqUser reqUser) throws InterruptedException {
+        User request = User.newBuilder()
+                .setUsername(reqUser.getUsername())
+                .setPassword(reqUser.getPassword())
+                .setCategory("join")
+                .build();
+        UsergRpcResponse response = userServiceBlockingStub.userIdChkAndJoinAndLogin(request);
+        return "" + response.getValidate();
     }
 
-    //로그인
+    // 로그인 처리
     @PostMapping("/login")
-    public String login(@RequestBody User user) {
-        // QueueProducer 실행
-        queueProducer.setCategory("login");
-        queueProducer.setUsername(user.getUsername());
-        queueProducer.setPassword(user.getPassword());
-        Thread producerThread = new Thread(queueProducer);
-        producerThread.start();
+    public String login(@RequestBody ReqUser reqUser) throws InterruptedException {
+        User request = User.newBuilder()
+                .setUsername(reqUser.getUsername())
+                .setPassword(reqUser.getPassword())
+                .setCategory("login")
+                .build();
 
-        // CountDownLatch 사용하여 메시지 수신 대기
-        CountDownLatch latch = new CountDownLatch(1);
-        queueConsumer = new QueueConsumer(latch);
-        Thread consumerThread = new Thread(queueConsumer);
-        consumerThread.start();
-
-        try {
-            // 메시지를 받을 때까지 대기
-            latch.await();
-            // 메시지를 받은 후, isDuplicate 값을 반환
-            String isDuplicate = queueConsumer.getResult();
-            if (isDuplicate != null && !isDuplicate.isEmpty()) {
-                return isDuplicate;
-            } else {
-                return "에러";
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            return "에러";
-        } finally {
-            // 메모리 해제
-            queueConsumer.setResult(null);
-            producerThread.interrupt();
-            consumerThread.interrupt();
-        }
+        UsergRpcResponse response = userServiceBlockingStub.userIdChkAndJoinAndLogin(request);
+        return response.getMessage();
     }
-
 
 }
