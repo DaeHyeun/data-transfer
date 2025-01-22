@@ -1,4 +1,4 @@
-<form id="joinForm" method="POST" action="/join">
+<form id="joinForm" method="POST" action="/user/join">
     <h1>회원가입</h1>
 
     <input type="hidden" value="join" id="category">
@@ -28,7 +28,7 @@
     const passwordConfirm = document.getElementById('passwordConfirm');
     const passwordMatchMessage = document.getElementById('passwordMatchMessage');
     const passwordMismatchMessage = document.getElementById('passwordMismatchMessage');
-    let chk ;
+    let chk;
 
     // 실시간 비교
     function comparePasswords() {
@@ -46,7 +46,7 @@
     passwordConfirm.addEventListener('input', comparePasswords);
 
     // 아이디 중복 확인
-    document.getElementById('checkUsernameBtn').addEventListener('click', async function() {
+    document.getElementById('checkUsernameBtn').addEventListener('click', async function () {
         const username = document.getElementById('username').value;
 
         // 아이디가 비어있으면 체크하지 않도록 처리
@@ -56,12 +56,12 @@
         }
 
         try {
-            const response = await fetch('/idchk', {
+            const response = await fetch('/user/idchk', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username })
+                body: JSON.stringify({username})
             });
 
             const result = await response.json();
@@ -82,11 +82,11 @@
     });
 
     // 폼 제출 전 최종 확인
-    document.getElementById('joinForm').addEventListener('submit', function(event) {
+    document.getElementById('joinForm').addEventListener('submit', function (event) {
         if (password.value !== passwordConfirm.value) {
             alert("비밀번호가 다릅니다.");
             event.preventDefault();  // 폼 제출 막기
-        } else if(chk){
+        } else if (chk) {
             alert("아이디를 확인하세요");
             event.preventDefault();  // 폼 제출 막기
         }
