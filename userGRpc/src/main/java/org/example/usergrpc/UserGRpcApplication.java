@@ -2,7 +2,6 @@ package org.example.usergrpc;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import org.example.usergrpc.mq.Consumer;
 import org.example.usergrpc.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -13,38 +12,25 @@ import java.io.IOException;
 
 @SpringBootApplication
 public class UserGRpcApplication {
-
-    @Autowired
-    private Consumer queueConsumer;  // 비-static으로 두고 Spring이 의존성 주입
-
-    public static void main(String[] args) throws IOException, InterruptedException {
-        // Spring Boot 애플리케이션 실행
-        ApplicationContext context = SpringApplication.run(UserGRpcApplication.class, args);
-
-        // Spring에서 생성된 UserGRpcApplication 객체를 가져와서 runGrpcServer 호출
-        UserGRpcApplication app = context.getBean(UserGRpcApplication.class);
-        app.runGrpcServer();
+    public static void main(String[] args) {
+        SpringApplication.run(UserGRpcApplication.class, args);
     }
-
-    // 비-static 메서드로 gRPC 서버 실행
-    public void runGrpcServer() throws IOException, InterruptedException {
-        int port = 50052;
+   /*
+    public static void main(String[] args) throws IOException, InterruptedException {
+        int port = 50052; // 사용하고자 하는 포트
 
         // gRPC 서버 인스턴스 생성
-        Server server = ServerBuilder.forPort(port)
-                .addService(new UserServiceImpl())
+        Server server = ServerBuilder.forPort(port) // 포트 50052에서 서버 실행
+                .addService(new UserServiceImpl()) // ChatService 구현체 등록
                 .build();
 
         System.out.println("====================================================");
-        System.out.println("사용자 grpc 가동 " + ":" + port + "...");
+        System.out.println("메인서버 가동 " +  ":" + port + "...");
         System.out.println("====================================================");
+
 
         // 서버 시작
         server.start();
-
-        // MQ에서 데이터 처리할 Consumer Thread 시작
-        Thread queueThread = new Thread(queueConsumer);
-        queueThread.start();
 
         // 서버가 종료되지 않도록 대기
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
@@ -55,4 +41,5 @@ public class UserGRpcApplication {
         // 서버 종료 대기
         server.awaitTermination();
     }
+    */
 }

@@ -6,12 +6,12 @@
 package org.example.usergrpc.user;
 
 public interface UserOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:org.example.usergrpc.user.User)
+    // @@protoc_insertion_point(interface_extends:User)
     com.google.protobuf.MessageOrBuilder {
 
   /**
    * <pre>
-   * db에서 할 작업 종류
+   * 작업 종류
    * </pre>
    *
    * <code>string category = 1;</code>
@@ -20,7 +20,7 @@ public interface UserOrBuilder extends
   java.lang.String getCategory();
   /**
    * <pre>
-   * db에서 할 작업 종류
+   * 작업 종류
    * </pre>
    *
    * <code>string category = 1;</code>

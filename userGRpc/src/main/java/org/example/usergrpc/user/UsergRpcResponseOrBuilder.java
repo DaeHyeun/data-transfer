@@ -5,22 +5,34 @@
 
 package org.example.usergrpc.user;
 
-public interface JoinUserOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:org.example.usergrpc.user.JoinUser)
+public interface UsergRpcResponseOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:UsergRpcResponse)
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>bool joinvalidate = 1;</code>
-   * @return The joinvalidate.
+   * <pre>
+   * 검증결과 (true, false)
+   * </pre>
+   *
+   * <code>bool validate = 1;</code>
+   * @return The validate.
    */
-  boolean getJoinvalidate();
+  boolean getValidate();
 
   /**
+   * <pre>
+   * 결과 메세지
+   * </pre>
+   *
    * <code>string message = 2;</code>
    * @return The message.
    */
   java.lang.String getMessage();
   /**
+   * <pre>
+   * 결과 메세지
+   * </pre>
+   *
    * <code>string message = 2;</code>
    * @return The bytes for message.
    */

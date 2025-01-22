@@ -6,12 +6,16 @@
 package org.example.usergrpc.user;
 
 /**
- * Protobuf type {@code org.example.usergrpc.user.LoginUser}
+ * <pre>
+ * 아이디 중복 검사 결과 메시지 정의
+ * </pre>
+ *
+ * Protobuf type {@code UsergRpcResponse}
  */
-public final class LoginUser extends
+public final class UsergRpcResponse extends
     com.google.protobuf.GeneratedMessage implements
-    // @@protoc_insertion_point(message_implements:org.example.usergrpc.user.LoginUser)
-    LoginUserOrBuilder {
+    // @@protoc_insertion_point(message_implements:UsergRpcResponse)
+    UsergRpcResponseOrBuilder {
 private static final long serialVersionUID = 0L;
   static {
     com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
@@ -20,44 +24,52 @@ private static final long serialVersionUID = 0L;
       /* minor= */ 29,
       /* patch= */ 0,
       /* suffix= */ "",
-      LoginUser.class.getName());
+      UsergRpcResponse.class.getName());
   }
-  // Use LoginUser.newBuilder() to construct.
-  private LoginUser(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+  // Use UsergRpcResponse.newBuilder() to construct.
+  private UsergRpcResponse(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
     super(builder);
   }
-  private LoginUser() {
+  private UsergRpcResponse() {
     message_ = "";
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return org.example.usergrpc.user.UserOuterClass.internal_static_org_example_usergrpc_user_LoginUser_descriptor;
+    return org.example.usergrpc.user.UserProto.internal_static_UsergRpcResponse_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return org.example.usergrpc.user.UserOuterClass.internal_static_org_example_usergrpc_user_LoginUser_fieldAccessorTable
+    return org.example.usergrpc.user.UserProto.internal_static_UsergRpcResponse_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            org.example.usergrpc.user.LoginUser.class, org.example.usergrpc.user.LoginUser.Builder.class);
+            org.example.usergrpc.user.UsergRpcResponse.class, org.example.usergrpc.user.UsergRpcResponse.Builder.class);
   }
 
-  public static final int LOGIN_FIELD_NUMBER = 1;
-  private boolean login_ = false;
+  public static final int VALIDATE_FIELD_NUMBER = 1;
+  private boolean validate_ = false;
   /**
-   * <code>bool login = 1;</code>
-   * @return The login.
+   * <pre>
+   * 검증결과 (true, false)
+   * </pre>
+   *
+   * <code>bool validate = 1;</code>
+   * @return The validate.
    */
   @java.lang.Override
-  public boolean getLogin() {
-    return login_;
+  public boolean getValidate() {
+    return validate_;
   }
 
   public static final int MESSAGE_FIELD_NUMBER = 2;
   @SuppressWarnings("serial")
   private volatile java.lang.Object message_ = "";
   /**
+   * <pre>
+   * 결과 메세지
+   * </pre>
+   *
    * <code>string message = 2;</code>
    * @return The message.
    */
@@ -75,6 +87,10 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
+   * <pre>
+   * 결과 메세지
+   * </pre>
+   *
    * <code>string message = 2;</code>
    * @return The bytes for message.
    */
@@ -107,8 +123,8 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (login_ != false) {
-      output.writeBool(1, login_);
+    if (validate_ != false) {
+      output.writeBool(1, validate_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(message_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 2, message_);
@@ -122,9 +138,9 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (login_ != false) {
+    if (validate_ != false) {
       size += com.google.protobuf.CodedOutputStream
-        .computeBoolSize(1, login_);
+        .computeBoolSize(1, validate_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(message_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(2, message_);
@@ -139,13 +155,13 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof org.example.usergrpc.user.LoginUser)) {
+    if (!(obj instanceof org.example.usergrpc.user.UsergRpcResponse)) {
       return super.equals(obj);
     }
-    org.example.usergrpc.user.LoginUser other = (org.example.usergrpc.user.LoginUser) obj;
+    org.example.usergrpc.user.UsergRpcResponse other = (org.example.usergrpc.user.UsergRpcResponse) obj;
 
-    if (getLogin()
-        != other.getLogin()) return false;
+    if (getValidate()
+        != other.getValidate()) return false;
     if (!getMessage()
         .equals(other.getMessage())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
@@ -159,9 +175,9 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + LOGIN_FIELD_NUMBER;
+    hash = (37 * hash) + VALIDATE_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
-        getLogin());
+        getValidate());
     hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
     hash = (53 * hash) + getMessage().hashCode();
     hash = (29 * hash) + getUnknownFields().hashCode();
@@ -169,44 +185,44 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static org.example.usergrpc.user.LoginUser parseFrom(
+  public static org.example.usergrpc.user.UsergRpcResponse parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static org.example.usergrpc.user.LoginUser parseFrom(
+  public static org.example.usergrpc.user.UsergRpcResponse parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static org.example.usergrpc.user.LoginUser parseFrom(
+  public static org.example.usergrpc.user.UsergRpcResponse parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static org.example.usergrpc.user.LoginUser parseFrom(
+  public static org.example.usergrpc.user.UsergRpcResponse parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static org.example.usergrpc.user.LoginUser parseFrom(byte[] data)
+  public static org.example.usergrpc.user.UsergRpcResponse parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static org.example.usergrpc.user.LoginUser parseFrom(
+  public static org.example.usergrpc.user.UsergRpcResponse parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static org.example.usergrpc.user.LoginUser parseFrom(java.io.InputStream input)
+  public static org.example.usergrpc.user.UsergRpcResponse parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseWithIOException(PARSER, input);
   }
-  public static org.example.usergrpc.user.LoginUser parseFrom(
+  public static org.example.usergrpc.user.UsergRpcResponse parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -214,26 +230,26 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  public static org.example.usergrpc.user.LoginUser parseDelimitedFrom(java.io.InputStream input)
+  public static org.example.usergrpc.user.UsergRpcResponse parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseDelimitedWithIOException(PARSER, input);
   }
 
-  public static org.example.usergrpc.user.LoginUser parseDelimitedFrom(
+  public static org.example.usergrpc.user.UsergRpcResponse parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static org.example.usergrpc.user.LoginUser parseFrom(
+  public static org.example.usergrpc.user.UsergRpcResponse parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseWithIOException(PARSER, input);
   }
-  public static org.example.usergrpc.user.LoginUser parseFrom(
+  public static org.example.usergrpc.user.UsergRpcResponse parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -246,7 +262,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(org.example.usergrpc.user.LoginUser prototype) {
+  public static Builder newBuilder(org.example.usergrpc.user.UsergRpcResponse prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -262,26 +278,30 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code org.example.usergrpc.user.LoginUser}
+   * <pre>
+   * 아이디 중복 검사 결과 메시지 정의
+   * </pre>
+   *
+   * Protobuf type {@code UsergRpcResponse}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:org.example.usergrpc.user.LoginUser)
-      org.example.usergrpc.user.LoginUserOrBuilder {
+      // @@protoc_insertion_point(builder_implements:UsergRpcResponse)
+      org.example.usergrpc.user.UsergRpcResponseOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return org.example.usergrpc.user.UserOuterClass.internal_static_org_example_usergrpc_user_LoginUser_descriptor;
+      return org.example.usergrpc.user.UserProto.internal_static_UsergRpcResponse_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return org.example.usergrpc.user.UserOuterClass.internal_static_org_example_usergrpc_user_LoginUser_fieldAccessorTable
+      return org.example.usergrpc.user.UserProto.internal_static_UsergRpcResponse_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              org.example.usergrpc.user.LoginUser.class, org.example.usergrpc.user.LoginUser.Builder.class);
+              org.example.usergrpc.user.UsergRpcResponse.class, org.example.usergrpc.user.UsergRpcResponse.Builder.class);
     }
 
-    // Construct using org.example.usergrpc.user.LoginUser.newBuilder()
+    // Construct using org.example.usergrpc.user.UsergRpcResponse.newBuilder()
     private Builder() {
 
     }
@@ -295,7 +315,7 @@ private static final long serialVersionUID = 0L;
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
-      login_ = false;
+      validate_ = false;
       message_ = "";
       return this;
     }
@@ -303,17 +323,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return org.example.usergrpc.user.UserOuterClass.internal_static_org_example_usergrpc_user_LoginUser_descriptor;
+      return org.example.usergrpc.user.UserProto.internal_static_UsergRpcResponse_descriptor;
     }
 
     @java.lang.Override
-    public org.example.usergrpc.user.LoginUser getDefaultInstanceForType() {
-      return org.example.usergrpc.user.LoginUser.getDefaultInstance();
+    public org.example.usergrpc.user.UsergRpcResponse getDefaultInstanceForType() {
+      return org.example.usergrpc.user.UsergRpcResponse.getDefaultInstance();
     }
 
     @java.lang.Override
-    public org.example.usergrpc.user.LoginUser build() {
-      org.example.usergrpc.user.LoginUser result = buildPartial();
+    public org.example.usergrpc.user.UsergRpcResponse build() {
+      org.example.usergrpc.user.UsergRpcResponse result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -321,17 +341,17 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public org.example.usergrpc.user.LoginUser buildPartial() {
-      org.example.usergrpc.user.LoginUser result = new org.example.usergrpc.user.LoginUser(this);
+    public org.example.usergrpc.user.UsergRpcResponse buildPartial() {
+      org.example.usergrpc.user.UsergRpcResponse result = new org.example.usergrpc.user.UsergRpcResponse(this);
       if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
     }
 
-    private void buildPartial0(org.example.usergrpc.user.LoginUser result) {
+    private void buildPartial0(org.example.usergrpc.user.UsergRpcResponse result) {
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.login_ = login_;
+        result.validate_ = validate_;
       }
       if (((from_bitField0_ & 0x00000002) != 0)) {
         result.message_ = message_;
@@ -340,18 +360,18 @@ private static final long serialVersionUID = 0L;
 
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof org.example.usergrpc.user.LoginUser) {
-        return mergeFrom((org.example.usergrpc.user.LoginUser)other);
+      if (other instanceof org.example.usergrpc.user.UsergRpcResponse) {
+        return mergeFrom((org.example.usergrpc.user.UsergRpcResponse)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(org.example.usergrpc.user.LoginUser other) {
-      if (other == org.example.usergrpc.user.LoginUser.getDefaultInstance()) return this;
-      if (other.getLogin() != false) {
-        setLogin(other.getLogin());
+    public Builder mergeFrom(org.example.usergrpc.user.UsergRpcResponse other) {
+      if (other == org.example.usergrpc.user.UsergRpcResponse.getDefaultInstance()) return this;
+      if (other.getValidate() != false) {
+        setValidate(other.getValidate());
       }
       if (!other.getMessage().isEmpty()) {
         message_ = other.message_;
@@ -385,7 +405,7 @@ private static final long serialVersionUID = 0L;
               done = true;
               break;
             case 8: {
-              login_ = input.readBool();
+              validate_ = input.readBool();
               bitField0_ |= 0x00000001;
               break;
             } // case 8
@@ -411,40 +431,56 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private boolean login_ ;
+    private boolean validate_ ;
     /**
-     * <code>bool login = 1;</code>
-     * @return The login.
+     * <pre>
+     * 검증결과 (true, false)
+     * </pre>
+     *
+     * <code>bool validate = 1;</code>
+     * @return The validate.
      */
     @java.lang.Override
-    public boolean getLogin() {
-      return login_;
+    public boolean getValidate() {
+      return validate_;
     }
     /**
-     * <code>bool login = 1;</code>
-     * @param value The login to set.
+     * <pre>
+     * 검증결과 (true, false)
+     * </pre>
+     *
+     * <code>bool validate = 1;</code>
+     * @param value The validate to set.
      * @return This builder for chaining.
      */
-    public Builder setLogin(boolean value) {
+    public Builder setValidate(boolean value) {
 
-      login_ = value;
+      validate_ = value;
       bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
     /**
-     * <code>bool login = 1;</code>
+     * <pre>
+     * 검증결과 (true, false)
+     * </pre>
+     *
+     * <code>bool validate = 1;</code>
      * @return This builder for chaining.
      */
-    public Builder clearLogin() {
+    public Builder clearValidate() {
       bitField0_ = (bitField0_ & ~0x00000001);
-      login_ = false;
+      validate_ = false;
       onChanged();
       return this;
     }
 
     private java.lang.Object message_ = "";
     /**
+     * <pre>
+     * 결과 메세지
+     * </pre>
+     *
      * <code>string message = 2;</code>
      * @return The message.
      */
@@ -461,6 +497,10 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     * 결과 메세지
+     * </pre>
+     *
      * <code>string message = 2;</code>
      * @return The bytes for message.
      */
@@ -478,6 +518,10 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
+     * <pre>
+     * 결과 메세지
+     * </pre>
+     *
      * <code>string message = 2;</code>
      * @param value The message to set.
      * @return This builder for chaining.
@@ -491,6 +535,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * 결과 메세지
+     * </pre>
+     *
      * <code>string message = 2;</code>
      * @return This builder for chaining.
      */
@@ -501,6 +549,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
+     * <pre>
+     * 결과 메세지
+     * </pre>
+     *
      * <code>string message = 2;</code>
      * @param value The bytes for message to set.
      * @return This builder for chaining.
@@ -515,23 +567,23 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    // @@protoc_insertion_point(builder_scope:org.example.usergrpc.user.LoginUser)
+    // @@protoc_insertion_point(builder_scope:UsergRpcResponse)
   }
 
-  // @@protoc_insertion_point(class_scope:org.example.usergrpc.user.LoginUser)
-  private static final org.example.usergrpc.user.LoginUser DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:UsergRpcResponse)
+  private static final org.example.usergrpc.user.UsergRpcResponse DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new org.example.usergrpc.user.LoginUser();
+    DEFAULT_INSTANCE = new org.example.usergrpc.user.UsergRpcResponse();
   }
 
-  public static org.example.usergrpc.user.LoginUser getDefaultInstance() {
+  public static org.example.usergrpc.user.UsergRpcResponse getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<LoginUser>
-      PARSER = new com.google.protobuf.AbstractParser<LoginUser>() {
+  private static final com.google.protobuf.Parser<UsergRpcResponse>
+      PARSER = new com.google.protobuf.AbstractParser<UsergRpcResponse>() {
     @java.lang.Override
-    public LoginUser parsePartialFrom(
+    public UsergRpcResponse parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -550,17 +602,17 @@ private static final long serialVersionUID = 0L;
     }
   };
 
-  public static com.google.protobuf.Parser<LoginUser> parser() {
+  public static com.google.protobuf.Parser<UsergRpcResponse> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<LoginUser> getParserForType() {
+  public com.google.protobuf.Parser<UsergRpcResponse> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public org.example.usergrpc.user.LoginUser getDefaultInstanceForType() {
+  public org.example.usergrpc.user.UsergRpcResponse getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

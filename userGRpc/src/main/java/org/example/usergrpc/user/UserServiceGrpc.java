@@ -15,100 +15,38 @@ public final class UserServiceGrpc {
 
   private UserServiceGrpc() {}
 
-  public static final java.lang.String SERVICE_NAME = "org.example.usergrpc.user.UserService";
+  public static final java.lang.String SERVICE_NAME = "UserService";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<org.example.usergrpc.user.User,
-      org.example.usergrpc.user.IdCheckResponse> getIdChkMethod;
+      org.example.usergrpc.user.UsergRpcResponse> getUserIdChkAndJoinAndLoginMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "idChk",
+      fullMethodName = SERVICE_NAME + '/' + "userIdChkAndJoinAndLogin",
       requestType = org.example.usergrpc.user.User.class,
-      responseType = org.example.usergrpc.user.IdCheckResponse.class,
+      responseType = org.example.usergrpc.user.UsergRpcResponse.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
   public static io.grpc.MethodDescriptor<org.example.usergrpc.user.User,
-      org.example.usergrpc.user.IdCheckResponse> getIdChkMethod() {
-    io.grpc.MethodDescriptor<org.example.usergrpc.user.User, org.example.usergrpc.user.IdCheckResponse> getIdChkMethod;
-    if ((getIdChkMethod = UserServiceGrpc.getIdChkMethod) == null) {
+      org.example.usergrpc.user.UsergRpcResponse> getUserIdChkAndJoinAndLoginMethod() {
+    io.grpc.MethodDescriptor<org.example.usergrpc.user.User, org.example.usergrpc.user.UsergRpcResponse> getUserIdChkAndJoinAndLoginMethod;
+    if ((getUserIdChkAndJoinAndLoginMethod = UserServiceGrpc.getUserIdChkAndJoinAndLoginMethod) == null) {
       synchronized (UserServiceGrpc.class) {
-        if ((getIdChkMethod = UserServiceGrpc.getIdChkMethod) == null) {
-          UserServiceGrpc.getIdChkMethod = getIdChkMethod =
-              io.grpc.MethodDescriptor.<org.example.usergrpc.user.User, org.example.usergrpc.user.IdCheckResponse>newBuilder()
+        if ((getUserIdChkAndJoinAndLoginMethod = UserServiceGrpc.getUserIdChkAndJoinAndLoginMethod) == null) {
+          UserServiceGrpc.getUserIdChkAndJoinAndLoginMethod = getUserIdChkAndJoinAndLoginMethod =
+              io.grpc.MethodDescriptor.<org.example.usergrpc.user.User, org.example.usergrpc.user.UsergRpcResponse>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "idChk"))
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "userIdChkAndJoinAndLogin"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
                   org.example.usergrpc.user.User.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  org.example.usergrpc.user.IdCheckResponse.getDefaultInstance()))
-              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("idChk"))
+                  org.example.usergrpc.user.UsergRpcResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("userIdChkAndJoinAndLogin"))
               .build();
         }
       }
     }
-    return getIdChkMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<org.example.usergrpc.user.User,
-      org.example.usergrpc.user.JoinUser> getJoinMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "join",
-      requestType = org.example.usergrpc.user.User.class,
-      responseType = org.example.usergrpc.user.JoinUser.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<org.example.usergrpc.user.User,
-      org.example.usergrpc.user.JoinUser> getJoinMethod() {
-    io.grpc.MethodDescriptor<org.example.usergrpc.user.User, org.example.usergrpc.user.JoinUser> getJoinMethod;
-    if ((getJoinMethod = UserServiceGrpc.getJoinMethod) == null) {
-      synchronized (UserServiceGrpc.class) {
-        if ((getJoinMethod = UserServiceGrpc.getJoinMethod) == null) {
-          UserServiceGrpc.getJoinMethod = getJoinMethod =
-              io.grpc.MethodDescriptor.<org.example.usergrpc.user.User, org.example.usergrpc.user.JoinUser>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "join"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  org.example.usergrpc.user.User.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  org.example.usergrpc.user.JoinUser.getDefaultInstance()))
-              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("join"))
-              .build();
-        }
-      }
-    }
-    return getJoinMethod;
-  }
-
-  private static volatile io.grpc.MethodDescriptor<org.example.usergrpc.user.User,
-      org.example.usergrpc.user.LoginUser> getLoginMethod;
-
-  @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "login",
-      requestType = org.example.usergrpc.user.User.class,
-      responseType = org.example.usergrpc.user.LoginUser.class,
-      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<org.example.usergrpc.user.User,
-      org.example.usergrpc.user.LoginUser> getLoginMethod() {
-    io.grpc.MethodDescriptor<org.example.usergrpc.user.User, org.example.usergrpc.user.LoginUser> getLoginMethod;
-    if ((getLoginMethod = UserServiceGrpc.getLoginMethod) == null) {
-      synchronized (UserServiceGrpc.class) {
-        if ((getLoginMethod = UserServiceGrpc.getLoginMethod) == null) {
-          UserServiceGrpc.getLoginMethod = getLoginMethod =
-              io.grpc.MethodDescriptor.<org.example.usergrpc.user.User, org.example.usergrpc.user.LoginUser>newBuilder()
-              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "login"))
-              .setSampledToLocalTracing(true)
-              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  org.example.usergrpc.user.User.getDefaultInstance()))
-              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  org.example.usergrpc.user.LoginUser.getDefaultInstance()))
-              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("login"))
-              .build();
-        }
-      }
-    }
-    return getLoginMethod;
+    return getUserIdChkAndJoinAndLoginMethod;
   }
 
   /**
@@ -164,29 +102,12 @@ public final class UserServiceGrpc {
 
     /**
      * <pre>
-     * 아이디 중복검사
+     * 아이디 중복검사, 회원가입, 로그인
      * </pre>
      */
-    default void idChk(org.example.usergrpc.user.User request,
-        io.grpc.stub.StreamObserver<org.example.usergrpc.user.IdCheckResponse> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getIdChkMethod(), responseObserver);
-    }
-
-    /**
-     * <pre>
-     *회원가입
-     * </pre>
-     */
-    default void join(org.example.usergrpc.user.User request,
-        io.grpc.stub.StreamObserver<org.example.usergrpc.user.JoinUser> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getJoinMethod(), responseObserver);
-    }
-
-    /**
-     */
-    default void login(org.example.usergrpc.user.User request,
-        io.grpc.stub.StreamObserver<org.example.usergrpc.user.LoginUser> responseObserver) {
-      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getLoginMethod(), responseObserver);
+    default void userIdChkAndJoinAndLogin(org.example.usergrpc.user.User request,
+        io.grpc.stub.StreamObserver<org.example.usergrpc.user.UsergRpcResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getUserIdChkAndJoinAndLoginMethod(), responseObserver);
     }
   }
 
@@ -225,32 +146,13 @@ public final class UserServiceGrpc {
 
     /**
      * <pre>
-     * 아이디 중복검사
+     * 아이디 중복검사, 회원가입, 로그인
      * </pre>
      */
-    public void idChk(org.example.usergrpc.user.User request,
-        io.grpc.stub.StreamObserver<org.example.usergrpc.user.IdCheckResponse> responseObserver) {
+    public void userIdChkAndJoinAndLogin(org.example.usergrpc.user.User request,
+        io.grpc.stub.StreamObserver<org.example.usergrpc.user.UsergRpcResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getIdChkMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     * <pre>
-     *회원가입
-     * </pre>
-     */
-    public void join(org.example.usergrpc.user.User request,
-        io.grpc.stub.StreamObserver<org.example.usergrpc.user.JoinUser> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getJoinMethod(), getCallOptions()), request, responseObserver);
-    }
-
-    /**
-     */
-    public void login(org.example.usergrpc.user.User request,
-        io.grpc.stub.StreamObserver<org.example.usergrpc.user.LoginUser> responseObserver) {
-      io.grpc.stub.ClientCalls.asyncUnaryCall(
-          getChannel().newCall(getLoginMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getUserIdChkAndJoinAndLoginMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -275,29 +177,12 @@ public final class UserServiceGrpc {
 
     /**
      * <pre>
-     * 아이디 중복검사
+     * 아이디 중복검사, 회원가입, 로그인
      * </pre>
      */
-    public org.example.usergrpc.user.IdCheckResponse idChk(org.example.usergrpc.user.User request) {
+    public org.example.usergrpc.user.UsergRpcResponse userIdChkAndJoinAndLogin(org.example.usergrpc.user.User request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getIdChkMethod(), getCallOptions(), request);
-    }
-
-    /**
-     * <pre>
-     *회원가입
-     * </pre>
-     */
-    public org.example.usergrpc.user.JoinUser join(org.example.usergrpc.user.User request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getJoinMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public org.example.usergrpc.user.LoginUser login(org.example.usergrpc.user.User request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getLoginMethod(), getCallOptions(), request);
+          getChannel(), getUserIdChkAndJoinAndLoginMethod(), getCallOptions(), request);
     }
   }
 
@@ -322,38 +207,17 @@ public final class UserServiceGrpc {
 
     /**
      * <pre>
-     * 아이디 중복검사
+     * 아이디 중복검사, 회원가입, 로그인
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<org.example.usergrpc.user.IdCheckResponse> idChk(
+    public com.google.common.util.concurrent.ListenableFuture<org.example.usergrpc.user.UsergRpcResponse> userIdChkAndJoinAndLogin(
         org.example.usergrpc.user.User request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getIdChkMethod(), getCallOptions()), request);
-    }
-
-    /**
-     * <pre>
-     *회원가입
-     * </pre>
-     */
-    public com.google.common.util.concurrent.ListenableFuture<org.example.usergrpc.user.JoinUser> join(
-        org.example.usergrpc.user.User request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getJoinMethod(), getCallOptions()), request);
-    }
-
-    /**
-     */
-    public com.google.common.util.concurrent.ListenableFuture<org.example.usergrpc.user.LoginUser> login(
-        org.example.usergrpc.user.User request) {
-      return io.grpc.stub.ClientCalls.futureUnaryCall(
-          getChannel().newCall(getLoginMethod(), getCallOptions()), request);
+          getChannel().newCall(getUserIdChkAndJoinAndLoginMethod(), getCallOptions()), request);
     }
   }
 
-  private static final int METHODID_ID_CHK = 0;
-  private static final int METHODID_JOIN = 1;
-  private static final int METHODID_LOGIN = 2;
+  private static final int METHODID_USER_ID_CHK_AND_JOIN_AND_LOGIN = 0;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -372,17 +236,9 @@ public final class UserServiceGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_ID_CHK:
-          serviceImpl.idChk((org.example.usergrpc.user.User) request,
-              (io.grpc.stub.StreamObserver<org.example.usergrpc.user.IdCheckResponse>) responseObserver);
-          break;
-        case METHODID_JOIN:
-          serviceImpl.join((org.example.usergrpc.user.User) request,
-              (io.grpc.stub.StreamObserver<org.example.usergrpc.user.JoinUser>) responseObserver);
-          break;
-        case METHODID_LOGIN:
-          serviceImpl.login((org.example.usergrpc.user.User) request,
-              (io.grpc.stub.StreamObserver<org.example.usergrpc.user.LoginUser>) responseObserver);
+        case METHODID_USER_ID_CHK_AND_JOIN_AND_LOGIN:
+          serviceImpl.userIdChkAndJoinAndLogin((org.example.usergrpc.user.User) request,
+              (io.grpc.stub.StreamObserver<org.example.usergrpc.user.UsergRpcResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -403,26 +259,12 @@ public final class UserServiceGrpc {
   public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
     return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
         .addMethod(
-          getIdChkMethod(),
+          getUserIdChkAndJoinAndLoginMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
               org.example.usergrpc.user.User,
-              org.example.usergrpc.user.IdCheckResponse>(
-                service, METHODID_ID_CHK)))
-        .addMethod(
-          getJoinMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              org.example.usergrpc.user.User,
-              org.example.usergrpc.user.JoinUser>(
-                service, METHODID_JOIN)))
-        .addMethod(
-          getLoginMethod(),
-          io.grpc.stub.ServerCalls.asyncUnaryCall(
-            new MethodHandlers<
-              org.example.usergrpc.user.User,
-              org.example.usergrpc.user.LoginUser>(
-                service, METHODID_LOGIN)))
+              org.example.usergrpc.user.UsergRpcResponse>(
+                service, METHODID_USER_ID_CHK_AND_JOIN_AND_LOGIN)))
         .build();
   }
 
@@ -432,7 +274,7 @@ public final class UserServiceGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return org.example.usergrpc.user.UserOuterClass.getDescriptor();
+      return org.example.usergrpc.user.UserProto.getDescriptor();
     }
 
     @java.lang.Override
@@ -471,9 +313,7 @@ public final class UserServiceGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new UserServiceFileDescriptorSupplier())
-              .addMethod(getIdChkMethod())
-              .addMethod(getJoinMethod())
-              .addMethod(getLoginMethod())
+              .addMethod(getUserIdChkAndJoinAndLoginMethod())
               .build();
         }
       }

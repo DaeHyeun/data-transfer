@@ -10,11 +10,11 @@ package org.example.usergrpc.user;
  * 메시지 정의
  * </pre>
  *
- * Protobuf type {@code org.example.usergrpc.user.User}
+ * Protobuf type {@code User}
  */
 public final class User extends
     com.google.protobuf.GeneratedMessage implements
-    // @@protoc_insertion_point(message_implements:org.example.usergrpc.user.User)
+    // @@protoc_insertion_point(message_implements:User)
     UserOrBuilder {
 private static final long serialVersionUID = 0L;
   static {
@@ -38,13 +38,13 @@ private static final long serialVersionUID = 0L;
 
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return org.example.usergrpc.user.UserOuterClass.internal_static_org_example_usergrpc_user_User_descriptor;
+    return org.example.usergrpc.user.UserProto.internal_static_User_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return org.example.usergrpc.user.UserOuterClass.internal_static_org_example_usergrpc_user_User_fieldAccessorTable
+    return org.example.usergrpc.user.UserProto.internal_static_User_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
             org.example.usergrpc.user.User.class, org.example.usergrpc.user.User.Builder.class);
   }
@@ -54,7 +54,7 @@ private static final long serialVersionUID = 0L;
   private volatile java.lang.Object category_ = "";
   /**
    * <pre>
-   * db에서 할 작업 종류
+   * 작업 종류
    * </pre>
    *
    * <code>string category = 1;</code>
@@ -75,7 +75,7 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * db에서 할 작업 종류
+   * 작업 종류
    * </pre>
    *
    * <code>string category = 1;</code>
@@ -371,21 +371,21 @@ private static final long serialVersionUID = 0L;
    * 메시지 정의
    * </pre>
    *
-   * Protobuf type {@code org.example.usergrpc.user.User}
+   * Protobuf type {@code User}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:org.example.usergrpc.user.User)
+      // @@protoc_insertion_point(builder_implements:User)
       org.example.usergrpc.user.UserOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return org.example.usergrpc.user.UserOuterClass.internal_static_org_example_usergrpc_user_User_descriptor;
+      return org.example.usergrpc.user.UserProto.internal_static_User_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return org.example.usergrpc.user.UserOuterClass.internal_static_org_example_usergrpc_user_User_fieldAccessorTable
+      return org.example.usergrpc.user.UserProto.internal_static_User_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
               org.example.usergrpc.user.User.class, org.example.usergrpc.user.User.Builder.class);
     }
@@ -413,7 +413,7 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return org.example.usergrpc.user.UserOuterClass.internal_static_org_example_usergrpc_user_User_descriptor;
+      return org.example.usergrpc.user.UserProto.internal_static_User_descriptor;
     }
 
     @java.lang.Override
@@ -539,7 +539,7 @@ private static final long serialVersionUID = 0L;
     private java.lang.Object category_ = "";
     /**
      * <pre>
-     * db에서 할 작업 종류
+     * 작업 종류
      * </pre>
      *
      * <code>string category = 1;</code>
@@ -559,7 +559,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * db에서 할 작업 종류
+     * 작업 종류
      * </pre>
      *
      * <code>string category = 1;</code>
@@ -580,7 +580,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * db에서 할 작업 종류
+     * 작업 종류
      * </pre>
      *
      * <code>string category = 1;</code>
@@ -597,7 +597,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * db에서 할 작업 종류
+     * 작업 종류
      * </pre>
      *
      * <code>string category = 1;</code>
@@ -611,7 +611,7 @@ private static final long serialVersionUID = 0L;
     }
     /**
      * <pre>
-     * db에서 할 작업 종류
+     * 작업 종류
      * </pre>
      *
      * <code>string category = 1;</code>
@@ -812,10 +812,10 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    // @@protoc_insertion_point(builder_scope:org.example.usergrpc.user.User)
+    // @@protoc_insertion_point(builder_scope:User)
   }
 
-  // @@protoc_insertion_point(class_scope:org.example.usergrpc.user.User)
+  // @@protoc_insertion_point(class_scope:User)
   private static final org.example.usergrpc.user.User DEFAULT_INSTANCE;
   static {
     DEFAULT_INSTANCE = new org.example.usergrpc.user.User();
