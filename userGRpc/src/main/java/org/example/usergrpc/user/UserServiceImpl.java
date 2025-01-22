@@ -7,6 +7,10 @@ import org.example.usergrpc.repositorry.UserRepository;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
 @GRpcService
 public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
 
@@ -65,6 +69,23 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
                     responseObserver.onNext(joinResponse);
                     responseObserver.onCompleted();
                 }
+                break;
+            case "getUserList":
+                List<UserEntity> userList = userRepository.findAll();
+                String userStrList = "";
+                for (UserEntity user : userList) {
+                    if(userStrList!= ""){
+                    userStrList += user.getUsername()+",";
+                    }else {
+                        userStrList += user.getUsername();
+                    }
+                }
+                UsergRpcResponse UserListResponse = UsergRpcResponse.newBuilder()
+                        .setValidate(true)
+                        .setMessage(userStrList)
+                        .build();
+                responseObserver.onNext(UserListResponse);
+                responseObserver.onCompleted();
                 break;
             default:
                 UsergRpcResponse defaultResponse = UsergRpcResponse.newBuilder()
