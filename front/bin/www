@@ -25,8 +25,6 @@ io.on('connection', (socket) => {
   // 채팅방 입장
   socket.on('socket', (data) => {
     const { username, message } = data; // 데이터에서 username과 message 추출
-    console.log(`${username}: ${message}`);
-
     // 모든 클라이언트에게 메시지 전송
     io.emit('message', `<strong>${username}:</strong> ${message}`);
   });

@@ -35,19 +35,7 @@ var userRouter = require('./routes/users');
 app.use('/user', userRouter);
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// 채팅 페이지로 이동 (로그인 후 이동)
-app.get('/chat', (req, res) => {
-    // 로그인된 사용자가 없으면 로그인 페이지로 리다이렉션
-    if (!req.session.username) {// express 세션에 아이디 없으면 로그인화면
-        return res.redirect('/');
-    }
-    // 로그인된 사용자명과 함께 채팅 페이지 렌더링
-    app.locals.io.emit('message', `<strong>${req.session.username}:</strong> 님이 입장했습니다.`);
-    res.render('chat', {username: req.session.username});
-});
-
-
+//app.locals.io.emit('message', `<strong>${req.session.username}:</strong> 님이 입장했습니다.`);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 module.exports = app;  // app 객체를 내보냅니다.

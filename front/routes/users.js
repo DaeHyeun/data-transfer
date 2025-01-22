@@ -46,19 +46,42 @@ router.post('/join', async (req, res) => {
 
 // 로그인 프로세스
 router.post('/login', async (req, res) => {
-  const {username, password} = req.body;
-  const axiosResponse = await axios.post('http://localhost:8080/user/login',
-      {
-        username: username
-        , password: password
-      });
-  if (axiosResponse.data !== null) {
-    req.session.username = axiosResponse.data;
-    res.redirect('/chat');
-  } else {
-    res.redirect('/');
+  const { username, password } = req.body;
+
+  try {
+    // 로그인 요청
+    const loginResult = await axios.post('http://localhost:8080/user/login', {
+      username: username,
+      password: password
+    });
+
+    // 로그인 성공 시
+    if (loginResult.data !== null) {
+      // 로그인한 사용자의 세션에 username 저장
+      req.session.username = loginResult.data; // 여기서 loginResult.data.username을 사용해야 합니다
+
+      // 유저 목록 요청
+      const userList = await axios.post('http://localhost:8080/user/getUserList');
+
+      // userList가 null이 아닐 경우, chat 페이지로 리다이렉트하면서 userList 전달
+      if (userList.data !== null) {
+        // chat 페이지로 렌더링하면서 유저 목록과 username 전달
+        res.render('chat', {
+          username: req.session.username,  // 로그인한 사용자 정보
+          userList: userList.data          // 유저 목록
+        });
+      } else {
+        res.redirect('/'); // 유저 목록이 없으면 로그인 페이지로 리다이렉트
+      }
+    } else {
+      res.redirect('/'); // 로그인 실패 시 로그인 페이지로 리다이렉트
+    }
+  } catch (error) {
+    console.error('Login or user list fetch error:', error);
+    res.status(500).send('Server error');
   }
 })
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
