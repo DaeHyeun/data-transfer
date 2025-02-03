@@ -7,11 +7,6 @@ var router = express.Router();
 // 클라이언트에서 /message 경로로 POST 요청을 받을 때
 router.post('/message', async (req, res) => {
     const {sender, message, receiverList} = req.body;
-    console.log("app.js");
-    console.log(sender);
-    console.log(message);
-    console.log(receiverList);
-
     try {
         // 서버로 메시지를 보내는 요청
         const response = await fetch('http://localhost:8080/user/sendMessage', {
