@@ -49,6 +49,68 @@ public final class UserServiceGrpc {
     return getUserIdChkAndJoinAndLoginMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<org.example.back.user.Message,
+      org.example.back.user.Message> getSendMessageMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "sendMessage",
+      requestType = org.example.back.user.Message.class,
+      responseType = org.example.back.user.Message.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<org.example.back.user.Message,
+      org.example.back.user.Message> getSendMessageMethod() {
+    io.grpc.MethodDescriptor<org.example.back.user.Message, org.example.back.user.Message> getSendMessageMethod;
+    if ((getSendMessageMethod = UserServiceGrpc.getSendMessageMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getSendMessageMethod = UserServiceGrpc.getSendMessageMethod) == null) {
+          UserServiceGrpc.getSendMessageMethod = getSendMessageMethod =
+              io.grpc.MethodDescriptor.<org.example.back.user.Message, org.example.back.user.Message>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "sendMessage"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  org.example.back.user.Message.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  org.example.back.user.Message.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("sendMessage"))
+              .build();
+        }
+      }
+    }
+    return getSendMessageMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<org.example.back.user.Message,
+      org.example.back.user.SavedMessage> getSavedMessageMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "savedMessage",
+      requestType = org.example.back.user.Message.class,
+      responseType = org.example.back.user.SavedMessage.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<org.example.back.user.Message,
+      org.example.back.user.SavedMessage> getSavedMessageMethod() {
+    io.grpc.MethodDescriptor<org.example.back.user.Message, org.example.back.user.SavedMessage> getSavedMessageMethod;
+    if ((getSavedMessageMethod = UserServiceGrpc.getSavedMessageMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getSavedMessageMethod = UserServiceGrpc.getSavedMessageMethod) == null) {
+          UserServiceGrpc.getSavedMessageMethod = getSavedMessageMethod =
+              io.grpc.MethodDescriptor.<org.example.back.user.Message, org.example.back.user.SavedMessage>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "savedMessage"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  org.example.back.user.Message.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  org.example.back.user.SavedMessage.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("savedMessage"))
+              .build();
+        }
+      }
+    }
+    return getSavedMessageMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -109,6 +171,26 @@ public final class UserServiceGrpc {
         io.grpc.stub.StreamObserver<org.example.back.user.UsergRpcResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getUserIdChkAndJoinAndLoginMethod(), responseObserver);
     }
+
+    /**
+     * <pre>
+     *메세지 전송 서비스
+     * </pre>
+     */
+    default void sendMessage(org.example.back.user.Message request,
+        io.grpc.stub.StreamObserver<org.example.back.user.Message> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSendMessageMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     *저장된 메세지 가지고 오기
+     * </pre>
+     */
+    default void savedMessage(org.example.back.user.Message request,
+        io.grpc.stub.StreamObserver<org.example.back.user.SavedMessage> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSavedMessageMethod(), responseObserver);
+    }
   }
 
   /**
@@ -154,6 +236,28 @@ public final class UserServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getUserIdChkAndJoinAndLoginMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     * <pre>
+     *메세지 전송 서비스
+     * </pre>
+     */
+    public void sendMessage(org.example.back.user.Message request,
+        io.grpc.stub.StreamObserver<org.example.back.user.Message> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getSendMessageMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     *저장된 메세지 가지고 오기
+     * </pre>
+     */
+    public void savedMessage(org.example.back.user.Message request,
+        io.grpc.stub.StreamObserver<org.example.back.user.SavedMessage> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getSavedMessageMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -183,6 +287,26 @@ public final class UserServiceGrpc {
     public org.example.back.user.UsergRpcResponse userIdChkAndJoinAndLogin(org.example.back.user.User request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getUserIdChkAndJoinAndLoginMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     *메세지 전송 서비스
+     * </pre>
+     */
+    public org.example.back.user.Message sendMessage(org.example.back.user.Message request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getSendMessageMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     *저장된 메세지 가지고 오기
+     * </pre>
+     */
+    public org.example.back.user.SavedMessage savedMessage(org.example.back.user.Message request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getSavedMessageMethod(), getCallOptions(), request);
     }
   }
 
@@ -215,9 +339,33 @@ public final class UserServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getUserIdChkAndJoinAndLoginMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     *메세지 전송 서비스
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<org.example.back.user.Message> sendMessage(
+        org.example.back.user.Message request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getSendMessageMethod(), getCallOptions()), request);
+    }
+
+    /**
+     * <pre>
+     *저장된 메세지 가지고 오기
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<org.example.back.user.SavedMessage> savedMessage(
+        org.example.back.user.Message request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getSavedMessageMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_USER_ID_CHK_AND_JOIN_AND_LOGIN = 0;
+  private static final int METHODID_SEND_MESSAGE = 1;
+  private static final int METHODID_SAVED_MESSAGE = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -239,6 +387,14 @@ public final class UserServiceGrpc {
         case METHODID_USER_ID_CHK_AND_JOIN_AND_LOGIN:
           serviceImpl.userIdChkAndJoinAndLogin((org.example.back.user.User) request,
               (io.grpc.stub.StreamObserver<org.example.back.user.UsergRpcResponse>) responseObserver);
+          break;
+        case METHODID_SEND_MESSAGE:
+          serviceImpl.sendMessage((org.example.back.user.Message) request,
+              (io.grpc.stub.StreamObserver<org.example.back.user.Message>) responseObserver);
+          break;
+        case METHODID_SAVED_MESSAGE:
+          serviceImpl.savedMessage((org.example.back.user.Message) request,
+              (io.grpc.stub.StreamObserver<org.example.back.user.SavedMessage>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -265,6 +421,20 @@ public final class UserServiceGrpc {
               org.example.back.user.User,
               org.example.back.user.UsergRpcResponse>(
                 service, METHODID_USER_ID_CHK_AND_JOIN_AND_LOGIN)))
+        .addMethod(
+          getSendMessageMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              org.example.back.user.Message,
+              org.example.back.user.Message>(
+                service, METHODID_SEND_MESSAGE)))
+        .addMethod(
+          getSavedMessageMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              org.example.back.user.Message,
+              org.example.back.user.SavedMessage>(
+                service, METHODID_SAVED_MESSAGE)))
         .build();
   }
 
@@ -314,6 +484,8 @@ public final class UserServiceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new UserServiceFileDescriptorSupplier())
               .addMethod(getUserIdChkAndJoinAndLoginMethod())
+              .addMethod(getSendMessageMethod())
+              .addMethod(getSavedMessageMethod())
               .build();
         }
       }

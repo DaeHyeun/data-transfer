@@ -3,19 +3,19 @@
 // source: user.proto
 // Protobuf Java Version: 4.29.0
 
-package org.example.usergrpc.user;
+package org.example.back.user;
 
 /**
  * <pre>
- * 메시지 정의
+ * 채팅 메시지 정의
  * </pre>
  *
- * Protobuf type {@code User}
+ * Protobuf type {@code Message}
  */
-public final class User extends
+public final class Message extends
     com.google.protobuf.GeneratedMessage implements
-    // @@protoc_insertion_point(message_implements:User)
-    UserOrBuilder {
+    // @@protoc_insertion_point(message_implements:Message)
+    MessageOrBuilder {
 private static final long serialVersionUID = 0L;
   static {
     com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
@@ -24,170 +24,145 @@ private static final long serialVersionUID = 0L;
       /* minor= */ 29,
       /* patch= */ 0,
       /* suffix= */ "",
-      User.class.getName());
+      Message.class.getName());
   }
-  // Use User.newBuilder() to construct.
-  private User(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+  // Use Message.newBuilder() to construct.
+  private Message(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
     super(builder);
   }
-  private User() {
-    category_ = "";
-    username_ = "";
-    password_ = "";
+  private Message() {
+    sender_ = "";
+    message_ = "";
+    receiveLsit_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return org.example.usergrpc.user.UserProto.internal_static_User_descriptor;
+    return org.example.back.user.UserProto.internal_static_Message_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return org.example.usergrpc.user.UserProto.internal_static_User_fieldAccessorTable
+    return org.example.back.user.UserProto.internal_static_Message_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            org.example.usergrpc.user.User.class, org.example.usergrpc.user.User.Builder.class);
+            org.example.back.user.Message.class, org.example.back.user.Message.Builder.class);
   }
 
-  public static final int CATEGORY_FIELD_NUMBER = 1;
+  public static final int SENDER_FIELD_NUMBER = 1;
   @SuppressWarnings("serial")
-  private volatile java.lang.Object category_ = "";
+  private volatile java.lang.Object sender_ = "";
   /**
-   * <pre>
-   * 작업 종류
-   * </pre>
-   *
-   * <code>string category = 1;</code>
-   * @return The category.
+   * <code>string sender = 1;</code>
+   * @return The sender.
    */
   @java.lang.Override
-  public java.lang.String getCategory() {
-    java.lang.Object ref = category_;
+  public java.lang.String getSender() {
+    java.lang.Object ref = sender_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      category_ = s;
+      sender_ = s;
       return s;
     }
   }
   /**
-   * <pre>
-   * 작업 종류
-   * </pre>
-   *
-   * <code>string category = 1;</code>
-   * @return The bytes for category.
+   * <code>string sender = 1;</code>
+   * @return The bytes for sender.
    */
   @java.lang.Override
   public com.google.protobuf.ByteString
-      getCategoryBytes() {
-    java.lang.Object ref = category_;
+      getSenderBytes() {
+    java.lang.Object ref = sender_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      category_ = b;
+      sender_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
   }
 
-  public static final int USERNAME_FIELD_NUMBER = 2;
+  public static final int MESSAGE_FIELD_NUMBER = 2;
   @SuppressWarnings("serial")
-  private volatile java.lang.Object username_ = "";
+  private volatile java.lang.Object message_ = "";
   /**
-   * <pre>
-   * 아이디
-   * </pre>
-   *
-   * <code>string username = 2;</code>
-   * @return The username.
+   * <code>string message = 2;</code>
+   * @return The message.
    */
   @java.lang.Override
-  public java.lang.String getUsername() {
-    java.lang.Object ref = username_;
+  public java.lang.String getMessage() {
+    java.lang.Object ref = message_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      username_ = s;
+      message_ = s;
       return s;
     }
   }
   /**
-   * <pre>
-   * 아이디
-   * </pre>
-   *
-   * <code>string username = 2;</code>
-   * @return The bytes for username.
+   * <code>string message = 2;</code>
+   * @return The bytes for message.
    */
   @java.lang.Override
   public com.google.protobuf.ByteString
-      getUsernameBytes() {
-    java.lang.Object ref = username_;
+      getMessageBytes() {
+    java.lang.Object ref = message_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      username_ = b;
+      message_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
   }
 
-  public static final int PASSWORD_FIELD_NUMBER = 3;
+  public static final int RECEIVELSIT_FIELD_NUMBER = 3;
   @SuppressWarnings("serial")
-  private volatile java.lang.Object password_ = "";
+  private com.google.protobuf.LazyStringArrayList receiveLsit_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
-   * <pre>
-   * 비밀번호
-   * </pre>
-   *
-   * <code>string password = 3;</code>
-   * @return The password.
+   * <code>repeated string receiveLsit = 3;</code>
+   * @return A list containing the receiveLsit.
    */
-  @java.lang.Override
-  public java.lang.String getPassword() {
-    java.lang.Object ref = password_;
-    if (ref instanceof java.lang.String) {
-      return (java.lang.String) ref;
-    } else {
-      com.google.protobuf.ByteString bs = 
-          (com.google.protobuf.ByteString) ref;
-      java.lang.String s = bs.toStringUtf8();
-      password_ = s;
-      return s;
-    }
+  public com.google.protobuf.ProtocolStringList
+      getReceiveLsitList() {
+    return receiveLsit_;
   }
   /**
-   * <pre>
-   * 비밀번호
-   * </pre>
-   *
-   * <code>string password = 3;</code>
-   * @return The bytes for password.
+   * <code>repeated string receiveLsit = 3;</code>
+   * @return The count of receiveLsit.
    */
-  @java.lang.Override
+  public int getReceiveLsitCount() {
+    return receiveLsit_.size();
+  }
+  /**
+   * <code>repeated string receiveLsit = 3;</code>
+   * @param index The index of the element to return.
+   * @return The receiveLsit at the given index.
+   */
+  public java.lang.String getReceiveLsit(int index) {
+    return receiveLsit_.get(index);
+  }
+  /**
+   * <code>repeated string receiveLsit = 3;</code>
+   * @param index The index of the value to return.
+   * @return The bytes of the receiveLsit at the given index.
+   */
   public com.google.protobuf.ByteString
-      getPasswordBytes() {
-    java.lang.Object ref = password_;
-    if (ref instanceof java.lang.String) {
-      com.google.protobuf.ByteString b = 
-          com.google.protobuf.ByteString.copyFromUtf8(
-              (java.lang.String) ref);
-      password_ = b;
-      return b;
-    } else {
-      return (com.google.protobuf.ByteString) ref;
-    }
+      getReceiveLsitBytes(int index) {
+    return receiveLsit_.getByteString(index);
   }
 
   private byte memoizedIsInitialized = -1;
@@ -204,14 +179,14 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(category_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 1, category_);
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(sender_)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 1, sender_);
     }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(username_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 2, username_);
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(message_)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 2, message_);
     }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(password_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 3, password_);
+    for (int i = 0; i < receiveLsit_.size(); i++) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 3, receiveLsit_.getRaw(i));
     }
     getUnknownFields().writeTo(output);
   }
@@ -222,14 +197,19 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(category_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(1, category_);
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(sender_)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(1, sender_);
     }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(username_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(2, username_);
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(message_)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(2, message_);
     }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(password_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(3, password_);
+    {
+      int dataSize = 0;
+      for (int i = 0; i < receiveLsit_.size(); i++) {
+        dataSize += computeStringSizeNoTag(receiveLsit_.getRaw(i));
+      }
+      size += dataSize;
+      size += 1 * getReceiveLsitList().size();
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -241,17 +221,17 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof org.example.usergrpc.user.User)) {
+    if (!(obj instanceof org.example.back.user.Message)) {
       return super.equals(obj);
     }
-    org.example.usergrpc.user.User other = (org.example.usergrpc.user.User) obj;
+    org.example.back.user.Message other = (org.example.back.user.Message) obj;
 
-    if (!getCategory()
-        .equals(other.getCategory())) return false;
-    if (!getUsername()
-        .equals(other.getUsername())) return false;
-    if (!getPassword()
-        .equals(other.getPassword())) return false;
+    if (!getSender()
+        .equals(other.getSender())) return false;
+    if (!getMessage()
+        .equals(other.getMessage())) return false;
+    if (!getReceiveLsitList()
+        .equals(other.getReceiveLsitList())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -263,55 +243,57 @@ private static final long serialVersionUID = 0L;
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + CATEGORY_FIELD_NUMBER;
-    hash = (53 * hash) + getCategory().hashCode();
-    hash = (37 * hash) + USERNAME_FIELD_NUMBER;
-    hash = (53 * hash) + getUsername().hashCode();
-    hash = (37 * hash) + PASSWORD_FIELD_NUMBER;
-    hash = (53 * hash) + getPassword().hashCode();
+    hash = (37 * hash) + SENDER_FIELD_NUMBER;
+    hash = (53 * hash) + getSender().hashCode();
+    hash = (37 * hash) + MESSAGE_FIELD_NUMBER;
+    hash = (53 * hash) + getMessage().hashCode();
+    if (getReceiveLsitCount() > 0) {
+      hash = (37 * hash) + RECEIVELSIT_FIELD_NUMBER;
+      hash = (53 * hash) + getReceiveLsitList().hashCode();
+    }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static org.example.usergrpc.user.User parseFrom(
+  public static org.example.back.user.Message parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static org.example.usergrpc.user.User parseFrom(
+  public static org.example.back.user.Message parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static org.example.usergrpc.user.User parseFrom(
+  public static org.example.back.user.Message parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static org.example.usergrpc.user.User parseFrom(
+  public static org.example.back.user.Message parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static org.example.usergrpc.user.User parseFrom(byte[] data)
+  public static org.example.back.user.Message parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static org.example.usergrpc.user.User parseFrom(
+  public static org.example.back.user.Message parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static org.example.usergrpc.user.User parseFrom(java.io.InputStream input)
+  public static org.example.back.user.Message parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseWithIOException(PARSER, input);
   }
-  public static org.example.usergrpc.user.User parseFrom(
+  public static org.example.back.user.Message parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -319,26 +301,26 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  public static org.example.usergrpc.user.User parseDelimitedFrom(java.io.InputStream input)
+  public static org.example.back.user.Message parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseDelimitedWithIOException(PARSER, input);
   }
 
-  public static org.example.usergrpc.user.User parseDelimitedFrom(
+  public static org.example.back.user.Message parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static org.example.usergrpc.user.User parseFrom(
+  public static org.example.back.user.Message parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseWithIOException(PARSER, input);
   }
-  public static org.example.usergrpc.user.User parseFrom(
+  public static org.example.back.user.Message parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -351,7 +333,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(org.example.usergrpc.user.User prototype) {
+  public static Builder newBuilder(org.example.back.user.Message prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -368,29 +350,29 @@ private static final long serialVersionUID = 0L;
   }
   /**
    * <pre>
-   * 메시지 정의
+   * 채팅 메시지 정의
    * </pre>
    *
-   * Protobuf type {@code User}
+   * Protobuf type {@code Message}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:User)
-      org.example.usergrpc.user.UserOrBuilder {
+      // @@protoc_insertion_point(builder_implements:Message)
+      org.example.back.user.MessageOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return org.example.usergrpc.user.UserProto.internal_static_User_descriptor;
+      return org.example.back.user.UserProto.internal_static_Message_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return org.example.usergrpc.user.UserProto.internal_static_User_fieldAccessorTable
+      return org.example.back.user.UserProto.internal_static_Message_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              org.example.usergrpc.user.User.class, org.example.usergrpc.user.User.Builder.class);
+              org.example.back.user.Message.class, org.example.back.user.Message.Builder.class);
     }
 
-    // Construct using org.example.usergrpc.user.User.newBuilder()
+    // Construct using org.example.back.user.Message.newBuilder()
     private Builder() {
 
     }
@@ -404,26 +386,27 @@ private static final long serialVersionUID = 0L;
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
-      category_ = "";
-      username_ = "";
-      password_ = "";
+      sender_ = "";
+      message_ = "";
+      receiveLsit_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
       return this;
     }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return org.example.usergrpc.user.UserProto.internal_static_User_descriptor;
+      return org.example.back.user.UserProto.internal_static_Message_descriptor;
     }
 
     @java.lang.Override
-    public org.example.usergrpc.user.User getDefaultInstanceForType() {
-      return org.example.usergrpc.user.User.getDefaultInstance();
+    public org.example.back.user.Message getDefaultInstanceForType() {
+      return org.example.back.user.Message.getDefaultInstance();
     }
 
     @java.lang.Override
-    public org.example.usergrpc.user.User build() {
-      org.example.usergrpc.user.User result = buildPartial();
+    public org.example.back.user.Message build() {
+      org.example.back.user.Message result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -431,51 +414,57 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public org.example.usergrpc.user.User buildPartial() {
-      org.example.usergrpc.user.User result = new org.example.usergrpc.user.User(this);
+    public org.example.back.user.Message buildPartial() {
+      org.example.back.user.Message result = new org.example.back.user.Message(this);
       if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
     }
 
-    private void buildPartial0(org.example.usergrpc.user.User result) {
+    private void buildPartial0(org.example.back.user.Message result) {
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
-        result.category_ = category_;
+        result.sender_ = sender_;
       }
       if (((from_bitField0_ & 0x00000002) != 0)) {
-        result.username_ = username_;
+        result.message_ = message_;
       }
       if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.password_ = password_;
+        receiveLsit_.makeImmutable();
+        result.receiveLsit_ = receiveLsit_;
       }
     }
 
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof org.example.usergrpc.user.User) {
-        return mergeFrom((org.example.usergrpc.user.User)other);
+      if (other instanceof org.example.back.user.Message) {
+        return mergeFrom((org.example.back.user.Message)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(org.example.usergrpc.user.User other) {
-      if (other == org.example.usergrpc.user.User.getDefaultInstance()) return this;
-      if (!other.getCategory().isEmpty()) {
-        category_ = other.category_;
+    public Builder mergeFrom(org.example.back.user.Message other) {
+      if (other == org.example.back.user.Message.getDefaultInstance()) return this;
+      if (!other.getSender().isEmpty()) {
+        sender_ = other.sender_;
         bitField0_ |= 0x00000001;
         onChanged();
       }
-      if (!other.getUsername().isEmpty()) {
-        username_ = other.username_;
+      if (!other.getMessage().isEmpty()) {
+        message_ = other.message_;
         bitField0_ |= 0x00000002;
         onChanged();
       }
-      if (!other.getPassword().isEmpty()) {
-        password_ = other.password_;
-        bitField0_ |= 0x00000004;
+      if (!other.receiveLsit_.isEmpty()) {
+        if (receiveLsit_.isEmpty()) {
+          receiveLsit_ = other.receiveLsit_;
+          bitField0_ |= 0x00000004;
+        } else {
+          ensureReceiveLsitIsMutable();
+          receiveLsit_.addAll(other.receiveLsit_);
+        }
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -505,18 +494,19 @@ private static final long serialVersionUID = 0L;
               done = true;
               break;
             case 10: {
-              category_ = input.readStringRequireUtf8();
+              sender_ = input.readStringRequireUtf8();
               bitField0_ |= 0x00000001;
               break;
             } // case 10
             case 18: {
-              username_ = input.readStringRequireUtf8();
+              message_ = input.readStringRequireUtf8();
               bitField0_ |= 0x00000002;
               break;
             } // case 18
             case 26: {
-              password_ = input.readStringRequireUtf8();
-              bitField0_ |= 0x00000004;
+              java.lang.String s = input.readStringRequireUtf8();
+              ensureReceiveLsitIsMutable();
+              receiveLsit_.add(s);
               break;
             } // case 26
             default: {
@@ -536,299 +526,278 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private java.lang.Object category_ = "";
+    private java.lang.Object sender_ = "";
     /**
-     * <pre>
-     * 작업 종류
-     * </pre>
-     *
-     * <code>string category = 1;</code>
-     * @return The category.
+     * <code>string sender = 1;</code>
+     * @return The sender.
      */
-    public java.lang.String getCategory() {
-      java.lang.Object ref = category_;
+    public java.lang.String getSender() {
+      java.lang.Object ref = sender_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        category_ = s;
+        sender_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <pre>
-     * 작업 종류
-     * </pre>
-     *
-     * <code>string category = 1;</code>
-     * @return The bytes for category.
+     * <code>string sender = 1;</code>
+     * @return The bytes for sender.
      */
     public com.google.protobuf.ByteString
-        getCategoryBytes() {
-      java.lang.Object ref = category_;
+        getSenderBytes() {
+      java.lang.Object ref = sender_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        category_ = b;
+        sender_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <pre>
-     * 작업 종류
-     * </pre>
-     *
-     * <code>string category = 1;</code>
-     * @param value The category to set.
+     * <code>string sender = 1;</code>
+     * @param value The sender to set.
      * @return This builder for chaining.
      */
-    public Builder setCategory(
+    public Builder setSender(
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
-      category_ = value;
+      sender_ = value;
       bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
     /**
-     * <pre>
-     * 작업 종류
-     * </pre>
-     *
-     * <code>string category = 1;</code>
+     * <code>string sender = 1;</code>
      * @return This builder for chaining.
      */
-    public Builder clearCategory() {
-      category_ = getDefaultInstance().getCategory();
+    public Builder clearSender() {
+      sender_ = getDefaultInstance().getSender();
       bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
     /**
-     * <pre>
-     * 작업 종류
-     * </pre>
-     *
-     * <code>string category = 1;</code>
-     * @param value The bytes for category to set.
+     * <code>string sender = 1;</code>
+     * @param value The bytes for sender to set.
      * @return This builder for chaining.
      */
-    public Builder setCategoryBytes(
+    public Builder setSenderBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
-      category_ = value;
+      sender_ = value;
       bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
 
-    private java.lang.Object username_ = "";
+    private java.lang.Object message_ = "";
     /**
-     * <pre>
-     * 아이디
-     * </pre>
-     *
-     * <code>string username = 2;</code>
-     * @return The username.
+     * <code>string message = 2;</code>
+     * @return The message.
      */
-    public java.lang.String getUsername() {
-      java.lang.Object ref = username_;
+    public java.lang.String getMessage() {
+      java.lang.Object ref = message_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        username_ = s;
+        message_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <pre>
-     * 아이디
-     * </pre>
-     *
-     * <code>string username = 2;</code>
-     * @return The bytes for username.
+     * <code>string message = 2;</code>
+     * @return The bytes for message.
      */
     public com.google.protobuf.ByteString
-        getUsernameBytes() {
-      java.lang.Object ref = username_;
+        getMessageBytes() {
+      java.lang.Object ref = message_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        username_ = b;
+        message_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <pre>
-     * 아이디
-     * </pre>
-     *
-     * <code>string username = 2;</code>
-     * @param value The username to set.
+     * <code>string message = 2;</code>
+     * @param value The message to set.
      * @return This builder for chaining.
      */
-    public Builder setUsername(
+    public Builder setMessage(
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
-      username_ = value;
+      message_ = value;
       bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
     /**
-     * <pre>
-     * 아이디
-     * </pre>
-     *
-     * <code>string username = 2;</code>
+     * <code>string message = 2;</code>
      * @return This builder for chaining.
      */
-    public Builder clearUsername() {
-      username_ = getDefaultInstance().getUsername();
+    public Builder clearMessage() {
+      message_ = getDefaultInstance().getMessage();
       bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
     /**
-     * <pre>
-     * 아이디
-     * </pre>
-     *
-     * <code>string username = 2;</code>
-     * @param value The bytes for username to set.
+     * <code>string message = 2;</code>
+     * @param value The bytes for message to set.
      * @return This builder for chaining.
      */
-    public Builder setUsernameBytes(
+    public Builder setMessageBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
-      username_ = value;
+      message_ = value;
       bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
 
-    private java.lang.Object password_ = "";
-    /**
-     * <pre>
-     * 비밀번호
-     * </pre>
-     *
-     * <code>string password = 3;</code>
-     * @return The password.
-     */
-    public java.lang.String getPassword() {
-      java.lang.Object ref = password_;
-      if (!(ref instanceof java.lang.String)) {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        password_ = s;
-        return s;
-      } else {
-        return (java.lang.String) ref;
+    private com.google.protobuf.LazyStringArrayList receiveLsit_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
+    private void ensureReceiveLsitIsMutable() {
+      if (!receiveLsit_.isModifiable()) {
+        receiveLsit_ = new com.google.protobuf.LazyStringArrayList(receiveLsit_);
       }
+      bitField0_ |= 0x00000004;
     }
     /**
-     * <pre>
-     * 비밀번호
-     * </pre>
-     *
-     * <code>string password = 3;</code>
-     * @return The bytes for password.
+     * <code>repeated string receiveLsit = 3;</code>
+     * @return A list containing the receiveLsit.
+     */
+    public com.google.protobuf.ProtocolStringList
+        getReceiveLsitList() {
+      receiveLsit_.makeImmutable();
+      return receiveLsit_;
+    }
+    /**
+     * <code>repeated string receiveLsit = 3;</code>
+     * @return The count of receiveLsit.
+     */
+    public int getReceiveLsitCount() {
+      return receiveLsit_.size();
+    }
+    /**
+     * <code>repeated string receiveLsit = 3;</code>
+     * @param index The index of the element to return.
+     * @return The receiveLsit at the given index.
+     */
+    public java.lang.String getReceiveLsit(int index) {
+      return receiveLsit_.get(index);
+    }
+    /**
+     * <code>repeated string receiveLsit = 3;</code>
+     * @param index The index of the value to return.
+     * @return The bytes of the receiveLsit at the given index.
      */
     public com.google.protobuf.ByteString
-        getPasswordBytes() {
-      java.lang.Object ref = password_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        password_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+        getReceiveLsitBytes(int index) {
+      return receiveLsit_.getByteString(index);
     }
     /**
-     * <pre>
-     * 비밀번호
-     * </pre>
-     *
-     * <code>string password = 3;</code>
-     * @param value The password to set.
+     * <code>repeated string receiveLsit = 3;</code>
+     * @param index The index to set the value at.
+     * @param value The receiveLsit to set.
      * @return This builder for chaining.
      */
-    public Builder setPassword(
-        java.lang.String value) {
+    public Builder setReceiveLsit(
+        int index, java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
-      password_ = value;
+      ensureReceiveLsitIsMutable();
+      receiveLsit_.set(index, value);
       bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
     /**
-     * <pre>
-     * 비밀번호
-     * </pre>
-     *
-     * <code>string password = 3;</code>
+     * <code>repeated string receiveLsit = 3;</code>
+     * @param value The receiveLsit to add.
      * @return This builder for chaining.
      */
-    public Builder clearPassword() {
-      password_ = getDefaultInstance().getPassword();
-      bitField0_ = (bitField0_ & ~0x00000004);
+    public Builder addReceiveLsit(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      ensureReceiveLsitIsMutable();
+      receiveLsit_.add(value);
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
     /**
-     * <pre>
-     * 비밀번호
-     * </pre>
-     *
-     * <code>string password = 3;</code>
-     * @param value The bytes for password to set.
+     * <code>repeated string receiveLsit = 3;</code>
+     * @param values The receiveLsit to add.
      * @return This builder for chaining.
      */
-    public Builder setPasswordBytes(
+    public Builder addAllReceiveLsit(
+        java.lang.Iterable<java.lang.String> values) {
+      ensureReceiveLsitIsMutable();
+      com.google.protobuf.AbstractMessageLite.Builder.addAll(
+          values, receiveLsit_);
+      bitField0_ |= 0x00000004;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>repeated string receiveLsit = 3;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearReceiveLsit() {
+      receiveLsit_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
+      bitField0_ = (bitField0_ & ~0x00000004);;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>repeated string receiveLsit = 3;</code>
+     * @param value The bytes of the receiveLsit to add.
+     * @return This builder for chaining.
+     */
+    public Builder addReceiveLsitBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
-      password_ = value;
+      ensureReceiveLsitIsMutable();
+      receiveLsit_.add(value);
       bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
 
-    // @@protoc_insertion_point(builder_scope:User)
+    // @@protoc_insertion_point(builder_scope:Message)
   }
 
-  // @@protoc_insertion_point(class_scope:User)
-  private static final org.example.usergrpc.user.User DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:Message)
+  private static final org.example.back.user.Message DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new org.example.usergrpc.user.User();
+    DEFAULT_INSTANCE = new org.example.back.user.Message();
   }
 
-  public static org.example.usergrpc.user.User getDefaultInstance() {
+  public static org.example.back.user.Message getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<User>
-      PARSER = new com.google.protobuf.AbstractParser<User>() {
+  private static final com.google.protobuf.Parser<Message>
+      PARSER = new com.google.protobuf.AbstractParser<Message>() {
     @java.lang.Override
-    public User parsePartialFrom(
+    public Message parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -847,17 +816,17 @@ private static final long serialVersionUID = 0L;
     }
   };
 
-  public static com.google.protobuf.Parser<User> parser() {
+  public static com.google.protobuf.Parser<Message> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<User> getParserForType() {
+  public com.google.protobuf.Parser<Message> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public org.example.usergrpc.user.User getDefaultInstanceForType() {
+  public org.example.back.user.Message getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

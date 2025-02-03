@@ -35,6 +35,16 @@ public final class UserProto {
   static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_UsergRpcResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_Message_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_Message_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_SavedMessage_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_SavedMessage_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -47,10 +57,14 @@ public final class UserProto {
       "\n\nuser.proto\"<\n\004User\022\020\n\010category\030\001 \001(\t\022\020" +
       "\n\010username\030\002 \001(\t\022\020\n\010password\030\003 \001(\t\"5\n\020Us" +
       "ergRpcResponse\022\020\n\010validate\030\001 \001(\010\022\017\n\007mess" +
-      "age\030\002 \001(\t2C\n\013UserService\0224\n\030userIdChkAnd" +
-      "JoinAndLogin\022\005.User\032\021.UsergRpcResponseB$" +
-      "\n\025org.example.back.userB\tUserProtoP\001b\006pr" +
-      "oto3"
+      "age\030\002 \001(\t\"?\n\007Message\022\016\n\006sender\030\001 \001(\t\022\017\n\007" +
+      "message\030\002 \001(\t\022\023\n\013receiveLsit\030\003 \003(\t\"-\n\014Sa" +
+      "vedMessage\022\035\n\013messageList\030\001 \003(\0132\010.Messag" +
+      "e2\217\001\n\013UserService\0224\n\030userIdChkAndJoinAnd" +
+      "Login\022\005.User\032\021.UsergRpcResponse\022!\n\013sendM" +
+      "essage\022\010.Message\032\010.Message\022\'\n\014savedMessa" +
+      "ge\022\010.Message\032\r.SavedMessageB$\n\025org.examp" +
+      "le.back.userB\tUserProtoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -68,6 +82,18 @@ public final class UserProto {
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_UsergRpcResponse_descriptor,
         new java.lang.String[] { "Validate", "Message", });
+    internal_static_Message_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_Message_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_Message_descriptor,
+        new java.lang.String[] { "Sender", "Message", "ReceiveLsit", });
+    internal_static_SavedMessage_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_SavedMessage_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_SavedMessage_descriptor,
+        new java.lang.String[] { "MessageList", });
     descriptor.resolveAllFeaturesImmutable();
   }
 
