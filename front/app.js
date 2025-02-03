@@ -15,6 +15,7 @@ app.use(session({
     saveUninitialized: true,    // 세션을 초기화되지 않은 채로 저장할지 여부
     cookie: {secure: false}   // 보안을 위한 옵션 (HTTPS를 사용할 경우 true로 설정)
 }));
+
 // 정적 파일 제공 (예: 스타일시트, 이미지 등)
 app.use(express.static('public'));
 app.use(express.json());
@@ -33,9 +34,10 @@ app.use('/', indexRouter);
 //user 라우트
 var userRouter = require('./routes/users');
 app.use('/user', userRouter);
+//chat 라우트
+var chatRouter = require('./routes/chat');
+app.use('/chat', chatRouter);
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//app.locals.io.emit('message', `<strong>${req.session.username}:</strong> 님이 입장했습니다.`);
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 module.exports = app;  // app 객체를 내보냅니다.

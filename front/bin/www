@@ -29,6 +29,14 @@ io.on('connection', (socket) => {
     io.emit('message', `<strong>${username}:</strong> ${message}`);
   });
 
+
+  socket.on('chat', (data)=>{
+    const {toSend, username, message} = data;
+    toSend.forEach(e=>{
+        io.emit( e , `<strong>${username}:</strong> ${message}`);
+    })
+  })
+
   // 클라이언트 연결 종료 시
   socket.on('disconnect', () => {
     console.log('A user disconnected');

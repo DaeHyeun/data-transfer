@@ -56,7 +56,7 @@ router.post('/login', async (req, res) => {
     });
 
     // 로그인 성공 시
-    if (loginResult.data !== null) {
+    if (loginResult.data !== '로그인 실패') {
       // 로그인한 사용자의 세션에 username 저장
       req.session.username = loginResult.data; // 여기서 loginResult.data.username을 사용해야 합니다
 

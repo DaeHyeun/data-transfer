@@ -1,0 +1,69 @@
+
+// 비밀번호와 비밀번호 확인을 실시간으로 비교
+const password = document.getElementById('password');
+const passwordConfirm = document.getElementById('passwordConfirm');
+const passwordMatchMessage = document.getElementById('passwordMatchMessage');
+const passwordMismatchMessage = document.getElementById('passwordMismatchMessage');
+let chk;
+
+// 실시간 비교
+function comparePasswords() {
+    if (password.value === passwordConfirm.value) {
+        passwordMatchMessage.style.display = 'block';  // 일치할 경우
+        passwordMismatchMessage.style.display = 'none';  // 불일치 메시지 숨김
+    } else {
+        passwordMismatchMessage.style.display = 'block';  // 불일치할 경우
+        passwordMatchMessage.style.display = 'none';  // 일치 메시지 숨김
+    }
+}
+
+// 비밀번호가 입력될 때마다 비교
+password.addEventListener('input', comparePasswords);
+passwordConfirm.addEventListener('input', comparePasswords);
+
+// 아이디 중복 확인
+document.getElementById('checkUsernameBtn').addEventListener('click', async function () {
+    const username = document.getElementById('username').value;
+
+    // 아이디가 비어있으면 체크하지 않도록 처리
+    if (!username) {
+        alert("아이디를 입력해주세요.");
+        return;
+    }
+
+    try {
+        const response = await fetch('/user/idchk', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({username})
+        });
+
+        const result = await response.json();
+        chk = result.exists;
+        if (result.exists) {
+            // 아이디가 중복된 경우
+            document.getElementById('usernameMessage').style.display = 'block';
+            document.getElementById('usernameAvailableMessage').style.display = 'none';
+        } else {
+            // 아이디가 사용 가능한 경우
+            document.getElementById('usernameMessage').style.display = 'none';
+            document.getElementById('usernameAvailableMessage').style.display = 'block';
+        }
+    } catch (error) {
+        console.error('아이디 중복 검사 오류:', error);
+        alert('아이디 중복 검사 중 오류가 발생했습니다.');
+    }
+});
+
+// 폼 제출 전 최종 확인
+document.getElementById('joinForm').addEventListener('submit', function (event) {
+    if (password.value !== passwordConfirm.value) {
+        alert("비밀번호가 다릅니다.");
+        event.preventDefault();  // 폼 제출 막기
+    } else if (chk) {
+        alert("아이디를 확인하세요");
+        event.preventDefault();  // 폼 제출 막기
+    }
+});
