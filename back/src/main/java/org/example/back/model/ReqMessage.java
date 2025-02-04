@@ -2,6 +2,7 @@ package org.example.back.model;
 
 import lombok.*;
 
+import java.io.File;
 import java.util.List;
 
 @Getter

@@ -1,78 +1,34 @@
 package org.example.back.controller;
 
+import com.google.protobuf.ByteString;
 import org.example.back.model.ReqMessage;
-import org.example.back.model.ReqUser;
 import org.example.back.user.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/user")  // "/user" 경로로 들어오는 요청을 처리하는 컨트롤러
+@RequestMapping("/message")  // "/user" 경로로 들어오는 요청을 처리하는 컨트롤러
 @CrossOrigin(origins = "http://localhost:3000")  // CORS 설정: 로컬 서버에서 오는 요청을 허용
-public class UserController {
+public class MessageController {
 
     private final UserServiceGrpc.UserServiceStub userServiceStub;  // 비동기 Stub
     private final UserServiceGrpc.UserServiceBlockingStub userServiceBlockingStub;  // 동기 Stub
     private final UserServiceGrpc.UserServiceFutureStub userServiceFutureStub;
 
     @Autowired
-    public UserController(UserServiceGrpc.UserServiceStub userServiceStub, UserServiceGrpc.UserServiceBlockingStub userServiceBlockingStub, UserServiceGrpc.UserServiceFutureStub userServiceFutureStub) {
+    public MessageController(UserServiceGrpc.UserServiceStub userServiceStub, UserServiceGrpc.UserServiceBlockingStub userServiceBlockingStub, UserServiceGrpc.UserServiceFutureStub userServiceFutureStub) {
         this.userServiceStub = userServiceStub;
         this.userServiceBlockingStub = userServiceBlockingStub;
         this.userServiceFutureStub = userServiceFutureStub;
     }
 
-    // 아이디 중복 검사
-    @PostMapping("/idchk")
-    public String idchkvv(@RequestBody ReqUser reqUser) {
-        User request = User.newBuilder()
-                .setUsername(reqUser.getUsername())
-                .setCategory("idChk")
-                .build();
-        UsergRpcResponse response = userServiceBlockingStub.userIdChkAndJoinAndLogin(request);
-        return "" + response.getValidate();
-    }
-
-    // 회원 가입 처리
-    @PostMapping("/join")
-    public String join(@RequestBody ReqUser reqUser) throws InterruptedException {
-        User request = User.newBuilder()
-                .setUsername(reqUser.getUsername())
-                .setPassword(reqUser.getPassword())
-                .setCategory("join")
-                .build();
-        UsergRpcResponse response = userServiceBlockingStub.userIdChkAndJoinAndLogin(request);
-        return "" + response.getValidate();
-    }
-
-    // 로그인 처리
-    @PostMapping("/login")
-    public String login(@RequestBody ReqUser reqUser) throws InterruptedException {
-        User request = User.newBuilder()
-                .setUsername(reqUser.getUsername())
-                .setPassword(reqUser.getPassword())
-                .setCategory("login")
-                .build();
-
-        UsergRpcResponse response = userServiceBlockingStub.userIdChkAndJoinAndLogin(request);
-        return response.getMessage();
-    }
-
-    //유저 리스트 출력
-    @PostMapping("/getUserList")
-    public List<String> getuserList() throws InterruptedException {
-        List<String> userList = new ArrayList<>();
-        User request = User.newBuilder().setCategory("getUserList").build();
-        UsergRpcResponse response = userServiceBlockingStub.userIdChkAndJoinAndLogin(request);
-        userList = Arrays.stream(response.getMessage().split(",")).toList();
-        return userList;
-    }
-
-    //메세지 전송 테스트
+    //메세지 전송
     @PostMapping("/sendMessage")
     public ResponseEntity<Map<String, String>> sendMessage(@RequestBody ReqMessage reqMessage) {
         List<String> aaa = reqMessage.getReceiverList();
@@ -139,6 +95,51 @@ public class UserController {
         return ResponseEntity.ok(successResult);
     }
 
+    @PostMapping("/file")  // POST 메서드로 파일을 받음
+    public String file(@RequestPart("tosend") String tosend, @RequestPart("file") MultipartFile file) {
+        System.out.println("스프링 부트");
+        System.out.println("tosend: " + tosend);  // 받은 tosend
+        System.out.println("file: " + file.getOriginalFilename());  // 받은 파일의 이름
+        System.out.println("=========================file class");
+        System.out.println(tosend);
+        System.out.println("file: " + file.getClass());
+        System.out.println(file.getOriginalFilename());//dddd.jpf
+        System.out.println(file.getName());//file
+        System.out.println(file.getResource());//MultipartFile resource [file]
+        System.out.println(file.getContentType());//image/jpeg
+        System.out.println(file.getSize());//48361
+        try {
+            System.out.println(file.getBytes());//[B@5df75c06
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("=========================file class");
+
+        try {
+            // MultipartFile을 바이트 배열로 변환
+            byte[] fileBytes = file.getBytes();
+            System.out.println("파일 바이트 배열 길이: " + fileBytes.length);  // 파일 크기 출력
+
+            // 바이트 배열을 ByteString으로 변환
+            ByteString fileByteString = ByteString.copyFrom(fileBytes);
+
+            // ByteString을 사용하여 gRPC 메시지를 생성하고 전송할 수 있습니다.
+            // 예시: gRPC 클라이언트에 전송하는 코드
+            TransFile request = TransFile.newBuilder()
+
+                    .setFile(fileByteString)  // ByteString을 사용하여 파일 전송
+                    .build();
+            UsergRpcResponse response = userServiceBlockingStub.transFile(request);
+            System.out.println(response.getMessage());
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "파일 처리 중 오류 발생";
+        }
+
+
+        return "success";
+    }
 
 
 }
