@@ -38,7 +38,7 @@ body {
 }
 
 /* 우측 채팅창 (3:7 비율에서 7) */
-.chat-section {
+#chat-section {
     width: 70%;  /* 3:7 비율로 70% */
     display: flex;
     flex-direction: column;

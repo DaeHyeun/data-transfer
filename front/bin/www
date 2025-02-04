@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
     io.emit('message', `<strong>${username}:</strong> ${message}`);
   });
 
-
+  
   socket.on('chat', (data)=>{
     const {toSend, username, message} = data;
     toSend.forEach(e=>{

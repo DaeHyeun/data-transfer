@@ -4,12 +4,13 @@ const axios = require('axios');
 var router = express.Router();
 
 
+
 // 클라이언트에서 /message 경로로 POST 요청을 받을 때
 router.post('/message', async (req, res) => {
     const {sender, message, receiverList} = req.body;
     try {
         // 서버로 메시지를 보내는 요청
-        const response = await fetch('http://localhost:8080/user/sendMessage', {
+        const response = await fetch('http://localhost:8080/message/sendMessage', {
             method: 'POST',  // POST 요청
             headers: {
                 'Content-Type': 'application/json',  // JSON 데이터 형식
@@ -33,7 +34,7 @@ router.post('/savedMessage', async (req, res) => {
     const {sender, message, tosend} = req.body;
     try {
         // 서버로 메시지를 보내는 요청
-        const response = await fetch('http://localhost:8080/user/savedMessage', {
+        const response = await fetch('http://localhost:8080/message/savedMessage', {
             method: 'POST',  // POST 요청
             headers: {
                 'Content-Type': 'application/json',  // JSON 데이터 형식
