@@ -45,6 +45,11 @@ public final class UserProto {
   static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_SavedMessage_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_TransFile_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_TransFile_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -60,11 +65,16 @@ public final class UserProto {
       "age\030\002 \001(\t\"?\n\007Message\022\016\n\006sender\030\001 \001(\t\022\017\n\007" +
       "message\030\002 \001(\t\022\023\n\013receiveLsit\030\003 \003(\t\"-\n\014Sa" +
       "vedMessage\022\035\n\013messageList\030\001 \003(\0132\010.Messag" +
-      "e2\217\001\n\013UserService\0224\n\030userIdChkAndJoinAnd" +
-      "Login\022\005.User\032\021.UsergRpcResponse\022!\n\013sendM" +
-      "essage\022\010.Message\032\010.Message\022\'\n\014savedMessa" +
-      "ge\022\010.Message\032\r.SavedMessageB(\n\031org.examp" +
-      "le.usergrpc.userB\tUserProtoP\001b\006proto3"
+      "e\"\177\n\tTransFile\022\016\n\006sender\030\001 \001(\t\022\017\n\007messag" +
+      "e\030\002 \001(\t\022\023\n\013receiveLsit\030\003 \003(\t\022\023\n\013oriFileN" +
+      "ame\030\004 \001(\t\022\013\n\003ext\030\005 \001(\t\022\014\n\004size\030\006 \001(\t\022\014\n\004" +
+      "file\030\007 \001(\0142\273\001\n\013UserService\0224\n\030userIdChkA" +
+      "ndJoinAndLogin\022\005.User\032\021.UsergRpcResponse" +
+      "\022!\n\013sendMessage\022\010.Message\032\010.Message\022\'\n\014s" +
+      "avedMessage\022\010.Message\032\r.SavedMessage\022*\n\t" +
+      "transFile\022\n.TransFile\032\021.UsergRpcResponse" +
+      "B(\n\031org.example.usergrpc.userB\tUserProto" +
+      "P\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -94,6 +104,12 @@ public final class UserProto {
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_SavedMessage_descriptor,
         new java.lang.String[] { "MessageList", });
+    internal_static_TransFile_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_TransFile_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_TransFile_descriptor,
+        new java.lang.String[] { "Sender", "Message", "ReceiveLsit", "OriFileName", "Ext", "Size", "File", });
     descriptor.resolveAllFeaturesImmutable();
   }
 

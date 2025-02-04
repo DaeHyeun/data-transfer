@@ -9,6 +9,7 @@ option java_package = "org.example.usergrpc.user";
 option java_multiple_files=true;
 option java_outer_classname = "UserProto";
 
+
 // 메시지 정의
 message User {
   string category = 1;   // 작업 종류
@@ -28,9 +29,18 @@ message Message {
   string message = 2;
   repeated string receiveLsit = 3;
 }
-
 message SavedMessage {
   repeated Message messageList = 1;
+}
+
+message TransFile {
+  string sender = 1;
+  string message = 2;
+  repeated string receiveLsit = 3;
+  string oriFileName =4 ;
+  string ext = 5;
+  string size = 6;
+  bytes file = 7;
 }
 
 // 서비스 정의
@@ -43,5 +53,7 @@ service UserService {
 
   //저장된 메세지 가지고 오기
   rpc savedMessage (Message) returns (SavedMessage);
+
+  rpc transFile (TransFile) returns (UsergRpcResponse);
 
 }

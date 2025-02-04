@@ -111,6 +111,37 @@ public final class UserServiceGrpc {
     return getSavedMessageMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<org.example.usergrpc.user.TransFile,
+      org.example.usergrpc.user.UsergRpcResponse> getTransFileMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "transFile",
+      requestType = org.example.usergrpc.user.TransFile.class,
+      responseType = org.example.usergrpc.user.UsergRpcResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<org.example.usergrpc.user.TransFile,
+      org.example.usergrpc.user.UsergRpcResponse> getTransFileMethod() {
+    io.grpc.MethodDescriptor<org.example.usergrpc.user.TransFile, org.example.usergrpc.user.UsergRpcResponse> getTransFileMethod;
+    if ((getTransFileMethod = UserServiceGrpc.getTransFileMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getTransFileMethod = UserServiceGrpc.getTransFileMethod) == null) {
+          UserServiceGrpc.getTransFileMethod = getTransFileMethod =
+              io.grpc.MethodDescriptor.<org.example.usergrpc.user.TransFile, org.example.usergrpc.user.UsergRpcResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "transFile"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  org.example.usergrpc.user.TransFile.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  org.example.usergrpc.user.UsergRpcResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier("transFile"))
+              .build();
+        }
+      }
+    }
+    return getTransFileMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -191,6 +222,13 @@ public final class UserServiceGrpc {
         io.grpc.stub.StreamObserver<org.example.usergrpc.user.SavedMessage> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getSavedMessageMethod(), responseObserver);
     }
+
+    /**
+     */
+    default void transFile(org.example.usergrpc.user.TransFile request,
+        io.grpc.stub.StreamObserver<org.example.usergrpc.user.UsergRpcResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getTransFileMethod(), responseObserver);
+    }
   }
 
   /**
@@ -258,6 +296,14 @@ public final class UserServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getSavedMessageMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void transFile(org.example.usergrpc.user.TransFile request,
+        io.grpc.stub.StreamObserver<org.example.usergrpc.user.UsergRpcResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getTransFileMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -307,6 +353,13 @@ public final class UserServiceGrpc {
     public org.example.usergrpc.user.SavedMessage savedMessage(org.example.usergrpc.user.Message request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getSavedMessageMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public org.example.usergrpc.user.UsergRpcResponse transFile(org.example.usergrpc.user.TransFile request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getTransFileMethod(), getCallOptions(), request);
     }
   }
 
@@ -361,11 +414,20 @@ public final class UserServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getSavedMessageMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<org.example.usergrpc.user.UsergRpcResponse> transFile(
+        org.example.usergrpc.user.TransFile request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getTransFileMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_USER_ID_CHK_AND_JOIN_AND_LOGIN = 0;
   private static final int METHODID_SEND_MESSAGE = 1;
   private static final int METHODID_SAVED_MESSAGE = 2;
+  private static final int METHODID_TRANS_FILE = 3;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -395,6 +457,10 @@ public final class UserServiceGrpc {
         case METHODID_SAVED_MESSAGE:
           serviceImpl.savedMessage((org.example.usergrpc.user.Message) request,
               (io.grpc.stub.StreamObserver<org.example.usergrpc.user.SavedMessage>) responseObserver);
+          break;
+        case METHODID_TRANS_FILE:
+          serviceImpl.transFile((org.example.usergrpc.user.TransFile) request,
+              (io.grpc.stub.StreamObserver<org.example.usergrpc.user.UsergRpcResponse>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -435,6 +501,13 @@ public final class UserServiceGrpc {
               org.example.usergrpc.user.Message,
               org.example.usergrpc.user.SavedMessage>(
                 service, METHODID_SAVED_MESSAGE)))
+        .addMethod(
+          getTransFileMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              org.example.usergrpc.user.TransFile,
+              org.example.usergrpc.user.UsergRpcResponse>(
+                service, METHODID_TRANS_FILE)))
         .build();
   }
 
@@ -486,6 +559,7 @@ public final class UserServiceGrpc {
               .addMethod(getUserIdChkAndJoinAndLoginMethod())
               .addMethod(getSendMessageMethod())
               .addMethod(getSavedMessageMethod())
+              .addMethod(getTransFileMethod())
               .build();
         }
       }

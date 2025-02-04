@@ -1,6 +1,7 @@
 package org.example.usergrpc.user;
 
 
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import org.example.usergrpc.entity.MessageEntity;
 import org.example.usergrpc.entity.UserEntity;
@@ -159,9 +160,9 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
                                     .build()  // 불필요한 세미콜론 제거
                     );
                 }
-            }else{//1:1 메세지
-                if (temp.length <= 2 ) {
-                    if (new HashSet<>( request.getReceiveLsitList()).equals(new HashSet<>(receiveList))) {
+            } else {//1:1 메세지
+                if (temp.length <= 2) {
+                    if (new HashSet<>(request.getReceiveLsitList()).equals(new HashSet<>(receiveList))) {
                         messageList.add(
                                 Message.newBuilder()
                                         .setMessage(result.get(i).getMessage())
@@ -183,5 +184,38 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
         System.out.println(response);
         responseObserver.onNext(response);
         responseObserver.onCompleted();
+    }
+
+    //첨부파일 메세지
+    @Override
+    public void transFile(TransFile request, StreamObserver<UsergRpcResponse> responseObserver) {
+        try {
+            System.out.println("첨부파일 grpc");
+
+            // TransFile 객체에서 필요한 정보 추출
+            byte[] fileData = request.getFile().toByteArray();  // 예시로 파일 데이터를 byte 배열로 가져옴
+            String fileName = request.getOriFileName();  // 예시로 파일 이름 가져오기
+
+            System.out.println("파일 이름: " + fileName);
+            System.out.println("파일 데이터 크기: " + fileData.length);
+
+            // 파일 처리 로직 구현 (파일을 디스크에 저장하거나 DB에 저장 등)
+
+            // 응답 생성
+            UsergRpcResponse response = UsergRpcResponse.newBuilder()
+                    .setMessage("파일 처리 성공")
+                    .build();
+
+            // 응답 보내기
+            responseObserver.onNext(response);
+
+            // 스트림을 정상적으로 종료
+            responseObserver.onCompleted();
+
+        } catch (Exception e) {
+            // 예외 발생 시 스트림에 오류 전송
+            e.printStackTrace();
+            responseObserver.onError(Status.INTERNAL.withDescription("파일 처리 중 오류 발생").asRuntimeException());
+        }
     }
 }

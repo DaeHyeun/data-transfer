@@ -3,10 +3,10 @@
 // source: user.proto
 // Protobuf Java Version: 4.29.0
 
-package org.example.back.user;
+package org.example.usergrpc.user;
 
-public interface MessageOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:Message)
+public interface TransFileOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:TransFile)
     com.google.protobuf.MessageOrBuilder {
 
   /**
@@ -57,4 +57,46 @@ public interface MessageOrBuilder extends
    */
   com.google.protobuf.ByteString
       getReceiveLsitBytes(int index);
+
+  /**
+   * <code>string oriFileName = 4;</code>
+   * @return The oriFileName.
+   */
+  java.lang.String getOriFileName();
+  /**
+   * <code>string oriFileName = 4;</code>
+   * @return The bytes for oriFileName.
+   */
+  com.google.protobuf.ByteString
+      getOriFileNameBytes();
+
+  /**
+   * <code>string ext = 5;</code>
+   * @return The ext.
+   */
+  java.lang.String getExt();
+  /**
+   * <code>string ext = 5;</code>
+   * @return The bytes for ext.
+   */
+  com.google.protobuf.ByteString
+      getExtBytes();
+
+  /**
+   * <code>string size = 6;</code>
+   * @return The size.
+   */
+  java.lang.String getSize();
+  /**
+   * <code>string size = 6;</code>
+   * @return The bytes for size.
+   */
+  com.google.protobuf.ByteString
+      getSizeBytes();
+
+  /**
+   * <code>bytes file = 7;</code>
+   * @return The file.
+   */
+  com.google.protobuf.ByteString getFile();
 }

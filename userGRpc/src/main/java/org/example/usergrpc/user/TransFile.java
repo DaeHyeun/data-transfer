@@ -3,19 +3,15 @@
 // source: user.proto
 // Protobuf Java Version: 4.29.0
 
-package org.example.back.user;
+package org.example.usergrpc.user;
 
 /**
- * <pre>
- * 채팅 메시지 정의
- * </pre>
- *
- * Protobuf type {@code Message}
+ * Protobuf type {@code TransFile}
  */
-public final class Message extends
+public final class TransFile extends
     com.google.protobuf.GeneratedMessage implements
-    // @@protoc_insertion_point(message_implements:Message)
-    MessageOrBuilder {
+    // @@protoc_insertion_point(message_implements:TransFile)
+    TransFileOrBuilder {
 private static final long serialVersionUID = 0L;
   static {
     com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
@@ -24,30 +20,34 @@ private static final long serialVersionUID = 0L;
       /* minor= */ 29,
       /* patch= */ 0,
       /* suffix= */ "",
-      Message.class.getName());
+      TransFile.class.getName());
   }
-  // Use Message.newBuilder() to construct.
-  private Message(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+  // Use TransFile.newBuilder() to construct.
+  private TransFile(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
     super(builder);
   }
-  private Message() {
+  private TransFile() {
     sender_ = "";
     message_ = "";
     receiveLsit_ =
         com.google.protobuf.LazyStringArrayList.emptyList();
+    oriFileName_ = "";
+    ext_ = "";
+    size_ = "";
+    file_ = com.google.protobuf.ByteString.EMPTY;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return org.example.back.user.UserProto.internal_static_Message_descriptor;
+    return org.example.usergrpc.user.UserProto.internal_static_TransFile_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return org.example.back.user.UserProto.internal_static_Message_fieldAccessorTable
+    return org.example.usergrpc.user.UserProto.internal_static_TransFile_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            org.example.back.user.Message.class, org.example.back.user.Message.Builder.class);
+            org.example.usergrpc.user.TransFile.class, org.example.usergrpc.user.TransFile.Builder.class);
   }
 
   public static final int SENDER_FIELD_NUMBER = 1;
@@ -165,6 +165,134 @@ private static final long serialVersionUID = 0L;
     return receiveLsit_.getByteString(index);
   }
 
+  public static final int ORIFILENAME_FIELD_NUMBER = 4;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object oriFileName_ = "";
+  /**
+   * <code>string oriFileName = 4;</code>
+   * @return The oriFileName.
+   */
+  @java.lang.Override
+  public java.lang.String getOriFileName() {
+    java.lang.Object ref = oriFileName_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      oriFileName_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string oriFileName = 4;</code>
+   * @return The bytes for oriFileName.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getOriFileNameBytes() {
+    java.lang.Object ref = oriFileName_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      oriFileName_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int EXT_FIELD_NUMBER = 5;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object ext_ = "";
+  /**
+   * <code>string ext = 5;</code>
+   * @return The ext.
+   */
+  @java.lang.Override
+  public java.lang.String getExt() {
+    java.lang.Object ref = ext_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      ext_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string ext = 5;</code>
+   * @return The bytes for ext.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getExtBytes() {
+    java.lang.Object ref = ext_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      ext_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int SIZE_FIELD_NUMBER = 6;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object size_ = "";
+  /**
+   * <code>string size = 6;</code>
+   * @return The size.
+   */
+  @java.lang.Override
+  public java.lang.String getSize() {
+    java.lang.Object ref = size_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      size_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string size = 6;</code>
+   * @return The bytes for size.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getSizeBytes() {
+    java.lang.Object ref = size_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      size_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int FILE_FIELD_NUMBER = 7;
+  private com.google.protobuf.ByteString file_ = com.google.protobuf.ByteString.EMPTY;
+  /**
+   * <code>bytes file = 7;</code>
+   * @return The file.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString getFile() {
+    return file_;
+  }
+
   private byte memoizedIsInitialized = -1;
   @java.lang.Override
   public final boolean isInitialized() {
@@ -187,6 +315,18 @@ private static final long serialVersionUID = 0L;
     }
     for (int i = 0; i < receiveLsit_.size(); i++) {
       com.google.protobuf.GeneratedMessage.writeString(output, 3, receiveLsit_.getRaw(i));
+    }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(oriFileName_)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 4, oriFileName_);
+    }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(ext_)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 5, ext_);
+    }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(size_)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 6, size_);
+    }
+    if (!file_.isEmpty()) {
+      output.writeBytes(7, file_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -211,6 +351,19 @@ private static final long serialVersionUID = 0L;
       size += dataSize;
       size += 1 * getReceiveLsitList().size();
     }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(oriFileName_)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(4, oriFileName_);
+    }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(ext_)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(5, ext_);
+    }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(size_)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(6, size_);
+    }
+    if (!file_.isEmpty()) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBytesSize(7, file_);
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -221,10 +374,10 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof org.example.back.user.Message)) {
+    if (!(obj instanceof org.example.usergrpc.user.TransFile)) {
       return super.equals(obj);
     }
-    org.example.back.user.Message other = (org.example.back.user.Message) obj;
+    org.example.usergrpc.user.TransFile other = (org.example.usergrpc.user.TransFile) obj;
 
     if (!getSender()
         .equals(other.getSender())) return false;
@@ -232,6 +385,14 @@ private static final long serialVersionUID = 0L;
         .equals(other.getMessage())) return false;
     if (!getReceiveLsitList()
         .equals(other.getReceiveLsitList())) return false;
+    if (!getOriFileName()
+        .equals(other.getOriFileName())) return false;
+    if (!getExt()
+        .equals(other.getExt())) return false;
+    if (!getSize()
+        .equals(other.getSize())) return false;
+    if (!getFile()
+        .equals(other.getFile())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -251,49 +412,57 @@ private static final long serialVersionUID = 0L;
       hash = (37 * hash) + RECEIVELSIT_FIELD_NUMBER;
       hash = (53 * hash) + getReceiveLsitList().hashCode();
     }
+    hash = (37 * hash) + ORIFILENAME_FIELD_NUMBER;
+    hash = (53 * hash) + getOriFileName().hashCode();
+    hash = (37 * hash) + EXT_FIELD_NUMBER;
+    hash = (53 * hash) + getExt().hashCode();
+    hash = (37 * hash) + SIZE_FIELD_NUMBER;
+    hash = (53 * hash) + getSize().hashCode();
+    hash = (37 * hash) + FILE_FIELD_NUMBER;
+    hash = (53 * hash) + getFile().hashCode();
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
   }
 
-  public static org.example.back.user.Message parseFrom(
+  public static org.example.usergrpc.user.TransFile parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static org.example.back.user.Message parseFrom(
+  public static org.example.usergrpc.user.TransFile parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static org.example.back.user.Message parseFrom(
+  public static org.example.usergrpc.user.TransFile parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static org.example.back.user.Message parseFrom(
+  public static org.example.usergrpc.user.TransFile parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static org.example.back.user.Message parseFrom(byte[] data)
+  public static org.example.usergrpc.user.TransFile parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static org.example.back.user.Message parseFrom(
+  public static org.example.usergrpc.user.TransFile parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static org.example.back.user.Message parseFrom(java.io.InputStream input)
+  public static org.example.usergrpc.user.TransFile parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseWithIOException(PARSER, input);
   }
-  public static org.example.back.user.Message parseFrom(
+  public static org.example.usergrpc.user.TransFile parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -301,26 +470,26 @@ private static final long serialVersionUID = 0L;
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
 
-  public static org.example.back.user.Message parseDelimitedFrom(java.io.InputStream input)
+  public static org.example.usergrpc.user.TransFile parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseDelimitedWithIOException(PARSER, input);
   }
 
-  public static org.example.back.user.Message parseDelimitedFrom(
+  public static org.example.usergrpc.user.TransFile parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static org.example.back.user.Message parseFrom(
+  public static org.example.usergrpc.user.TransFile parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessage
         .parseWithIOException(PARSER, input);
   }
-  public static org.example.back.user.Message parseFrom(
+  public static org.example.usergrpc.user.TransFile parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -333,7 +502,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(org.example.back.user.Message prototype) {
+  public static Builder newBuilder(org.example.usergrpc.user.TransFile prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -349,30 +518,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * <pre>
-   * 채팅 메시지 정의
-   * </pre>
-   *
-   * Protobuf type {@code Message}
+   * Protobuf type {@code TransFile}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:Message)
-      org.example.back.user.MessageOrBuilder {
+      // @@protoc_insertion_point(builder_implements:TransFile)
+      org.example.usergrpc.user.TransFileOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return org.example.back.user.UserProto.internal_static_Message_descriptor;
+      return org.example.usergrpc.user.UserProto.internal_static_TransFile_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return org.example.back.user.UserProto.internal_static_Message_fieldAccessorTable
+      return org.example.usergrpc.user.UserProto.internal_static_TransFile_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              org.example.back.user.Message.class, org.example.back.user.Message.Builder.class);
+              org.example.usergrpc.user.TransFile.class, org.example.usergrpc.user.TransFile.Builder.class);
     }
 
-    // Construct using org.example.back.user.Message.newBuilder()
+    // Construct using org.example.usergrpc.user.TransFile.newBuilder()
     private Builder() {
 
     }
@@ -390,23 +555,27 @@ private static final long serialVersionUID = 0L;
       message_ = "";
       receiveLsit_ =
           com.google.protobuf.LazyStringArrayList.emptyList();
+      oriFileName_ = "";
+      ext_ = "";
+      size_ = "";
+      file_ = com.google.protobuf.ByteString.EMPTY;
       return this;
     }
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return org.example.back.user.UserProto.internal_static_Message_descriptor;
+      return org.example.usergrpc.user.UserProto.internal_static_TransFile_descriptor;
     }
 
     @java.lang.Override
-    public org.example.back.user.Message getDefaultInstanceForType() {
-      return org.example.back.user.Message.getDefaultInstance();
+    public org.example.usergrpc.user.TransFile getDefaultInstanceForType() {
+      return org.example.usergrpc.user.TransFile.getDefaultInstance();
     }
 
     @java.lang.Override
-    public org.example.back.user.Message build() {
-      org.example.back.user.Message result = buildPartial();
+    public org.example.usergrpc.user.TransFile build() {
+      org.example.usergrpc.user.TransFile result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -414,14 +583,14 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public org.example.back.user.Message buildPartial() {
-      org.example.back.user.Message result = new org.example.back.user.Message(this);
+    public org.example.usergrpc.user.TransFile buildPartial() {
+      org.example.usergrpc.user.TransFile result = new org.example.usergrpc.user.TransFile(this);
       if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
     }
 
-    private void buildPartial0(org.example.back.user.Message result) {
+    private void buildPartial0(org.example.usergrpc.user.TransFile result) {
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.sender_ = sender_;
@@ -433,20 +602,32 @@ private static final long serialVersionUID = 0L;
         receiveLsit_.makeImmutable();
         result.receiveLsit_ = receiveLsit_;
       }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.oriFileName_ = oriFileName_;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.ext_ = ext_;
+      }
+      if (((from_bitField0_ & 0x00000020) != 0)) {
+        result.size_ = size_;
+      }
+      if (((from_bitField0_ & 0x00000040) != 0)) {
+        result.file_ = file_;
+      }
     }
 
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof org.example.back.user.Message) {
-        return mergeFrom((org.example.back.user.Message)other);
+      if (other instanceof org.example.usergrpc.user.TransFile) {
+        return mergeFrom((org.example.usergrpc.user.TransFile)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(org.example.back.user.Message other) {
-      if (other == org.example.back.user.Message.getDefaultInstance()) return this;
+    public Builder mergeFrom(org.example.usergrpc.user.TransFile other) {
+      if (other == org.example.usergrpc.user.TransFile.getDefaultInstance()) return this;
       if (!other.getSender().isEmpty()) {
         sender_ = other.sender_;
         bitField0_ |= 0x00000001;
@@ -466,6 +647,24 @@ private static final long serialVersionUID = 0L;
           receiveLsit_.addAll(other.receiveLsit_);
         }
         onChanged();
+      }
+      if (!other.getOriFileName().isEmpty()) {
+        oriFileName_ = other.oriFileName_;
+        bitField0_ |= 0x00000008;
+        onChanged();
+      }
+      if (!other.getExt().isEmpty()) {
+        ext_ = other.ext_;
+        bitField0_ |= 0x00000010;
+        onChanged();
+      }
+      if (!other.getSize().isEmpty()) {
+        size_ = other.size_;
+        bitField0_ |= 0x00000020;
+        onChanged();
+      }
+      if (other.getFile() != com.google.protobuf.ByteString.EMPTY) {
+        setFile(other.getFile());
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -509,6 +708,26 @@ private static final long serialVersionUID = 0L;
               receiveLsit_.add(s);
               break;
             } // case 26
+            case 34: {
+              oriFileName_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000008;
+              break;
+            } // case 34
+            case 42: {
+              ext_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000010;
+              break;
+            } // case 42
+            case 50: {
+              size_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000020;
+              break;
+            } // case 50
+            case 58: {
+              file_ = input.readBytes();
+              bitField0_ |= 0x00000040;
+              break;
+            } // case 58
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -781,23 +1000,271 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    // @@protoc_insertion_point(builder_scope:Message)
+    private java.lang.Object oriFileName_ = "";
+    /**
+     * <code>string oriFileName = 4;</code>
+     * @return The oriFileName.
+     */
+    public java.lang.String getOriFileName() {
+      java.lang.Object ref = oriFileName_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        oriFileName_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string oriFileName = 4;</code>
+     * @return The bytes for oriFileName.
+     */
+    public com.google.protobuf.ByteString
+        getOriFileNameBytes() {
+      java.lang.Object ref = oriFileName_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        oriFileName_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string oriFileName = 4;</code>
+     * @param value The oriFileName to set.
+     * @return This builder for chaining.
+     */
+    public Builder setOriFileName(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      oriFileName_ = value;
+      bitField0_ |= 0x00000008;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string oriFileName = 4;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearOriFileName() {
+      oriFileName_ = getDefaultInstance().getOriFileName();
+      bitField0_ = (bitField0_ & ~0x00000008);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string oriFileName = 4;</code>
+     * @param value The bytes for oriFileName to set.
+     * @return This builder for chaining.
+     */
+    public Builder setOriFileNameBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      oriFileName_ = value;
+      bitField0_ |= 0x00000008;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object ext_ = "";
+    /**
+     * <code>string ext = 5;</code>
+     * @return The ext.
+     */
+    public java.lang.String getExt() {
+      java.lang.Object ref = ext_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        ext_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string ext = 5;</code>
+     * @return The bytes for ext.
+     */
+    public com.google.protobuf.ByteString
+        getExtBytes() {
+      java.lang.Object ref = ext_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        ext_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string ext = 5;</code>
+     * @param value The ext to set.
+     * @return This builder for chaining.
+     */
+    public Builder setExt(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      ext_ = value;
+      bitField0_ |= 0x00000010;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string ext = 5;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearExt() {
+      ext_ = getDefaultInstance().getExt();
+      bitField0_ = (bitField0_ & ~0x00000010);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string ext = 5;</code>
+     * @param value The bytes for ext to set.
+     * @return This builder for chaining.
+     */
+    public Builder setExtBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      ext_ = value;
+      bitField0_ |= 0x00000010;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object size_ = "";
+    /**
+     * <code>string size = 6;</code>
+     * @return The size.
+     */
+    public java.lang.String getSize() {
+      java.lang.Object ref = size_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        size_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string size = 6;</code>
+     * @return The bytes for size.
+     */
+    public com.google.protobuf.ByteString
+        getSizeBytes() {
+      java.lang.Object ref = size_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        size_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string size = 6;</code>
+     * @param value The size to set.
+     * @return This builder for chaining.
+     */
+    public Builder setSize(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      size_ = value;
+      bitField0_ |= 0x00000020;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string size = 6;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearSize() {
+      size_ = getDefaultInstance().getSize();
+      bitField0_ = (bitField0_ & ~0x00000020);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string size = 6;</code>
+     * @param value The bytes for size to set.
+     * @return This builder for chaining.
+     */
+    public Builder setSizeBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      size_ = value;
+      bitField0_ |= 0x00000020;
+      onChanged();
+      return this;
+    }
+
+    private com.google.protobuf.ByteString file_ = com.google.protobuf.ByteString.EMPTY;
+    /**
+     * <code>bytes file = 7;</code>
+     * @return The file.
+     */
+    @java.lang.Override
+    public com.google.protobuf.ByteString getFile() {
+      return file_;
+    }
+    /**
+     * <code>bytes file = 7;</code>
+     * @param value The file to set.
+     * @return This builder for chaining.
+     */
+    public Builder setFile(com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      file_ = value;
+      bitField0_ |= 0x00000040;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>bytes file = 7;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearFile() {
+      bitField0_ = (bitField0_ & ~0x00000040);
+      file_ = getDefaultInstance().getFile();
+      onChanged();
+      return this;
+    }
+
+    // @@protoc_insertion_point(builder_scope:TransFile)
   }
 
-  // @@protoc_insertion_point(class_scope:Message)
-  private static final org.example.back.user.Message DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:TransFile)
+  private static final org.example.usergrpc.user.TransFile DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new org.example.back.user.Message();
+    DEFAULT_INSTANCE = new org.example.usergrpc.user.TransFile();
   }
 
-  public static org.example.back.user.Message getDefaultInstance() {
+  public static org.example.usergrpc.user.TransFile getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Message>
-      PARSER = new com.google.protobuf.AbstractParser<Message>() {
+  private static final com.google.protobuf.Parser<TransFile>
+      PARSER = new com.google.protobuf.AbstractParser<TransFile>() {
     @java.lang.Override
-    public Message parsePartialFrom(
+    public TransFile parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -816,17 +1283,17 @@ private static final long serialVersionUID = 0L;
     }
   };
 
-  public static com.google.protobuf.Parser<Message> parser() {
+  public static com.google.protobuf.Parser<TransFile> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<Message> getParserForType() {
+  public com.google.protobuf.Parser<TransFile> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public org.example.back.user.Message getDefaultInstanceForType() {
+  public org.example.usergrpc.user.TransFile getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 
