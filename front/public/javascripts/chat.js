@@ -96,25 +96,32 @@ document.getElementById('message-input').addEventListener('keydown', (event) => 
     }
 });
 
+
+
 // 서버로부터 받은 메시지 처리(타인이 보낸 메세지)
+// 여기서 include(file::)이면 파일 가지고 오는거로 해야 할 듯
 socket.on(username, (msg) => {
-    toSend.forEach(function(e){
-        if(msg.includes(e)){
+    toSend.forEach(function (e) {
+        if (msg.includes(e)) {
+            // 일반 메시지 처리
             const chatBox = document.getElementById('chat-box');
             const messageDiv = document.createElement('div');
+            if(msg.includes("file::")){
+                msg = msg.replace("file::","");
+                //여디가 messageDiv에 filedownLoad라는 함수 실행하는거 만들자
+                messageDiv.onclick = function() { filedownLoad(msg); }; // 클릭 이벤트 핸들러 추가
+            }
+
             messageDiv.innerHTML = msg; // 메시지 HTML 삽입
             chatBox.appendChild(messageDiv);
-            chatBox.scrollTop = chatBox.scrollHeight;  // 스크롤 맨 아래로
+            chatBox.scrollTop = chatBox.scrollHeight; // 스크롤 맨 아래로
         }
     });
 });
 
 
 
-
-
-
-//첨부파일 전송
+//첨부파일 전송(드래그 앤 드랍)
 var fileItem = document.getElementById('chat-section');
 
 fileItem.ondragover = function(e) {
@@ -128,7 +135,7 @@ fileItem.ondrop = function(e) {
         for (var i = 0; i < data.items.length; i++) { // DataTransferItem 객체 사용
             if (data.items[i].kind == "file") {
                 var file = data.items[i].getAsFile();
-                uploadFile(toSend, file);
+                uploadFile(toSend, file);//전송함수 호출
             }
         }
     } else { // File API 사용
@@ -138,10 +145,16 @@ fileItem.ondrop = function(e) {
     }
 };
 
+// 파일 전송 함수
 function uploadFile (tosend, file){
     const formData = new FormData();  // FormData 객체 생성
+    let username = $('#hiddenUsername').val();  // 서버에서 전달한 username을 가져옴
+    formData.append("sender", username);
     formData.append("tosend", JSON.stringify(tosend));  // 배열을 JSON 문자열로 변환해서 첨부
-    formData.append("file", file);  // 파일 추가
+
+    // 파일명 인코딩
+    let encodedFileName = encodeURIComponent(file.name);
+    formData.append("file", file, encodedFileName);  // 인코딩된 파일명으로 첨부
 
     fetch('/upload', {
         method: 'POST',
@@ -149,9 +162,41 @@ function uploadFile (tosend, file){
     })
         .then(response => response.json())  // 서버 응답을 JSON으로 파싱
         .then(data => {
-            console.log("Success response data: " + data.message);
+            socket.emit('chat',{toSend : toSend , username: data.sender, message:data.message})//{toSend, username, message}
+            document.getElementById('message-input').value = '';  // 입력창 초기화
         })
         .catch(error => {
             console.error('Error:', error);  // 에러 처리
         });
+}
+
+// 파일 다운로드 기능을 처리하는 함수
+function filedownLoad(filePath) {
+    const data = {
+        fileName : filePath.substring(filePath.lastIndexOf(">")+2)
+    }
+    fetch('/fileDownload',{
+        method:'post',
+        headers: {
+            'Content-Type': 'application/json' // JSON 형식으로 데이터 전송
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => response.blob()) // 파일을 Blob 형식으로 받음
+        .then(blob => {
+            // 파일 다운로드를 위한 링크 생성
+            const link = document.createElement('a');
+            const url = window.URL.createObjectURL(blob);
+            link.href = url;
+            link.download = filePath.substring(filePath.lastIndexOf(">") + 2); // 다운로드할 파일 이름
+            document.body.appendChild(link);
+            link.click(); // 다운로드 시작
+            link.remove();
+            window.URL.revokeObjectURL(url); // URL 해제
+        })
+        .catch(error => {
+            console.error("Error:", error);
+        });
+
+
 }
