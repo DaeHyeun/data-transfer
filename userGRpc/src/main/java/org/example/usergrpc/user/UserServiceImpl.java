@@ -3,13 +3,19 @@ package org.example.usergrpc.user;
 
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
+import org.example.usergrpc.entity.FileEntity;
 import org.example.usergrpc.entity.MessageEntity;
 import org.example.usergrpc.entity.UserEntity;
+import org.example.usergrpc.repositorry.FileRepository;
 import org.example.usergrpc.repositorry.MessageRepository;
 import org.example.usergrpc.repositorry.UserRepository;
 import org.lognet.springboot.grpc.GRpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,6 +26,8 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
     private UserRepository userRepository;  // UserRepository 주입
     @Autowired
     private MessageRepository messageRepository;
+    @Autowired
+    private FileRepository fileRepository;
 
     @Override
     public void userIdChkAndJoinAndLogin(User request, StreamObserver<UsergRpcResponse> responseObserver) {
@@ -194,28 +202,95 @@ public class UserServiceImpl extends UserServiceGrpc.UserServiceImplBase {
 
             // TransFile 객체에서 필요한 정보 추출
             byte[] fileData = request.getFile().toByteArray();  // 예시로 파일 데이터를 byte 배열로 가져옴
-            String fileName = request.getOriFileName();  // 예시로 파일 이름 가져오기
+            //uuid
+            //경로 : "C:\\Users\\HCNC\\Desktop\\chatFile\\"
+            String oriFileName = request.getOriFileName();  // 예시로 파일 이름 가져오기
+            String sender = request.getSender();
+            List<String> receiveLsitList = request.getReceiveLsitList();
+            String ext = request.getExt();
+            String size = request.getSize();
 
-            System.out.println("파일 이름: " + fileName);
-            System.out.println("파일 데이터 크기: " + fileData.length);
+            // 파일명 디코딩
+            String decodedFileName = URLDecoder.decode(oriFileName, "UTF-8");
+            String uuid = generateUUIDWithoutHyphens();
 
+            System.out.println("=======================================");
+            System.out.println(generateUUIDWithoutHyphens());
+            System.out.println("=======================================");
+
+            //message table 저장
+            MessageEntity messageEntity = new MessageEntity();
+            messageEntity.setMessage("file::" + uuid + oriFileName.substring(oriFileName.lastIndexOf(".")));
+            messageEntity.setSender(userRepository.findByUsername(sender));
+            messageEntity.setReceiveList(String.join(",", receiveLsitList));
+            messageRepository.save(messageEntity);
+
+            //file table 저장
+            FileEntity fileEntity = new FileEntity();
+            fileEntity.setFileExtension(ext);
+            fileEntity.setFileSize(size);
+            fileEntity.setOriginalFileName(decodedFileName);
+            fileEntity.setFilePath("C:\\Users\\HCNC\\Desktop\\chatFile\\");
+            fileEntity.setFileUuid(uuid);
+            fileEntity.setReceiveList(String.join(",", receiveLsitList));
+            fileEntity.setMessage(messageRepository.findByMessage("file::" + uuid + oriFileName.substring(oriFileName.lastIndexOf("."))));
+            fileEntity.setSender(userRepository.findByUsername(sender));
+            fileRepository.save(fileEntity);
+
+            //uuid이름으로 파일 저장
+            saveFile(fileData, uuid+oriFileName.substring(oriFileName.lastIndexOf(".")));
             // 파일 처리 로직 구현 (파일을 디스크에 저장하거나 DB에 저장 등)
 
             // 응답 생성
             UsergRpcResponse response = UsergRpcResponse.newBuilder()
-                    .setMessage("파일 처리 성공")
+                    .setValidate(true)
+                    .setMessage("file::" + uuid+oriFileName.substring(oriFileName.lastIndexOf(".")))
                     .build();
 
             // 응답 보내기
             responseObserver.onNext(response);
-
             // 스트림을 정상적으로 종료
             responseObserver.onCompleted();
-
         } catch (Exception e) {
             // 예외 발생 시 스트림에 오류 전송
             e.printStackTrace();
             responseObserver.onError(Status.INTERNAL.withDescription("파일 처리 중 오류 발생").asRuntimeException());
+            UsergRpcResponse response = UsergRpcResponse.newBuilder()
+                    .setValidate(false)
+                    .setMessage("뭔가 실패")
+                    .build();
+            responseObserver.onNext(response);
+            responseObserver.onCompleted();
         }
+    }
+
+    //파일저장 method
+    public void saveFile(byte[] fileData, String fileName) throws IOException {
+
+        // 파일 저장 경로 지정
+        String savePath = "C:\\Users\\HCNC\\Desktop\\chatFile\\" + fileName;
+        // File 객체 생성
+        File file = new File(savePath);
+
+        // 파일 경로가 존재하지 않으면 디렉토리 생성
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();  // 상위 디렉토리 생성
+        }
+
+        // FileOutputStream을 사용하여 파일을 저장
+        try (FileOutputStream fos = new FileOutputStream(file)) {
+            fos.write(fileData);  // 파일 데이터 저장
+            System.out.println("파일이 성공적으로 저장되었습니다: " + savePath);
+        } catch (IOException e) {
+            System.err.println("파일 저장 중 오류가 발생했습니다: " + e.getMessage());
+            throw e;
+        }
+    }
+    //uuid 생성
+    public static String generateUUIDWithoutHyphens() {
+        // UUID 생성
+        UUID uuid = UUID.randomUUID();
+        // 하이픈 제거
+        return uuid.toString().replace("-", "");
     }
 }
