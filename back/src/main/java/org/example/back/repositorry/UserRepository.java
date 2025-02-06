@@ -1,10 +1,7 @@
-package org.example.usergrpc.repositorry;
+package org.example.back.repositorry;
 
-import org.example.usergrpc.entity.UserEntity;
+import org.example.back.entity.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-
-import java.util.List;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
     // 필요한 경우 추가적인 쿼리 메서드를 정의할 수 있습니다.

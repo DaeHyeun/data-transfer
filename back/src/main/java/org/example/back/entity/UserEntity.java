@@ -1,7 +1,8 @@
-package org.example.usergrpc.entity;
+package org.example.back.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @AllArgsConstructor
